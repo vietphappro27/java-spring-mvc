@@ -13,7 +13,7 @@ public class HelloController {
     }
 
     @GetMapping("/user")
-    public String userpPage() {
+    public String userPage() {
         return "Only user can see this page";
     }
 
