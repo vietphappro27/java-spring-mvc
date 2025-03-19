@@ -11,4 +11,13 @@ public class HelloController {
         return "hello";
     }
 
+    @GetMapping("user")
+    public String userPage() {
+        return "this is user page";
+    }
+
+    @GetMapping("admin")
+    public String adminPage() {
+        return "this is admin page";
+    }
 }
