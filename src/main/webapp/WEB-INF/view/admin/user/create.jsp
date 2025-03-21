@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<!-- jstl core -->
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<!-- form: -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- <!DOCTYPE html> -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -24,33 +29,46 @@
         <div class="col-md-6 col-12 mx-auto">
           <h3>Create a user</h3>
           <hr />
-          <form>
+          <form:form
+            method="post"
+            action="/admin/user/create"
+            modelAttribute="newUser"
+          >
             <div class="mb-3">
               <label class="form-label">FullName:</label>
-              <input type="text" class="form-control" />
+              <form:input type="text" class="form-control" path="fullname" />
             </div>
             <div class="mb-3">
               <label class="form-label">Address:</label>
-              <input type="text" class="form-control" />
+              <form:input type="text" class="form-control" path="address" />
             </div>
             <div class="mb-3">
-              <label class="form-label">Phone Number:</label>
-              <input type="number" class="form-control" />
+              <label class="form-label">Phone:</label>
+              <form:input type="number" class="form-control" path="phone" />
             </div>
             <div class="mb-3">
               <label class="form-label">Email:</label>
-              <input type="email" class="form-control" />
+              <form:input type="email" class="form-control" path="email" />
             </div>
             <div class="mb-3">
               <label class="form-label">Password:</label>
-              <input type="password" class="form-control" />
+              <form:input
+                type="password"
+                class="form-control"
+                path="password"
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">Repeat Password:</label>
-              <input type="password" class="form-control" />
+              <form:input
+                type="password"
+                class="form-control"
+                path="confirmPassword"
+              />
             </div>
+
             <button type="submit" class="btn btn-primary">Create</button>
-          </form>
+          </form:form>
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@
     <h1>hello from jsp</h1>
     <!-- syntax: ${var} -->
     <h1>${message}</h1>
-    <h1>${controler}</h1>
     <button class="btn btn-warning">click on</button>
   </body>
 </html>
