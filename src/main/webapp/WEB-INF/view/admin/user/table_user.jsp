@@ -43,24 +43,19 @@
               </tr>
             </thead>
             <tbody>
-              <th>1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>
-                <button class="btn btn-success">View</button>
-                <button type="button" class="btn btn-warning">Update</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-              </td>
-            </tbody>
-            <tbody>
-              <th>2</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>
-                <button class="btn btn-success">View</button>
-                <button type="button" class="btn btn-warning">Update</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-              </td>
+              <c:forEach items="${users}" var="user">
+                  <th>${user.id}</th>
+                  <th>${user.email}</th>
+                  <td>${user.fullname}</td>
+                  <td>
+                    <button class="btn btn-success">View</button>
+                    <button type="button" class="btn btn-warning">
+                      Update
+                    </button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
