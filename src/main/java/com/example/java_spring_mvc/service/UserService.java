@@ -27,4 +27,8 @@ public class UserService {
     public List<User> getAllUserByAddress(String address){
         return this.userRepository.findByAddress(address);
     }
+    public User getUserById(long id){
+        return this.userRepository.findById(id);
+    }
 }
+

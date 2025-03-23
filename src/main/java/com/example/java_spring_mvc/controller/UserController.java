@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.java_spring_mvc.domain.User;
@@ -42,7 +43,17 @@ public class UserController {
         return "/admin/user/table_user";
     }
 
-
+    @RequestMapping("/admin/user/{id}")
+    public String requestMethodName(Model model, @PathVariable long id) {
+        User user=this.userService.getUserById(id);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("fullname", user.getFullname());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("address", user.getAddress());
+        System.out.println(user);
+        return "/admin/user/detail";
+    }
+    
     @RequestMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());

@@ -8,7 +8,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table User</title>
+    <title>Detail User</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -27,36 +27,18 @@
       <div class="row">
         <div class="col-12 mx-auto">
           <div class="d-flex justify-content-between">
-            <h3>Table User</h3>
-            <a href="/admin/user/create" class="btn btn-primary">
-              Create User
-            </a>
+            <h3>Detail User ${id}</h3>
           </div>
-          <hr />
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Full Name</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-                <!-- render user -->
-              <c:forEach items="${users}" var="user">       
-                  <th>${user.id}</th>
-                  <th>${user.email}</th>
-                  <td>${user.fullname}</td>
-                  <td>
-                    <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
-                    <a href="/admin/user/${user.id}" class="btn btn-warning">Update</a>
-                    <a href="/admin/user/${user.id}" class="btn btn-danger">Delete</a>
-                  </td>
-                </tr>
-              </c:forEach>
-            </tbody>
-          </table>
+          <div class="card" style="width: 18rem">
+            <div class="card-header">Profile User</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">ID: ${id}</li>
+              <li class="list-group-item">name: ${fullname}</li>
+              <li class="list-group-item">email: ${email}</li>
+              <li class="list-group-item">address: ${address}</li>
+            </ul>
+          </div>
+          <a href="/admin/user" class="btn btn-primary"> Back </a>
         </div>
       </div>
     </div>
