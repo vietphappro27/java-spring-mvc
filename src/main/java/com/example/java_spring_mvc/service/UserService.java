@@ -18,9 +18,6 @@ public class UserService {
     public String handleHello() {
         return "hello from service";
     }
-    // public User handleSaveUser(User user){
-    //     return this.userRepository.save(user);
-    // } 
     public void handleSaveUser(User user){
         this.userRepository.save(user);
     } 

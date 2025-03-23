@@ -11,6 +11,8 @@ import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.repository.UserRepository;
 import com.example.java_spring_mvc.service.UserService;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class UserController {
@@ -25,7 +27,7 @@ public class UserController {
     public String getHomePage(Model model) {
         // List<User> listUser= this.userService.getAllUser();
         // System.out.println(listUser);
-        List<User> listUser= this.userService.getAllUserByAddress("H Dong");
+        List<User> listUser= this.userService.getAllUserByAddress("Ha Dong");
         System.out.println(listUser);
         // syntax: model.addAttribute("message", var);
         model.addAttribute("message", "test");
@@ -33,13 +35,19 @@ public class UserController {
     }
 
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
+    public String getUserPage() {
+        return "/admin/user/table_user";
+    }
+
+
+    @RequestMapping("/admin/user/create")
+    public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
         return "/admin/user/create";
     }
 
     @RequestMapping(value = "admin/user/create", method=RequestMethod.POST)
-    public String requestMethodName(Model model, @ModelAttribute("newUser") User vietphap) {
+    public String creatUserPage(Model model, @ModelAttribute("newUser") User vietphap) {
         System.out.println("do post "+ vietphap);
         this.userService.handleSaveUser(vietphap);
         return "hello";
