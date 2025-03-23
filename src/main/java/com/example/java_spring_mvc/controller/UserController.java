@@ -1,5 +1,7 @@
 package com.example.java_spring_mvc.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +23,10 @@ public class UserController {
 
     @RequestMapping("/")
     public String getHomePage(Model model) {
+        // List<User> listUser= this.userService.getAllUser();
+        // System.out.println(listUser);
+        List<User> listUser= this.userService.getAllUserByAddress("H Dong");
+        System.out.println(listUser);
         // syntax: model.addAttribute("message", var);
         model.addAttribute("message", "test");
         return "hello"; // hello.jsp
