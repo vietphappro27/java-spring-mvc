@@ -21,6 +21,12 @@ public class UserService {
     public void handleSaveUser(User user){
         this.userRepository.save(user);
     } 
+    // public void handelUpdateUser(User user){
+    //     this.userRepository.
+    // }
+    // public void handleDeleteUser(User user){
+    //     this.userRepository.delete(user);
+    // }
     public List<User> getAllUser(){
         return this.userRepository.findAll();
     }

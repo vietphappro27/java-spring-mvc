@@ -13,15 +13,21 @@ import com.example.java_spring_mvc.repository.UserRepository;
 import com.example.java_spring_mvc.service.UserService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
 public class UserController {
 
+    private final UserRepository userRepository;
+
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping("/")
@@ -29,7 +35,7 @@ public class UserController {
         // List<User> listUser= this.userService.getAllUser();
         // System.out.println(listUser);
         List<User> listUser= this.userService.getAllUserByAddress("Ha Dong");
-        System.out.println(listUser);
+        // System.out.println(listUser);
         // syntax: model.addAttribute("message", var);
         model.addAttribute("message", "test");
         return "hello"; // hello.jsp
@@ -38,19 +44,18 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUser();
-        System.out.println(users);                  // show int terminal
+        // System.out.println(users);                  // show int terminal
         model.addAttribute("users", users);
         return "/admin/user/table_user";
     }
 
     @RequestMapping("/admin/user/{id}")
-    public String requestMethodName(Model model, @PathVariable long id) {
+    public String getDetailUserPage(Model model, @PathVariable long id) {
         User user=this.userService.getUserById(id);
         model.addAttribute("id", user.getId());
         model.addAttribute("fullname", user.getFullname());
         model.addAttribute("email", user.getEmail());
         model.addAttribute("address", user.getAddress());
-        System.out.println(user);
         return "/admin/user/detail";
     }
     
@@ -61,11 +66,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "admin/user/create", method=RequestMethod.POST)
-    public String creatUserPage(Model model, @ModelAttribute("newUser") User vietphap) {
-        System.out.println("do post "+ vietphap);
+    public String createUserPage(Model model, @ModelAttribute("newUser") User vietphap) {
+        // System.out.println("do post "+ vietphap);
         this.userService.handleSaveUser(vietphap);
         //  redirect to URL
         return "redirect:/admin/user";
+    }
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userRepository.findById(id);
+        model.addAttribute("newUser", currentUser);
+        return "admin/user/update";
+    }
+    @PostMapping("admin/user/update")
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User vietphap) {
+        User currentUser = this.userRepository.findById(vietphap.getId());
+        if(currentUser !=null){
+            currentUser.setAddress(vietphap.getAddress());
+            currentUser.setFullname(vietphap.getFullname());
+            currentUser.setPhone(vietphap.getPhone());
+            System.out.println(currentUser);
+            this.userService.handleSaveUser(currentUser);
+        }
+        System.out.println(vietphap.getId());
+        return "redirect:/admin/user";
+
     }
     
 
