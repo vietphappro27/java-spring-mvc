@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,53 +18,76 @@ public class User {
     private String password;
     private String address;
     private String phone;
-    private String confirmPassword;
+    private String avatar;
+
+    // private String confirmPassword;
+    // roleId
     public long getId() {
         return id;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getEmail() {
         return email;
     }
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", email=" + email + ", fullname=" + fullname + ", password=" + password
-                + ", address=" + address + ", phone=" + phone + ", confirmPassword=" + confirmPassword + "]";
-    }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getFullname() {
         return fullname;
     }
+
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getPhone() {
         return phone;
     }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public String getConfirmPassword() {
-        return confirmPassword;
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + email + ", fullname=" + fullname + ", password=" + password
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-    
+    // public String getConfirmPassword() {
+    // return confirmPassword;
+    // }
+    // public void setConfirmPassword(String confirmPassword) {
+    // this.confirmPassword = confirmPassword;
+    // }
+
 }

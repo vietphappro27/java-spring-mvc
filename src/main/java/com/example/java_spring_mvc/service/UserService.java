@@ -10,7 +10,7 @@ import com.example.java_spring_mvc.repository.UserRepository;
 @Service
 public class UserService {
     private UserRepository userRepository;
-    
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -18,23 +18,22 @@ public class UserService {
     public String handleHello() {
         return "hello from service";
     }
-    public void handleSaveUser(User user){
-        this.userRepository.save(user);
-    } 
-    // public void handelUpdateUser(User user){
-    //     this.userRepository.
-    // }
-    // public void handleDeleteUser(User user){
-    //     this.userRepository.delete(user);
-    // }
-    public List<User> getAllUser(){
+
+    public void handleSaveUser(User newUser) {
+        this.userRepository.save(newUser);
+    }
+    public void handleDeleteUser(User user){
+        this.userRepository.deleteById(user.getId());
+    }
+    public List<User> getAllUser() {
         return this.userRepository.findAll();
     }
-    public List<User> getAllUserByAddress(String address){
+
+    public List<User> getAllUserByAddress(String address) {
         return this.userRepository.findByAddress(address);
     }
-    public User getUserById(long id){
+
+    public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
 }
-

@@ -8,7 +8,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update User</title>
+    <title>Document</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,7 +20,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="/css/demo.css" />
     <!-- <link rel="stylesheet" href="/css/demo.css" /> -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
@@ -40,60 +39,42 @@
       crossorigin="anonymous"
     ></script>
   </head>
+
   <body>
     <!-- header -->
     <jsp:include page="../layout/header.jsp" />
     <div id="layoutSidenav">
       <!-- sidebar -->
       <jsp:include page="../layout/sidebar.jsp" />
-
       <div id="layoutSidenav_content">
         <div class="container mt-5">
           <div class="row">
             <div class="col-12 mx-auto">
-              <h3>Update User</h3>
+              <h3>Delete a user #${id}</h3>
               <hr />
+              <div class="alert alert-danger">
+                Are you sure to delete this user ?
+              </div>
               <form:form
                 method="post"
-                action="/admin/user/update"
+                action="/admin/user/delete"
                 modelAttribute="newUser"
               >
                 <div class="mb-3" style="display: none">
                   <label class="form-label">Id:</label>
-                  <form:input type="text" class="form-control" path="id" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Email:</label>
                   <form:input
-                    type="email"
-                    class="form-control"
-                    path="email"
-                    disabled="true"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">FullName:</label>
-                  <form:input
+                    value="${id}"
                     type="text"
                     class="form-control"
-                    path="fullname"
+                    path="id"
                   />
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Address:</label>
-                  <form:input type="text" class="form-control" path="address" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Phone:</label>
-                  <form:input type="text" class="form-control" path="phone" />
-                </div>
-
-                <button type="submit" class="btn btn-warning">Update</button>
-                <!-- <a href="/admin/user" class="btn btn-warning"> Update</a> -->
+                <button type="submit" class="btn btn-danger">Confirm</button>
               </form:form>
             </div>
           </div>
         </div>
+
         <!-- footer -->
         <jsp:include page="../layout/footer.jsp" />
       </div>
