@@ -29,6 +29,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    List<Order> orders;
+
     public Role getRole() {
         return role;
     }
@@ -44,9 +47,6 @@ public class User {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-
-    @OneToMany(mappedBy = "user")
-    List<Order> orders;
 
     public long getId() {
         return id;
@@ -109,11 +109,5 @@ public class User {
         return "User [id=" + id + ", email=" + email + ", fullname=" + fullname + ", password=" + password
                 + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
-    // public String getConfirmPassword() {
-    // return confirmPassword;
-    // }
-    // public void setConfirmPassword(String confirmPassword) {
-    // this.confirmPassword = confirmPassword;
-    // }
 
 }
