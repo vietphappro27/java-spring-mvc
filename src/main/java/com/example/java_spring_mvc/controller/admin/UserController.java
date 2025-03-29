@@ -47,7 +47,7 @@ public class UserController {
         List<User> users = this.userService.getAllUser();
         // System.out.println(users); // show int terminal
         model.addAttribute("users", users);
-        return "/admin/user/table_user";
+        return "/admin/user/show";
     }
 
     @RequestMapping("/admin/user/{id}")

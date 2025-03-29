@@ -46,25 +46,36 @@
       <!-- sidebar -->
       <jsp:include page="../layout/sidebar.jsp" />
       <div id="layoutSidenav_content">
-        <div class="container mt-5">
-          <div class="row">
-            <div class="col-12 mx-auto">
-              <div class="d-flex justify-content-between">
-                <h3>Detail User ${id}</h3>
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">Manage User</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">
+                <a href="/admin">Dashboard</a> / User
+              </li>
+            </ol>
+          </div>
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col-12 mx-auto">
+                <div class="d-flex justify-content-between">
+                  <h3>Detail User ${id}</h3>
+                </div>
+                <hr />
+                <div class="card" style="width: 18rem">
+                  <div class="card-header">Profile User</div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">name: ${fullname}</li>
+                    <li class="list-group-item">email: ${email}</li>
+                    <li class="list-group-item">address: ${address}</li>
+                  </ul>
+                </div>
+                <a href="/admin/user" class="btn btn-secondary"> Back </a>
               </div>
-              <div class="card" style="width: 18rem">
-                <div class="card-header">Profile User</div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">ID: ${id}</li>
-                  <li class="list-group-item">name: ${fullname}</li>
-                  <li class="list-group-item">email: ${email}</li>
-                  <li class="list-group-item">address: ${address}</li>
-                </ul>
-              </div>
-              <a href="/admin/user" class="btn btn-primary"> Back </a>
             </div>
           </div>
-        </div>
+        </main>
         <!-- footer -->
         <jsp:include page="../layout/footer.jsp" />
       </div>
