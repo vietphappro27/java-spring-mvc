@@ -1,501 +1,404 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"
-    />
-    <link rel="stylesheet" href="/client/fonts/icomoon/style.css" />
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+  <!-- jstl core -->
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <!-- form: -->
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+      <!DOCTYPE html>
+      <html lang="en">
 
-    <link rel="stylesheet" href="/client/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/client/css/magnific-popup.css" />
-    <link rel="stylesheet" href="/client/css/jquery-ui.css" />
-    <link rel="stylesheet" href="/client/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="/client/css/owl.theme.default.min.css" />
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Male-Fashion | Template</title>
 
-    <link rel="stylesheet" href="/client/css/aos.css" />
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+          rel="stylesheet">
 
-    <link rel="stylesheet" href="/client/css/style.css" />
-    <link rel="stylesheet" href="/client/css/demo.css" />
-  </head>
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/client/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/client/css/style.css" type="text/css">
+        <!-- Google Font -->
+      </head>
 
-  <body>
-    <div class="site-wrap">
-      <header class="site-navbar" role="banner">
-        <div class="site-navbar-top">
+      <body>
+        <!-- Header Section Begin -->
+        <jsp:include page="../layout/header.jsp" />
+        <!-- Header Section End -->
+
+        <!-- Hero Section Begin -->
+        <section class="hero">
+          <div class="hero__slider owl-carousel">
+            <!-- <div class="hero__items set-bg" data-setbg="/client/img/hero/hero-1.jpg"> -->
+            <div class="hero__items set-bg" data-setbg="/client/img/hero/hero1.png">
+            </div>
+            <!-- <div class="hero__items set-bg" data-setbg="/client/img/hero/hero-2.jpg"> -->
+            <div class="hero__items set-bg" data-setbg="/client/img/hero/hero2.png">
+            </div>
+          </div>
+        </section>
+        <!-- Hero Section End -->
+
+        <!-- Banner Section Begin -->
+        <section class="banner spad">
           <div class="container">
-            <div class="row align-items-center">
-              <div
-                class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left"
-              >
-                <form action="" class="site-block-top-search">
-                  <span class="icon icon-search2"></span>
-                  <input
-                    type="text"
-                    class="form-control border-0"
-                    placeholder="Search"
-                  />
-                </form>
-              </div>
-
-              <div
-                class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center"
-              >
-                <div class="site-logo">
-                  <a href="index.html" class="js-logo-clone">Shoppers</a>
+            <div class="row">
+              <div class="col-lg-7 offset-lg-4">
+                <div class="banner__item">
+                  <div class="banner__item__pic">
+                    <img src="/client/img/banner/1.png" alt="" style="width: 440px;height: 440px;object-fit: cover;">
+                  </div>
+                  <div class="banner__item__text">
+                    <h2>BST Adidas Runners</h2>
+                    <a href="#">Xem thêm</a>
+                  </div>
                 </div>
               </div>
-
-              <div class="col-6 col-md-4 order-3 order-md-3 text-right">
-                <div class="site-top-icons">
-                  <ul>
-                    <li>
-                      <a href="#"><span class="icon icon-person"></span></a>
-                    </li>
-                    <li>
-                      <a href="#"><span class="icon icon-heart-o"></span></a>
-                    </li>
-                    <li>
-                      <a href="cart.html" class="site-cart">
-                        <span class="icon icon-shopping_cart"></span>
-                        <span class="count">2</span>
-                      </a>
-                    </li>
-                    <li class="d-inline-block d-md-none ml-md-0">
-                      <a href="#" class="site-menu-toggle js-menu-toggle"
-                        ><span class="icon-menu"></span
-                      ></a>
-                    </li>
-                  </ul>
+              <div class="col-lg-5">
+                <div class="banner__item banner__item--middle">
+                  <div class="banner__item__pic">
+                    <img src="/client/img/banner/2.png" alt="">
+                  </div>
+                  <div class="banner__item__text">
+                    <h2>Phụ kiện</h2>
+                    <a href="#">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="banner__item banner__item--last">
+                  <div class="banner__item__pic">
+                    <img src="/client/img/banner/banner-3.jpg" alt="">
+                  </div>
+                  <div class="banner__item__text">
+                    <h2>Xu Hướng <br>2025</h2>
+                    <a href="#">Xem thêm</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <nav
-          class="site-navigation text-right text-md-center"
-          role="navigation"
-        >
+        </section>
+        <!-- Banner Section End -->
+
+        <!-- Product Section Begin -->
+        <section class="product spad">
           <div class="container">
-            <ul class="site-menu js-clone-nav d-none d-md-block">
-              <li class="has-children active">
-                <a href="index.html">Home</a>
-                <ul class="dropdown">
-                  <li><a href="#">Menu One</a></li>
-                  <li><a href="#">Menu Two</a></li>
-                  <li><a href="#">Menu Three</a></li>
-                  <li class="has-children">
-                    <a href="#">Sub Menu</a>
-                    <ul class="dropdown">
-                      <li><a href="#">Menu One</a></li>
-                      <li><a href="#">Menu Two</a></li>
-                      <li><a href="#">Menu Three</a></li>
+            <div class="row">
+              <div class="col-lg-12">
+                <ul class="filter__controls">
+                  <li class="active" data-filter="*">Sản Phẩm Bán Chạy</li>
+                  <li data-filter=".new-arrivals">Sản Phẩm Mới</li>
+                  <li data-filter=".hot-sales">Giảm Giá</li>
+                </ul>
+              </div>
+            </div>
+            <div class="row product__filter">
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/1.jpeg">
+                    <span class="label">New</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
                     </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="has-children">
-                <a href="about.html">About</a>
-                <ul class="dropdown">
-                  <li><a href="#">Menu One</a></li>
-                  <li><a href="#">Menu Two</a></li>
-                  <li><a href="#">Menu Three</a></li>
-                </ul>
-              </li>
-              <li><a href="shop.html">Shop</a></li>
-              <li><a href="#">Catalogue</a></li>
-              <li><a href="#">New Arrivals</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-
-      <div
-        class="site-blocks-cover"
-        style="background-image: url(images/hero_1.jpg)"
-        data-aos="fade"
-      >
-        <div class="container">
-          <div
-            class="row align-items-start align-items-md-center justify-content-end"
-          >
-            <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
-              <h1 class="mb-2">Finding Your Perfect Shoes</h1>
-              <div class="intro-text text-center text-md-left">
-                <p class="mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus at iaculis quam. Integer accumsan tincidunt
-                  fringilla.
-                </p>
-                <p>
-                  <a href="#" class="btn btn-sm btn-primary">Shop Now</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-section site-section-sm site-blocks-1">
-        <div class="container">
-          <div class="row">
-            <div
-              class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-              data-aos="fade-up"
-              data-aos-delay=""
-            >
-              <div class="icon mr-4 align-self-start">
-                <span class="icon-truck"></span>
-              </div>
-              <div class="text">
-                <h2 class="text-uppercase">Free Shipping</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus at iaculis quam. Integer accumsan tincidunt
-                  fringilla.
-                </p>
-              </div>
-            </div>
-            <div
-              class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <div class="icon mr-4 align-self-start">
-                <span class="icon-refresh2"></span>
-              </div>
-              <div class="text">
-                <h2 class="text-uppercase">Free Returns</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus at iaculis quam. Integer accumsan tincidunt
-                  fringilla.
-                </p>
-              </div>
-            </div>
-            <div
-              class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <div class="icon mr-4 align-self-start">
-                <span class="icon-help"></span>
-              </div>
-              <div class="text">
-                <h2 class="text-uppercase">Customer Support</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus at iaculis quam. Integer accumsan tincidunt
-                  fringilla.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-section site-blocks-2">
-        <div class="container">
-          <div class="row">
-            <div
-              class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0"
-              data-aos="fade"
-              data-aos-delay=""
-            >
-              <a class="block-2-item" href="#">
-                <figure class="image">
-                  <img src="images/women.jpg" alt="" class="img-fluid" />
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">Collections</span>
-                  <h3>Women</h3>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0"
-              data-aos="fade"
-              data-aos-delay="100"
-            >
-              <a class="block-2-item" href="#">
-                <figure class="image">
-                  <img src="images/children.jpg" alt="" class="img-fluid" />
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">Collections</span>
-                  <h3>Children</h3>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0"
-              data-aos="fade"
-              data-aos-delay="200"
-            >
-              <a class="block-2-item" href="#">
-                <figure class="image">
-                  <img src="images/men.jpg" alt="" class="img-fluid" />
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">Collections</span>
-                  <h3>Men</h3>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-section block-3 site-blocks-2 bg-light">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-7 site-section-heading text-center pt-4">
-              <h2>Featured Products</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="nonloop-block-3 owl-carousel">
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img
-                        src="images/cloth_1.jpg"
-                        alt="Image placeholder"
-                        class="img-fluid"
-                      />
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">Tank Top</a></h3>
-                      <p class="mb-0">Finding perfect t-shirt</p>
-                      <p class="text-primary font-weight-bold">$50</p>
-                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img
-                        src="images/shoe_1.jpg"
-                        alt="Image placeholder"
-                        class="img-fluid"
-                      />
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">Corater</a></h3>
-                      <p class="mb-0">Finding perfect products</p>
-                      <p class="text-primary font-weight-bold">$50</p>
+                  <div class="product__item__text">
+                    <h6>Vintas Vivu - Low Top - Plantation</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
                     </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img
-                        src="images/cloth_2.jpg"
-                        alt="Image placeholder"
-                        class="img-fluid"
-                      />
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">Polo Shirt</a></h3>
-                      <p class="mb-0">Finding perfect products</p>
-                      <p class="text-primary font-weight-bold">$50</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img
-                        src="images/cloth_3.jpg"
-                        alt="Image placeholder"
-                        class="img-fluid"
-                      />
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">T-Shirt Mockup</a></h3>
-                      <p class="mb-0">Finding perfect products</p>
-                      <p class="text-primary font-weight-bold">$50</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img
-                        src="images/shoe_1.jpg"
-                        alt="Image placeholder"
-                        class="img-fluid"
-                      />
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">Corater</a></h3>
-                      <p class="mb-0">Finding perfect products</p>
-                      <p class="text-primary font-weight-bold">$50</p>
+                    <h5>750.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-1">
+                        <input type="radio" id="pc-1">
+                      </label>
+                      <label class="active black" for="pc-2">
+                        <input type="radio" id="pc-2">
+                      </label>
+                      <label class="grey" for="pc-3">
+                        <input type="radio" id="pc-3">
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-section block-8">
-        <div class="container">
-          <div class="row justify-content-center mb-5">
-            <div class="col-md-7 site-section-heading text-center pt-4">
-              <h2>Big Sale!</h2>
-            </div>
-          </div>
-          <div class="row align-items-center">
-            <div class="col-md-12 col-lg-7 mb-5">
-              <a href="#"
-                ><img
-                  src="images/blog_1.jpg"
-                  alt="Image placeholder"
-                  class="img-fluid rounded"
-              /></a>
-            </div>
-            <div class="col-md-12 col-lg-5 text-center pl-md-5">
-              <h2><a href="#">50% less in all items</a></h2>
-              <p class="post-meta mb-4">
-                By <a href="#">Carl Smith</a>
-                <span class="block-8-sep">&bullet;</span> September 3, 2018
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quisquam iste dolor accusantium facere corporis ipsum animi
-                deleniti fugiat. Ex, veniam?
-              </p>
-              <p><a href="#" class="btn btn-primary btn-sm">Shop Now</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="site-footer border-top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-              <div class="row">
-                <div class="col-md-12">
-                  <h3 class="footer-heading mb-4">Navigations</h3>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <ul class="list-unstyled">
-                    <li><a href="#">Sell online</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Shopping cart</a></li>
-                    <li><a href="#">Store builder</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <ul class="list-unstyled">
-                    <li><a href="#">Mobile commerce</a></li>
-                    <li><a href="#">Dropshipping</a></li>
-                    <li><a href="#">Website development</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <ul class="list-unstyled">
-                    <li><a href="#">Point of sale</a></li>
-                    <li><a href="#">Hardware</a></li>
-                    <li><a href="#">Software</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-              <h3 class="footer-heading mb-4">Promo</h3>
-              <a href="#" class="block-6">
-                <img
-                  src="images/hero_1.jpg"
-                  alt="Image placeholder"
-                  class="img-fluid rounded mb-4"
-                />
-                <h3 class="font-weight-light mb-0">
-                  Finding Your Perfect Shoes
-                </h3>
-                <p>Promo from nuary 15 &mdash; 25, 2019</p>
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="block-5 mb-5">
-                <h3 class="footer-heading mb-4">Contact Info</h3>
-                <ul class="list-unstyled">
-                  <li class="address">
-                    203 Fake St. Mountain View, San Francisco, California, USA
-                  </li>
-                  <li class="phone">
-                    <a href="tel://23923929210">+2 392 3929 210</a>
-                  </li>
-                  <li class="email">emailaddress@domain.com</li>
-                </ul>
-              </div>
-
-              <div class="block-7">
-                <form action="#" method="post">
-                  <label for="email_subscribe" class="footer-heading"
-                    >Subscribe</label
-                  >
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control py-4"
-                      id="email_subscribe"
-                      placeholder="Email"
-                    />
-                    <input
-                      type="submit"
-                      class="btn btn-sm btn-primary"
-                      value="Send"
-                    />
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                <div class="product__item sale">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/2.jpg">
+                    <span class="label">Sale</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
                   </div>
-                </form>
+                  <div class="product__item__text">
+                    <h6>Vintas Denim - Low Top</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>650.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-4">
+                        <input type="radio" id="pc-4">
+                      </label>
+                      <label class="active black" for="pc-5">
+                        <input type="radio" id="pc-5">
+                      </label>
+                      <label class="grey" for="pc-6">
+                        <input type="radio" id="pc-6">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                <div class="product__item new">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/3.jpeg">
+                    <span class="label">New</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>Track 6 Jazico - Low Top</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>1.190.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-7">
+                        <input type="radio" id="pc-7">
+                      </label>
+                      <label class="active black" for="pc-8">
+                        <input type="radio" id="pc-8">
+                      </label>
+                      <label class="grey" for="pc-9">
+                        <input type="radio" id="pc-9">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                <div class="product__item sale">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/4.jpg">
+                    <span class="label">Sale</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>Samba OG</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>1.500.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-10">
+                        <input type="radio" id="pc-10">
+                      </label>
+                      <label class="active black" for="pc-11">
+                        <input type="radio" id="pc-11">
+                      </label>
+                      <label class="grey" for="pc-12">
+                        <input type="radio" id="pc-12">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/5.jpg">
+                    <span class="label">New</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>Ultraboost 5</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>1.700.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-13">
+                        <input type="radio" id="pc-13">
+                      </label>
+                      <label class="active black" for="pc-14">
+                        <input type="radio" id="pc-14">
+                      </label>
+                      <label class="grey" for="pc-15">
+                        <input type="radio" id="pc-15">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                <div class="product__item sale">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/6.jpg">
+                    <span class="label">Sale</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>Chuck 70</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>800.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-16">
+                        <input type="radio" id="pc-16">
+                      </label>
+                      <label class="active black" for="pc-17">
+                        <input type="radio" id="pc-17">
+                      </label>
+                      <label class="grey" for="pc-18">
+                        <input type="radio" id="pc-18">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/7.jpg">
+                    <span class="label">New</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>Converse x CDG Chuck 70</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>1.000.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-19">
+                        <input type="radio" id="pc-19">
+                      </label>
+                      <label class="active black" for="pc-20">
+                        <input type="radio" id="pc-20">
+                      </label>
+                      <label class="grey" for="pc-21">
+                        <input type="radio" id="pc-21">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                <div class="product__item sale">
+                  <div class="product__item__pic set-bg" data-setbg="/client/img/product/8.jpg">
+                    <span class="label">Sale</span>
+                    <ul class="product__hover">
+                      <li><a href="#"><img src="/client/img/icon/heart.png" alt=""></a></li>
+                      <li><a href="#"><img src="/client/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                      <li><a href="#"><img src="/client/img/icon/search.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6>VANS AUTHENTIC CLASSIC BLACK/WHITE</h6>
+                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <div class="rating">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <h5>1.200.000 VND</h5>
+                    <div class="product__color__select">
+                      <label for="pc-22">
+                        <input type="radio" id="pc-22">
+                      </label>
+                      <label class="active black" for="pc-23">
+                        <input type="radio" id="pc-23">
+                      </label>
+                      <label class="grey" for="pc-24">
+                        <input type="radio" id="pc-24">
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row pt-5 mt-5 text-center">
-            <div class="col-md-12">
-              <p>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;
-                <script
-                  data-cfasync="false"
-                  src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-                ></script>
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                All rights reserved | This template is made with
-                <i class="icon-heart" aria-hidden="true"></i> by
-                <a
-                  href="https://colorlib.com"
-                  target="_blank"
-                  class="text-primary"
-                  >Colorlib</a
-                >
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+        </section>
 
-    <script src="/client/js/jquery-3.3.1.min.js"></script>
-    <script src="/client/js/jquery-ui.js"></script>
-    <script src="/client/js/popper.min.js"></script>
-    <script src="/client/js/bootstrap.min.js"></script>
-    <script src="/client/js/owl.carousel.min.js"></script>
-    <script src="/client/js/jquery.magnific-popup.min.js"></script>
-    <script src="/client/js/aos.js"></script>
+        <!-- Footer Section Begin -->
+        <jsp:include page="../layout/footer.jsp" />
+        <!-- Footer Section End -->
 
-    <script src="/client/js/main.js"></script>
-  </body>
-</html>
+        <!-- Js Plugins -->
+        <script src="/client/js/jquery-3.3.1.min.js"></script>
+        <script src="/client/js/bootstrap.min.js"></script>
+        <script src="/client/js/jquery.nice-select.min.js"></script>
+        <script src="/client/js/jquery.nicescroll.min.js"></script>
+        <script src="/client/js/jquery.magnific-popup.min.js"></script>
+        <script src="/client/js/jquery.countdown.min.js"></script>
+        <script src="/client/js/jquery.slicknav.js"></script>
+        <script src="/client/js/mixitup.min.js"></script>
+        <script src="/client/js/owl.carousel.min.js"></script>
+        <script src="/client/js/main.js"></script>
+      </body>
+
+      </html>

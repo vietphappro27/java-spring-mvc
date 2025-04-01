@@ -34,7 +34,7 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage User</h1>
+                <h1 class="mt-4">Quản lý người dùng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
                     <a href="/admin">Dashboard</a> / User
@@ -45,9 +45,9 @@
                 <div class="row">
                   <div class="col-12 mx-auto">
                     <div class="d-flex justify-content-between">
-                      <h3>Manage User</h3>
+                      <h3>Danh sách người dùng</h3>
                       <a href="/admin/user/create" class="btn btn-primary">
-                        Create User
+                        Thêm người dùng
                       </a>
                     </div>
                     <hr />
@@ -56,16 +56,18 @@
                         <tr>
                           <th>ID</th>
                           <th>Email</th>
-                          <th>Full Name</th>
-                          <th>Action</th>
+                          <th>Họ tên</th>
+                          <th>Vai trò</th>
+                          <th>Hành động</th>
                         </tr>
                       </thead>
                       <tbody>
                         <!-- render user -->
                         <c:forEach items="${users}" var="user">
                           <th>${user.id}</th>
-                          <th>${user.email}</th>
+                          <td>${user.email}</td>
                           <td>${user.fullname}</td>
+                          <td>${user.role.name}</td>
                           <td>
                             <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
                             <a href="/admin/user/update/${user.id}" class="btn btn-warning">Update</a>
