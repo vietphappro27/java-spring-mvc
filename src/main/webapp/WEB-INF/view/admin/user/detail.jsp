@@ -51,11 +51,16 @@
                     <hr />
                     <div class="card" style="width: 30rem">
                       <div class="card-header">Profile User</div>
+                      <div class="d-flex justify-content-center p-3">
+                        <img src="${pageContext.request.contextPath}/images/avatar/${avatar}" class="rounded-circle"
+                          style="width: 150px; height: 150px; object-fit: cover;" alt="img" />
+                      </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
                         <li class="list-group-item">name: ${fullname}</li>
                         <li class="list-group-item">email: ${email}</li>
                         <li class="list-group-item">address: ${address}</li>
+                        <li class="list-group-item">phone: ${phone}</li>
                       </ul>
                     </div>
                     <a href="/admin/user" class="btn btn-secondary"> Back </a>

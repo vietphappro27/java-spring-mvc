@@ -51,10 +51,12 @@ public class UserController {
     @RequestMapping("/admin/user/{id}")
     public String getDetailUserPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
+        model.addAttribute("avatar", user.getAvatar());
         model.addAttribute("id", user.getId());
         model.addAttribute("fullname", user.getFullname());
         model.addAttribute("email", user.getEmail());
         model.addAttribute("address", user.getAddress());
+        model.addAttribute("phone", user.getPhone());
         return "/admin/user/detail";
     }
 
@@ -65,31 +67,35 @@ public class UserController {
     }
 
     @PostMapping(value = "admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User vietphap,
+    public String createUserPage(Model model,
+            @ModelAttribute("newUser") User vietphap,
             @RequestParam("vietphapFile") MultipartFile file) {
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(vietphap.getPassword());
         vietphap.setAvatar(avatar);
         vietphap.setPassword(hashPassword);
-        String tmp = vietphap.getRole().getName();
-        vietphap.setRole(this.userService.getRoleByName(vietphap.getRole().getName()));
+        String role = vietphap.getRole().getName();
+        vietphap.setRole(this.userService.getRoleByName(role));
         this.userService.handleSaveUser(vietphap);
         return "redirect:/admin/user";
     }
 
-    @RequestMapping("/admin/user/update/{id}")
+    @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
-        // User currentUser = this.userRepository.findById(id);
         User currentUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currentUser);
+        model.addAttribute("avatar", currentUser.getAvatar());
         return "admin/user/update";
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User vietphap) {
-        // User currentUser = this.userRepository.findById(vietphap.getId());
+    public String postUpdateUser(Model model,
+            @ModelAttribute("newUser") User vietphap,
+            @RequestParam("vietphapFile") MultipartFile file) {
         User currentUser = this.userService.getUserById(vietphap.getId());
         if (currentUser != null) {
+            String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+            currentUser.setAvatar(avatar);
             currentUser.setAddress(vietphap.getAddress());
             currentUser.setFullname(vietphap.getFullname());
             currentUser.setPhone(vietphap.getPhone());
