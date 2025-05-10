@@ -20,6 +20,10 @@ public class UploadService {
     }
 
     public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
+        if (file.isEmpty()) {
+            // image default
+            return "default.jpg";
+        }
         String rootPath = this.servletContext.getRealPath("/resources/images");
         String img_name = "";
         try {

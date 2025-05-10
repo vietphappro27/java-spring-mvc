@@ -1,7 +1,9 @@
 package com.example.java_spring_mvc.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,14 +21,19 @@ public class Order {
     private long id;
 
     private double totalPrice;
+    private LocalDate orderDate;
+    private String status;
+    private String shipAddress;
+    private String shipName;
+    private String shipPhone;
+    private String note;
 
-    // long user_id
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order")
-    List<OrderDetail> orderDetails;
+    List<OrderItem> orderItems;
 
     public long getId() {
         return id;
@@ -44,9 +51,71 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getShipAddress() {
+        return shipAddress;
+    }
+
+    public void setShipAddress(String shipAddress) {
+        this.shipAddress = shipAddress;
+    }
+
+    public String getShipName() {
+        return shipName;
+    }
+
+    public void setShipName(String shipName) {
+        this.shipName = shipName;
+    }
+
+    public String getShipPhone() {
+        return shipPhone;
+    }
+
+    public void setShipPhone(String shipPhone) {
+        this.shipPhone = shipPhone;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
     @Override
     public String toString() {
-        return "Order [id=" + id + ", totalPrice=" + totalPrice + "]";
+        return "Order [id=" + id + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", status=" + status
+                + ", shipAddress=" + shipAddress + ", shipName=" + shipName + ", shipPhone=" + shipPhone + ", note="
+                + note + ", user=" + user + ", orderItems=" + orderItems + "]";
     }
 
 }

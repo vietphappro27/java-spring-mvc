@@ -36,9 +36,85 @@
                         });
                     });
                 </script>
+                <script>
+                    $(document).ready(() => {
+                        let itemIndex = 0;
+
+                        // Thêm ProductItem mới
+                        $("#addProductItem").click(function () {
+                            const newItemHtml = `
+                                <div class="product-item row mb-3" id="productItem_${itemIndex}">
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Size:</label>
+                                        <select class="form-select" name="productItems[${itemIndex}].size.id" required>
+                                            <c:forEach items="${sizes}" var="size">
+                                                <option value="${size.id}">${size.sizeValue}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Quantity:</label>
+                                        <input type="number" class="form-control" name="productItems[${itemIndex}].quantity" min="0" required />
+                                    </div>
+                                    <div class="col-12 col-md-3 d-flex align-items-end">
+                                        <button type="button" class="btn btn-danger remove-product-item" data-index="${itemIndex}">Remove</button>
+                                    </div>
+                                </div>`;
+                            $("#productItemsContainer").append(newItemHtml);
+                            itemIndex++;
+                            
+                            // Hide error message if at least one item is added
+                            $("#itemError").hide();
+                            
+                            // Renumber indices after removal
+                            renumberIndices();
+                        });
+
+                        // Xóa ProductItem
+                        $(document).on("click", ".remove-product-item", function () {
+                            $(this).closest(".product-item").remove();
+                            
+                            // Renumber indices after removal
+                            renumberIndices();
+                            
+                            // Show error if no items left
+                            if ($(".product-item").length === 0) {
+                                $("#itemError").show();
+                            }
+                        });
+                        
+                        // Renumber all indices to ensure continuous sequence
+                        function renumberIndices() {
+                            $(".product-item").each(function(idx) {
+                                const item = $(this);
+                                item.attr("id", "productItem_" + idx);
+                                
+                                // Update size select name
+                                item.find("select").attr("name", "productItems[" + idx + "].size.id");
+                                
+                                // Update quantity input name
+                                item.find("input[type='number']").attr("name", "productItems[" + idx + "].quantity");
+                                
+                                // Update remove button data-index
+                                item.find(".remove-product-item").attr("data-index", idx);
+                            });
+                        }
+                        
+                        // Form validation before submit
+                        $("form").submit(function(event) {
+                            if ($(".product-item").length === 0) {
+                                $("#itemError").show();
+                                event.preventDefault();
+                                return false;
+                            }
+                            return true;
+                        });
+                        
+                        // Show error message initially
+                        $("#itemError").show();
+                    });
+                </script>
             </head>
-
-
 
             <body>
                 <!-- header -->
@@ -55,13 +131,11 @@
                                         <a href="/admin">Dashboard</a> / Product
                                     </li>
                                 </ol>
-
                             </div>
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-12 mx-auto">
-                                        <!-- <div class="col-12 mx-auto"> -->
-                                        <h3>Create a Product</h3>
+                                        <h3>Create a product</h3>
                                         <hr />
                                         <form:form method="post" action="/admin/product/create"
                                             modelAttribute="newProduct" class="row" enctype="multipart/form-data">
@@ -70,32 +144,33 @@
                                                 <form:input type="text" class="form-control" path="name" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Password:</label>
-                                                <form:input type="password" class="form-control" path="password" />
+                                                <label class="form-label">Price:</label>
+                                                <form:input type="number" class="form-control" path="price" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Phone:</label>
-                                                <form:input type="number" class="form-control" path="phone" />
-                                            </div>
-                                            <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">FullName:</label>
-                                                <form:input type="text" class="form-control" path="fullname" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Address:</label>
-                                                <form:input type="text" class="form-control" path="address" />
-                                            </div>
-
-                                            <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label"> Role: </label>
-                                                <form:select class="form-select" path="role.name">
-                                                    <form:option value="USER">USER</form:option>
-                                                    <form:option value="ADMIN">ADMIN</form:option>
+                                                <label class="form-label"> Brand: </label>
+                                                <form:select class="form-select" path="brand">
+                                                    <form:option value="Nike">Nike</form:option>
+                                                    <form:option value="Adidas">Adidas</form:option>
+                                                    <form:option value="Vans">Vans</form:option>
+                                                    <form:option value="Converse">Converse</form:option>
                                                 </form:select>
                                             </div>
-
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label for="avatarFile" class="form-label">Avatar:</label>
+                                                <label class="form-label"> Category: </label>
+                                                <form:select class="form-select" path="category">
+                                                    <form:option value="Nam">Nam</form:option>
+                                                    <form:option value="Nữ">Nữ</form:option>
+                                                </form:select>
+                                            </div>
+                                            <div class="mb-3 col-12 col-md-6">
+                                                <label class="form-label">Description:</label>
+                                                <form:textarea class="form-control" path="description" rows="3"
+                                                    required="true" />
+                                            </div>
+                                            <!-- image -->
+                                            <div class="mb-3 col-12 col-md-6">
+                                                <label for="avatarFile" class="form-label">Image:</label>
                                                 <input class="form-control" type="file" id="avatarFile"
                                                     accept=".png, .jpg, .jpeg" name="vietphapFile" />
                                             </div>
@@ -103,12 +178,21 @@
                                                 <img style="max-height: 250px; display: none;" alt="avatar preview"
                                                     id="avatarPreview" />
                                             </div>
+                                            <!-- Product Items -->
+                                            <div class="mb-3">
+                                                <h5>Product Items</h5>
+                                                <button type="button" id="addProductItem"
+                                                    class="btn btn-success mb-2">Add Product Item</button>
+                                                <div id="productItemsContainer"></div>
+                                                <div id="itemError" class="text-danger" style="display:none;">Please add at least one product item</div>
+                                            </div>
+                                            <!-- button -->
                                             <div class="row mb-5">
                                                 <div class="col-auto">
                                                     <button type="submit" class="btn btn-primary">Create</button>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a href="/admin/user" class="btn btn-secondary">Back</a>
+                                                    <a href="/admin/product" class="btn btn-secondary">Back</a>
                                                 </div>
                                             </div>
                                         </form:form>

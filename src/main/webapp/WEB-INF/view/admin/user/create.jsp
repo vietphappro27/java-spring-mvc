@@ -62,22 +62,48 @@
                     <hr />
                     <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="row"
                       enctype="multipart/form-data">
+
                       <div class="mb-3 col-12 col-md-6">
+                        <c:set var="emailHasBindError">
+                          <form:errors path="email" class="invalid-feedback"/>
+                        </c:set>
                         <label class="form-label">Email:</label>
-                        <form:input type="email" class="form-control" path="email" />
+                        <form:input type="email"
+                        class= "form-control ${not empty emailHasBindError ? 'is-invalid' : ''}"
+                        path="email" /> ${emailHasBindError}
                       </div>
+
+
                       <div class="mb-3 col-12 col-md-6">
+                        <c:set var="passwordHasBindError">
+                          <form:errors path="password" class="invalid-feedback"/>
+                        </c:set>
                         <label class="form-label">Password:</label>
-                        <form:input type="password" class="form-control" path="password" />
+                        <form:input type="password"
+                        class="form-control ${not empty passwordHasBindError ? 'is-invalid' : ''}"
+                        path="password" /> ${passwordHasBindError}
                       </div>
+
                       <div class="mb-3 col-12 col-md-6">
+                        <c:set var="phoneHasBindError">
+                          <form:errors path="phone" class="invalid-feedback"/>
+                        </c:set>
                         <label class="form-label">Phone:</label>
-                        <form:input type="number" class="form-control" path="phone" />
+                        <form:input type="number"
+                        class="form-control ${not empty phoneHasBindError ? 'is-invalid' : ''}"
+                        path="phone" /> ${phoneHasBindError}
                       </div>
+
                       <div class="mb-3 col-12 col-md-6">
+                        <c:set var="fullnameHasBindError">
+                          <form:errors path="fullname" class="invalid-feedback"/>
+                        </c:set>
                         <label class="form-label">FullName:</label>
-                        <form:input type="text" class="form-control" path="fullname" />
+                        <form:input type="text"
+                        class="form-control ${not empty fullnameHasBindError ? 'is-invalid' : ''}"
+                        path="fullname" /> ${fullnameHasBindError}
                       </div>
+                      
                       <div class="mb-3">
                         <label class="form-label">Address:</label>
                         <form:input type="text" class="form-control" path="address" />
@@ -90,7 +116,7 @@
                           <form:option value="ADMIN">ADMIN</form:option>
                         </form:select>
                       </div>
-
+                      <!-- upload and preview file -->
                       <div class="mb-3 col-12 col-md-6">
                         <label for="avatarFile" class="form-label">Avatar:</label>
                         <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg"
@@ -99,6 +125,7 @@
                       <div class="col-12 mb-3">
                         <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
                       </div>
+                      <!-- button -->
                       <div class="row mb-5">
                         <div class="col-auto">
                           <button type="submit" class="btn btn-primary">Create</button>

@@ -19,10 +19,6 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public String handleHello() {
-        return "hello from service";
-    }
-
     public void handleSaveUser(User newUser) {
         this.userRepository.save(newUser);
     }

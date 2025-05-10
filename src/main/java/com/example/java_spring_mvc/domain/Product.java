@@ -1,9 +1,15 @@
 package com.example.java_spring_mvc.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,14 +19,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @OneToMany(mappedBy = "product")
+    List<ProductItem> productItems = new ArrayList<>();
+
     private String name;
+    private String description;
     private double price;
     private String image;
-    private String detailDesc;
-    private String shortDesc;
-    private String quantity;
-    private String sold;
     private String brand;
+    private String category;
 
     public long getId() {
         return id;
@@ -30,12 +37,28 @@ public class Product {
         this.id = id;
     }
 
+    public List<ProductItem> getProductItems() {
+        return productItems;
+    }
+
+    public void setProductItems(List<ProductItem> productItems) {
+        this.productItems = productItems;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getPrice() {
@@ -54,38 +77,6 @@ public class Product {
         this.image = image;
     }
 
-    public String getDetailDesc() {
-        return detailDesc;
-    }
-
-    public void setDetailDesc(String detailDesc) {
-        this.detailDesc = detailDesc;
-    }
-
-    public String getShortDesc() {
-        return shortDesc;
-    }
-
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getSold() {
-        return sold;
-    }
-
-    public void setSold(String sold) {
-        this.sold = sold;
-    }
-
     public String getBrand() {
         return brand;
     }
@@ -94,11 +85,19 @@ public class Product {
         this.brand = brand;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", price=" + price + ", image=" + image + ", detailDesc="
-                + detailDesc + ", shortDesc=" + shortDesc + ", quantity=" + quantity + ", sold=" + sold + ", brand="
-                + brand + "]";
+        return "Product [id=" + id + ", productItems=" + productItems + ", name=" + name + ", description="
+                + description + ", price=" + price + ", image=" + image + ", brand=" + brand + ", category=" + category
+                + "]";
     }
 
 }

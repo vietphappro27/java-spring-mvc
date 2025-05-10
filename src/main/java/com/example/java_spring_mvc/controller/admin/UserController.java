@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.service.UploadService;
 import com.example.java_spring_mvc.service.UserService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,15 +35,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> listUser = this.userService.getAllUserByAddress("Ha Dong");
-        // System.out.println(listUser);
-        // syntax: model.addAttribute("message", var);
-        model.addAttribute("message", "test");
-        return "hello"; // hello.jsp
-    }
-
+    // show
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUser();
@@ -48,6 +44,7 @@ public class UserController {
         return "/admin/user/show";
     }
 
+    // detail
     @RequestMapping("/admin/user/{id}")
     public String getDetailUserPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
@@ -60,6 +57,7 @@ public class UserController {
         return "/admin/user/detail";
     }
 
+    // create
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
@@ -68,8 +66,19 @@ public class UserController {
 
     @PostMapping(value = "admin/user/create")
     public String createUserPage(Model model,
-            @ModelAttribute("newUser") User vietphap,
+            @ModelAttribute("newUser") @Valid User vietphap,
+            BindingResult newUserBindingResult,
             @RequestParam("vietphapFile") MultipartFile file) {
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + ": " + error.getDefaultMessage());
+        }
+        // validate
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/create";
+        }
+
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(vietphap.getPassword());
         vietphap.setAvatar(avatar);
@@ -80,6 +89,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
+    // update
     @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getUserById(id);
@@ -106,6 +116,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
+    // delete
     @GetMapping("/admin/user/delete/{id}")
     public String getDeleteUserPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
@@ -125,5 +136,4 @@ public class UserController {
         }
         return "redirect:/admin/user";
     }
-
 }
