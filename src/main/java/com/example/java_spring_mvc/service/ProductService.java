@@ -1,5 +1,6 @@
 package com.example.java_spring_mvc.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -45,6 +46,12 @@ public class ProductService {
         }
     }
 
+    public void deleteProductItem(long itemId) {
+        if (this.productItemRepository.existsById(itemId)) {
+            this.productItemRepository.deleteById(itemId);
+        }
+    }
+
     public List<Size> getAllSize() {
         return this.sizeRepository.findAll();
     }
@@ -69,12 +76,6 @@ public class ProductService {
         }
     }
 
-    public void deleteProductItem(long itemId) {
-        if (this.productItemRepository.existsById(itemId)) {
-            this.productItemRepository.deleteById(itemId);
-        }
-    }
-
     public void addProductItem(long productId, long sizeId, long quantity) {
         Product product = this.productRepository.findById(productId);
         Size size = this.sizeRepository.findById(sizeId);
@@ -86,6 +87,20 @@ public class ProductService {
             newItem.setSold(0L);
             this.productItemRepository.save(newItem);
         }
+    }
+
+    public List<ProductItem> getProductItemsByProductId(long productId) {
+        return this.productItemRepository.findByProduct(this.productRepository.findById(productId));
+    }
+
+    public List<Size> getSizesByProductId(long productId) {
+        List<ProductItem> productItems = this.productItemRepository
+                .findByProduct(this.productRepository.findById(productId));
+        List<Size> sizes = new ArrayList<>();
+        for (ProductItem item : productItems) {
+            sizes.add(item.getSize());
+        }
+        return sizes;
     }
 
     public void handleDeleteProduct(Product product) {

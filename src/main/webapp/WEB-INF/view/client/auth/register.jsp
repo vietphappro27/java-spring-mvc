@@ -26,47 +26,47 @@
                                         <h2>Đăng Ký</h2>
                                     </div>
                                     <!-- register -->
-                                    <form action="#!">
+                                    <form:form method="post" action="/register" modelAttribute="registerDTO">
                                         <div class="row gy-2 overflow-hidden">
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="fullname"
-                                                        id="fullname" placeholder="Full Name" required>
+                                                    <form:input type="text" class="form-control" name="fullname"
+                                                        id="fullname" placeholder="Full Name" path="fullname" required="required" />
                                                     <label for="fullname" class="form-label">Họ tên</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="email" class="form-control" name="email" id="email"
-                                                        placeholder="name@example.com" required>
+                                                    <form:input type="email" class="form-control" name="email" id="email"
+                                                        placeholder="name@example.com" path="email" required="required" />
                                                     <label for="email" class="form-label">Email</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="tel" class="form-control" name="phone" id="phone"
-                                                        placeholder="Phone Number" required>
+                                                    <form:input type="tel" class="form-control" name="phone" id="phone"
+                                                        placeholder="Phone Number" path="phone" required="required" />
                                                     <label for="phone" class="form-label">Số điện thoại</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                        placeholder="Address" required>
+                                                    <form:input type="text" class="form-control" name="address" id="address"
+                                                        placeholder="Address" path="address" required="required" />
                                                     <label for="address" class="form-label">Địa chỉ</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" class="form-control" name="password"
-                                                        id="password" placeholder="Password" required>
+                                                    <form:input type="password" class="form-control" name="password"
+                                                        id="password" placeholder="Password" path="password" required="required" />
                                                     <label for="password" class="form-label">Mật khẩu</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" class="form-control" name="repeatpassword"
-                                                        id="repeatpassword" placeholder="Repeat Password" required>
+                                                    <form:input type="password" class="form-control" name="repeatpassword"
+                                                        id="repeatpassword" placeholder="Repeat Password" path="confirmPassword" required="required" />
                                                     <label for="repeatpassword" class="form-label">Nhập lại mật
                                                         khẩu</label>
                                                 </div>
@@ -85,7 +85,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form:form>
                                 </div>
                             </div>
                         </div>

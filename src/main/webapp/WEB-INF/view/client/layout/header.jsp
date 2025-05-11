@@ -67,7 +67,7 @@
                         <div class="col-lg-6 col-md-6">
                             <nav class="header__menu mobile-menu">
                                 <ul>
-                                    <li class="active"><a href="/">Trang Chủ</a></li>
+                                    <li><a href="/">Trang Chủ</a></li>
                                     <li><a href="/product">Sản Phẩm</a></li>
                                     <li><a href="/product">Nam</a>
                                         <ul class="dropdown">
@@ -85,7 +85,7 @@
                                             <li><a href="/product">Converse</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/product">Giảm Giá</a></li>
+                                    <li><a href="/product">Phụ Kiện</a></li>
                                 </ul>
                             </nav>
                         </div>

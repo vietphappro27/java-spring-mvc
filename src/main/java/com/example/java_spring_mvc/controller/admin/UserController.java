@@ -126,9 +126,7 @@ public class UserController {
 
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User vietphap) {
-        // User user = this.userRepository.findById(vietphap.getId());
         User user = this.userService.getUserById(vietphap.getId());
-        System.out.println("ID nhận được từ form: " + vietphap.getId());
         if (user != null) {
             this.userService.handleDeleteUser(user);
         } else {

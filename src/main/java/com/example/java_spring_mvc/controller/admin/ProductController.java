@@ -162,4 +162,22 @@ public class ProductController {
         this.productService.handleDeleteProduct(currentProduct);
         return "redirect:/admin/product";
     }
+    // @GetMapping("/admin/user/delete/{id}")
+    // public String getDeleteUserPage(Model model, @PathVariable long id) {
+    // model.addAttribute("id", id);
+    // model.addAttribute("newUser", new User());
+    // return "admin/user/delete";
+    // }
+
+    // @PostMapping("/admin/user/delete")
+    // public String postDeleteUser(Model model, @ModelAttribute("newUser") User
+    // vietphap) {
+    // User user = this.userService.getUserById(vietphap.getId());
+    // if (user != null) {
+    // this.userService.handleDeleteUser(user);
+    // } else {
+    // System.out.println("incorrect");
+    // }
+    // return "redirect:/admin/user";
+    // }
 }

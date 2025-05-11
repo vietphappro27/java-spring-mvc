@@ -17,6 +17,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+            <!-- fmt for number formatting -->
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       </head>
 
       <body>
@@ -64,51 +66,14 @@
                         <td>${product.name}</td>
                         <td>${product.brand}</td>
                         <td>${product.category}</td>
-                        <td>${product.price} VNĐ</td>
+                        <td><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ</td>
                         <td>
                           <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
                           <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
                           <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
                         </td>
                         </tr>
-                        </c:forEach> 
-                        <!-- template -->
-                        <%-- <tr>
-                          <th>1</th>
-                          <td>Vans Old Skool</td>
-                          <td>Vans</td>
-                          <td>All</td>
-                          <td>1.200.000 VND</td>
-                          <td>
-                            <a href="/admin/user/1" class="btn btn-success">View</a>
-                            <a href="/admin/user/update/1" class="btn btn-warning">Update</a>
-                            <a href="/admin/user/delete/1" class="btn btn-danger">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>2</th>
-                          <td>Vintas Vivu - Low Top - Plantation</td>
-                          <td>Ananas</td>
-                          <td>Men</td>
-                          <td>700.000 VND</td>
-                          <td>
-                            <a href="/admin/user/1" class="btn btn-success">View</a>
-                            <a href="/admin/user/update/1" class="btn btn-warning">Update</a>
-                            <a href="/admin/user/delete/1" class="btn btn-danger">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>3</th>
-                          <td>Ultraboost 5</td>
-                          <td>Adidas</td>
-                          <td>Woman</td>
-                          <td>1.700.000 VND</td>
-                          <td>
-                            <a href="/admin/user/1" class="btn btn-success">View</a>
-                            <a href="/admin/user/update/1" class="btn btn-warning">Update</a>
-                            <a href="/admin/user/delete/1" class="btn btn-danger">Delete</a>
-                          </td>
-                        </tr> --%>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>

@@ -3,6 +3,8 @@
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!-- form: -->
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <!-- fmt for number formatting -->
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       <!-- <!DOCTYPE html> -->
       <html lang="en">
 
@@ -42,6 +44,7 @@
             });
           });
         </script>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       </head>
 
       <body>
@@ -81,7 +84,7 @@
                             <ul class="list-group list-group-flush">
                               <li class="list-group-item">ID: ${product.id}</li>
                               <li class="list-group-item">Name: ${product.name}</li>
-                              <li class="list-group-item">Price: ${product.price} VNĐ</li>
+                              <li class="list-group-item">Price: <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ</li>
                               <li class="list-group-item">Brand: ${product.brand}</li>
                               <li class="list-group-item">Category: ${product.category}</li>
                               <li class="list-group-item">Description: ${product.description}</li>

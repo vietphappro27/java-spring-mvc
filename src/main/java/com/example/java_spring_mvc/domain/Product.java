@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +34,7 @@ public class Product {
 
     @NonNull
     @NotEmpty(message = "Mô tả không được để trống")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
     @NonNull
