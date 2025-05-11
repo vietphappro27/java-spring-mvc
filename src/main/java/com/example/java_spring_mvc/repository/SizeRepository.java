@@ -8,5 +8,7 @@ import com.example.java_spring_mvc.domain.Size;
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
     Size findBySizeValue(String size_value);
+
+    Size findById(long id);
     // findALl() : in-built
 }

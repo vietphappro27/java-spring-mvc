@@ -9,4 +9,5 @@ import com.example.java_spring_mvc.domain.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product save(Product vietphap);
 
+    Product findById(long id);
 }

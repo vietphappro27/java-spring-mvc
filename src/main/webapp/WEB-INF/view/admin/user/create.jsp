@@ -103,7 +103,7 @@
                         class="form-control ${not empty fullnameHasBindError ? 'is-invalid' : ''}"
                         path="fullname" /> ${fullnameHasBindError}
                       </div>
-                      
+
                       <div class="mb-3">
                         <label class="form-label">Address:</label>
                         <form:input type="text" class="form-control" path="address" />

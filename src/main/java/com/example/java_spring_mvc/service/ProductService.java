@@ -26,9 +26,17 @@ public class ProductService {
 
     public void handleSaveProduct(Product product) {
         List<ProductItem> productItems = product.getProductItems();
+        // For updates
+        if (product.getId() > 0) {
+            // This is an update operation
+            Product savedProduct = this.productRepository.save(product);
+            return;
+        }
+        // For create
         if (productItems == null || productItems.isEmpty()) {
             throw new IllegalArgumentException("Product must have at least one ProductItem.");
         }
+        // Save new product with its items
         Product savedProduct = this.productRepository.save(product);
         for (ProductItem item : productItems) {
             item.setProduct(savedProduct);
@@ -39,5 +47,52 @@ public class ProductService {
 
     public List<Size> getAllSize() {
         return this.sizeRepository.findAll();
+    }
+
+    public List<Product> getAllProduct() {
+        return this.productRepository.findAll();
+    }
+
+    public Product getProductById(long id) {
+        return this.productRepository.findById(id);
+    }
+
+    public void updateProductItem(long itemId, long sizeId, long quantity) {
+        ProductItem item = this.productItemRepository.findById(itemId);
+        if (item != null) {
+            Size size = this.sizeRepository.findById(sizeId);
+            if (size != null) {
+                item.setSize(size);
+                item.setQuantity(quantity);
+                this.productItemRepository.save(item);
+            }
+        }
+    }
+
+    public void deleteProductItem(long itemId) {
+        if (this.productItemRepository.existsById(itemId)) {
+            this.productItemRepository.deleteById(itemId);
+        }
+    }
+
+    public void addProductItem(long productId, long sizeId, long quantity) {
+        Product product = this.productRepository.findById(productId);
+        Size size = this.sizeRepository.findById(sizeId);
+        if (product != null && size != null) {
+            ProductItem newItem = new ProductItem();
+            newItem.setProduct(product);
+            newItem.setSize(size);
+            newItem.setQuantity(quantity);
+            newItem.setSold(0L);
+            this.productItemRepository.save(newItem);
+        }
+    }
+
+    public void handleDeleteProduct(Product product) {
+        List<ProductItem> productItems = this.productItemRepository.findByProduct(product);
+        for (ProductItem item : productItems) {
+            this.productItemRepository.deleteById(item.getId());
+        }
+        this.productRepository.delete(product);
     }
 }

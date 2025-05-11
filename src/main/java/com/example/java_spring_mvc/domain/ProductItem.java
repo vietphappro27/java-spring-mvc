@@ -1,5 +1,6 @@
 package com.example.java_spring_mvc.domain;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "product_items")
@@ -23,7 +25,10 @@ public class ProductItem {
     @JoinColumn(name = "size_id")
     private Size size;
 
+    @NonNull
+    @DecimalMin(value = "0", inclusive = false, message = "Số lượng phải lớn hơn 0")
     private long quantity;
+
     private long sold;
 
     public long getId() {
