@@ -41,7 +41,7 @@ public class UserController {
         List<User> users = this.userService.getAllUser();
         // System.out.println(users); // show int terminal
         model.addAttribute("users", users);
-        return "/admin/user/show";
+        return "admin/user/show";
     }
 
     // detail
@@ -54,14 +54,14 @@ public class UserController {
         model.addAttribute("email", user.getEmail());
         model.addAttribute("address", user.getAddress());
         model.addAttribute("phone", user.getPhone());
-        return "/admin/user/detail";
+        return "admin/user/detail";
     }
 
     // create
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "/admin/user/create";
+        return "admin/user/create";
     }
 
     @PostMapping(value = "admin/user/create")
@@ -76,7 +76,7 @@ public class UserController {
         }
         // validate
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         }
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");

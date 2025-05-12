@@ -61,7 +61,7 @@ public class ProductController {
         }
         if (newProductBindingResult.hasErrors()) {
             model.addAttribute("sizes", productService.getAllSize());
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         try {
             String image = this.uploadService.handleSaveUploadFile(file, "product");
@@ -70,7 +70,7 @@ public class ProductController {
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("sizes", productService.getAllSize());
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         return "redirect:/admin/product";
     }

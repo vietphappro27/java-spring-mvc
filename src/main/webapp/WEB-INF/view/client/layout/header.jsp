@@ -7,56 +7,6 @@
             <div id="preloder">
                 <div class="loader"></div>
             </div>
-
-            <!-- Offcanvas Menu Begin -->
-            <!-- <div class="offcanvas-menu-overlay"></div>
-            <div class="offcanvas-menu-wrapper">
-                <div class="offcanvas__option">
-                    <div class="offcanvas__links">
-                        <a href="#">Sign in</a>
-                        <a href="#">FAQs</a>
-                    </div>
-                    <div class="offcanvas__top__hover">
-                        <span>Usd <i class="arrow_carrot-down"></i></span>
-                        <ul>
-                            <li>USD</li>
-                            <li>EUR</li>
-                            <li>USD</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="offcanvas__nav__option">
-                    <a href="#" class="search-switch"><img src="/client/img/icon/search.png" alt=""></a>
-                    <a href="#"><img src="/client/img/icon/heart.png" alt=""></a>
-                    <a href="#"><img src="/client/img/icon/cart.png" alt=""> <span>0</span></a>
-                    <div class="price">$0.00</div>
-                </div>
-                <div id="mobile-menu-wrap"></div>
-                <div class="offcanvas__text">
-                    <p>Free shipping, 30-day return or refund guarantee.</p>
-                </div>
-            </div> -->
-            <!-- Offcanvas Menu End -->
-            <header class="header">
-                <div class="header__top">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-7">
-                                <div class="header__top__left">
-                                    <p>Miễn phí vận chuyển, bảo đảm hoàn trả hoặc hoàn tiền trong 30 ngày</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-5">
-                                <div class="header__top__right">
-                                    <div class="header__top__links">
-                                        <a href="/login">Đăng nhập</a>
-                                        <a href="#">FAQs</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-3 col-md-3">
@@ -91,13 +41,35 @@
                         </div>
                         <div class="col-lg-3 col-md-3">
                             <div class="header__nav__option">
-                                <a href="#" class="search-switch"><img src="/client/img/icon/search.png" alt=""></a>
-                                <a href="#"><img src="/client/img/icon/heart.png" alt=""></a>
-                                <a href="/cart"><img src="/client/img/icon/cart.png" alt=""> <span>0</span></a>
-                                <!-- <div class="price">$0.00</div> -->
+                                <c:if test="${not empty pageContext.request.userPrincipal}">
+                                    <%-- icon cart --%>
+                                    <a href="/cart" class="cart-icon-container"><img src="/client/img/icon/cart.png" alt=""><span>0</span></a>
+                                    <%-- icon user --%>
+                                    <div class="user-dropdown">
+                                        <a href="#" class="user-icon-link"><img src="/client/img/icon/user.png" alt=""></a>
+                                        <div class="user-dropdown-content">
+                                            <div class="user-info">
+                                                <img src="/images/avatar/${sessionScope.avatar}" alt="User Avatar" class="user-avatar">
+                                                <div class="user-name">
+                                                    <c:out value="${sessionScope.fullName}" />
+                                                </div>
+                                            </div>
+                                            <a href="/account" class="dropdown-item">Quản lý tài khoản</a>
+                                            <a href="/orders" class="dropdown-item">Lịch sử mua hàng</a>
+                                            <div class="dropdown-divider"></div>
+                                            <form:form action="/logout" method="POST">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
+                                                <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                            </form:form>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${empty pageContext.request.userPrincipal}">
+                                        <a href="/login">Đăng nhập</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>
-                    <div class="canvas__open"><i class="fa fa-bars"></i></div>
                 </div>
             </header>

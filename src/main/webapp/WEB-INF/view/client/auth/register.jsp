@@ -27,19 +27,30 @@
                                     </div>
                                     <!-- register -->
                                     <form:form method="post" action="/register" modelAttribute="registerDTO">
+                                        <c:set var="errorPassword">
+                                            <form:errors path="confirmPassword" class="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorEmail">
+                                            <form:errors path="email" class="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorFullname">
+                                            <form:errors path="fullname" class="invalid-feedback" />
+                                        </c:set>
                                         <div class="row gy-2 overflow-hidden">
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <form:input type="text" class="form-control" name="fullname"
-                                                        id="fullname" placeholder="Full Name" path="fullname" required="required" />
+                                                    <form:input type="text" class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" 
+                                                        name="fullname" id="fullname" placeholder="Full Name" path="fullname" required="required" />
                                                     <label for="fullname" class="form-label">Họ tên</label>
+                                                    ${errorFullname}
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <form:input type="email" class="form-control" name="email" id="email"
-                                                        placeholder="name@example.com" path="email" required="required" />
+                                                    <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                                        name="email" id="email" placeholder="name@example.com" path="email" required="required" />
                                                     <label for="email" class="form-label">Email</label>
+                                                    ${errorEmail}
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -65,10 +76,11 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <form:input type="password" class="form-control" name="repeatpassword"
+                                                    <form:input type="password" class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" name="repeatpassword"
                                                         id="repeatpassword" placeholder="Repeat Password" path="confirmPassword" required="required" />
                                                     <label for="repeatpassword" class="form-label">Nhập lại mật
                                                         khẩu</label>
+                                                    ${errorPassword}
                                                 </div>
                                             </div>
 
