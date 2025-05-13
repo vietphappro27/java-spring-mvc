@@ -65,43 +65,42 @@
 
                       <div class="mb-3 col-12 col-md-6">
                         <c:set var="emailHasBindError">
-                          <form:errors path="email" class="invalid-feedback"/>
+                          <form:errors path="email" class="invalid-feedback" />
                         </c:set>
                         <label class="form-label">Email:</label>
-                        <form:input type="email"
-                        class= "form-control ${not empty emailHasBindError ? 'is-invalid' : ''}"
-                        path="email" /> ${emailHasBindError}
+                        <form:input type="email" class="form-control ${not empty emailHasBindError ? 'is-invalid' : ''}"
+                          path="email" /> ${emailHasBindError}
                       </div>
 
 
                       <div class="mb-3 col-12 col-md-6">
                         <c:set var="passwordHasBindError">
-                          <form:errors path="password" class="invalid-feedback"/>
+                          <form:errors path="password" class="invalid-feedback" />
                         </c:set>
                         <label class="form-label">Password:</label>
                         <form:input type="password"
-                        class="form-control ${not empty passwordHasBindError ? 'is-invalid' : ''}"
-                        path="password" /> ${passwordHasBindError}
+                          class="form-control ${not empty passwordHasBindError ? 'is-invalid' : ''}" path="password" />
+                        ${passwordHasBindError}
                       </div>
 
                       <div class="mb-3 col-12 col-md-6">
                         <c:set var="phoneHasBindError">
-                          <form:errors path="phone" class="invalid-feedback"/>
+                          <form:errors path="phone" class="invalid-feedback" />
                         </c:set>
                         <label class="form-label">Phone:</label>
                         <form:input type="number"
-                        class="form-control ${not empty phoneHasBindError ? 'is-invalid' : ''}"
-                        path="phone" /> ${phoneHasBindError}
+                          class="form-control ${not empty phoneHasBindError ? 'is-invalid' : ''}" path="phone" />
+                        ${phoneHasBindError}
                       </div>
 
                       <div class="mb-3 col-12 col-md-6">
                         <c:set var="fullnameHasBindError">
-                          <form:errors path="fullname" class="invalid-feedback"/>
+                          <form:errors path="fullname" class="invalid-feedback" />
                         </c:set>
                         <label class="form-label">FullName:</label>
                         <form:input type="text"
-                        class="form-control ${not empty fullnameHasBindError ? 'is-invalid' : ''}"
-                        path="fullname" /> ${fullnameHasBindError}
+                          class="form-control ${not empty fullnameHasBindError ? 'is-invalid' : ''}" path="fullname" />
+                        ${fullnameHasBindError}
                       </div>
 
                       <div class="mb-3">

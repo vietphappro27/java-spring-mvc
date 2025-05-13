@@ -5,24 +5,38 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.java_spring_mvc.domain.Cart;
+import com.example.java_spring_mvc.domain.CartDetail;
 import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.ProductItem;
 import com.example.java_spring_mvc.domain.Size;
+import com.example.java_spring_mvc.domain.User;
+import com.example.java_spring_mvc.repository.CartDetailRepository;
+import com.example.java_spring_mvc.repository.CartRepository;
 import com.example.java_spring_mvc.repository.ProductItemRepository;
 import com.example.java_spring_mvc.repository.ProductRepository;
 import com.example.java_spring_mvc.repository.SizeRepository;
+import com.example.java_spring_mvc.repository.UserRepository;
 
 @Service
 public class ProductService {
+
     private ProductRepository productRepository;
     private SizeRepository sizeRepository;
     private ProductItemRepository productItemRepository;
+    private CartRepository cartRepository;
+    private CartDetailRepository cartDetailRepository;
+    private UserRepository userRepository;
 
     public ProductService(ProductRepository productRepository, SizeRepository sizeRepository,
-            ProductItemRepository productItemRepository) {
+            ProductItemRepository productItemRepository, CartRepository cartRepository,
+            CartDetailRepository cartDetailRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.sizeRepository = sizeRepository;
         this.productItemRepository = productItemRepository;
+        this.cartRepository = cartRepository;
+        this.cartDetailRepository = cartDetailRepository;
+        this.userRepository = userRepository;
     }
 
     public void handleSaveProduct(Product product) {
@@ -109,5 +123,30 @@ public class ProductService {
             this.productItemRepository.deleteById(item.getId());
         }
         this.productRepository.delete(product);
+    }
+
+    public void handleAddProductToCart(String email, long productId) {
+        User user = this.userRepository.findByEmail(email);
+        if (user != null) {
+            Cart cart = this.cartRepository.findByUser(user);
+            if (cart == null) {
+                cart = new Cart();
+                cart.setUser(user);
+                cart.setSum(1);
+            } else {
+                cart.setSum(cart.getSum() + 1);
+            }
+            this.cartRepository.save(cart);
+            Product product = this.productRepository.findById(productId);
+            if (product != null) {
+                CartDetail cartDetail = new CartDetail();
+                cartDetail.setCart(cart);
+                cartDetail.setProduct(product);
+                cartDetail.setQuantity(1);
+                cartDetail.setPrice(product.getPrice());
+                this.cartDetailRepository.save(cartDetail);
+            }
+
+        }
     }
 }

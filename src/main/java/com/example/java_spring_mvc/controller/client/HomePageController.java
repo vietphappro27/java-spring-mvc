@@ -78,6 +78,7 @@ public class HomePageController {
         return "client/auth/confirmOTP";
     }
 
+    // BUG: access denied
     @GetMapping("/access-denied")
     public String getAccessDeniedPage(Model model) {
         return "client/auth/accessDenied";

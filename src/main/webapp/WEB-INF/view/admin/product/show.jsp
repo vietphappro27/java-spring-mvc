@@ -17,7 +17,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-            <!-- fmt for number formatting -->
+        <!-- fmt for number formatting -->
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       </head>
 
@@ -62,17 +62,19 @@
                       <tbody>
                         <!-- render product -->
                         <c:forEach items="${products}" var="product">
-                        <th>${product.id}</th>
-                        <td>${product.name}</td>
-                        <td>${product.brand}</td>
-                        <td>${product.category}</td>
-                        <td><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ</td>
-                        <td>
-                          <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
-                          <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
-                          <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
-                        </td>
-                        </tr>
+                          <th>${product.id}</th>
+                          <td>${product.name}</td>
+                          <td>${product.brand}</td>
+                          <td>${product.category}</td>
+                          <td>
+                            <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" /> VNĐ
+                          </td>
+                          <td>
+                            <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
+                            <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
+                            <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
+                          </td>
+                          </tr>
                         </c:forEach>
                       </tbody>
                     </table>

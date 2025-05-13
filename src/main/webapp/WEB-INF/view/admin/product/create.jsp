@@ -62,10 +62,10 @@
                                 </div>`;
                             $("#productItemsContainer").append(newItemHtml);
                             itemIndex++;
-                            
+
                             // Hide error message if at least one item is added
                             $("#itemError").hide();
-                            
+
                             // Renumber indices after removal
                             renumberIndices();
                         });
@@ -73,35 +73,35 @@
                         // Xóa ProductItem
                         $(document).on("click", ".remove-product-item", function () {
                             $(this).closest(".product-item").remove();
-                            
+
                             // Renumber indices after removal
                             renumberIndices();
-                            
+
                             // Show error if no items left
                             if ($(".product-item").length === 0) {
                                 $("#itemError").show();
                             }
                         });
-                        
+
                         // Renumber all indices to ensure continuous sequence
                         function renumberIndices() {
-                            $(".product-item").each(function(idx) {
+                            $(".product-item").each(function (idx) {
                                 const item = $(this);
                                 item.attr("id", "productItem_" + idx);
-                                
+
                                 // Update size select name
                                 item.find("select").attr("name", "productItems[" + idx + "].size.id");
-                                
+
                                 // Update quantity input name
                                 item.find("input[type='number']").attr("name", "productItems[" + idx + "].quantity");
-                                
+
                                 // Update remove button data-index
                                 item.find(".remove-product-item").attr("data-index", idx);
                             });
                         }
-                        
+
                         // Form validation before submit
-                        $("form").submit(function(event) {
+                        $("form").submit(function (event) {
                             if ($(".product-item").length === 0) {
                                 $("#itemError").show();
                                 event.preventDefault();
@@ -109,7 +109,7 @@
                             }
                             return true;
                         });
-                        
+
                         // Show error message initially
                         $("#itemError").show();
                     });
@@ -184,7 +184,8 @@
                                                 <button type="button" id="addProductItem"
                                                     class="btn btn-success mb-2">Add Product Item</button>
                                                 <div id="productItemsContainer"></div>
-                                                <div id="itemError" class="text-danger" style="display:none;">Please add at least one product item</div>
+                                                <div id="itemError" class="text-danger" style="display:none;">Please add
+                                                    at least one product item</div>
                                             </div>
                                             <!-- button -->
                                             <div class="row mb-5">

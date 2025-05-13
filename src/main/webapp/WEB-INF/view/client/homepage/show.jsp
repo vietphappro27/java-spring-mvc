@@ -111,7 +111,11 @@
                     </div>
                     <div class="product__item__text">
                       <h6>${product.name}</h6>
-                      <a href="#" class="add-cart">+ Add To Cart</a>
+                      <form action="/add-product-to-cart/${product.id}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <%-- <input type="hidden" name="productId" value="${product.id}" /> --%>
+                        <button type="submit" class="add-cart">+ Add To Cart</button>
+                      </form>
                       <h5><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ</h5>
                     </div>
                   </div>

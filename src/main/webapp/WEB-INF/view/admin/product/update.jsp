@@ -100,9 +100,11 @@
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <c:if test="${not empty newProduct.image}">
-                                                    <img src="${pageContext.request.contextPath}/images/product/${newProduct.image}" 
-                                                        style="max-height: 250px; display: block;" alt="Current product image" />
-                                                    <p class="text-muted mt-2">Current image will be kept if no new image is selected</p>
+                                                    <img src="${pageContext.request.contextPath}/images/product/${newProduct.image}"
+                                                        style="max-height: 250px; display: block;"
+                                                        alt="Current product image" />
+                                                    <p class="text-muted mt-2">Current image will be kept if no new
+                                                        image is selected</p>
                                                 </c:if>
                                                 <img style="max-height: 250px; display: none;" alt="New image preview"
                                                     id="avatarPreview" />
