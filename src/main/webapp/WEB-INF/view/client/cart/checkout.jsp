@@ -60,41 +60,38 @@
                         <div class="checkout__form">
                             <form action="#">
                                 <div class="row">
-                                    <div class="col-lg-8 col-md-6">
-                                        <!-- coupon -->
-                                        <!-- <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a
-                                                href="#">Click
-                                                here</a> to enter your code</h6>
-                                        <h6 class="checkout__title">Billing Details</h6> -->
-
-                                        <div class="checkout__input">
-                                            <p>Tên người nhận<span>*</span></p>
-                                            <input type="text" class="checkout__input__add">
-                                        </div>
-                                        <div class="checkout__input">
-                                            <p>Địa chỉ nhận<span>*</span></p>
-                                            <input type="text" class="checkout__input__add">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="checkout__input">
-                                                    <p>Số điện thoại<span>*</span></p>
-                                                    <input type="text">
-                                                </div>
+                                    <form:form action="/place-order" method="post" modelAttribute="cart">
+                                        <input type="hidden" name ="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <div class="col-lg-7 col-md-6">
+                                            <div class="checkout__input">
+                                                <p>Tên người nhận<span>*</span></p>
+                                                <input name="shipName" type="text" class="checkout__input__add">
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="checkout__input">
-                                                    <p>Email<span>*</span></p>
-                                                    <input type="text">
-                                                </div>
+                                            <div class="checkout__input">
+                                                <p>Địa chỉ nhận<span>*</span></p>
+                                                <input name="shipAddress" type="text" class="checkout__input__add">
+                                            </div>
+                                            <%-- <div class="row"> --%>
+                                                <%-- <div class="col-lg-6"> --%>
+                                                    <div class="checkout__input">
+                                                        <p>Số điện thoại<span>*</span></p>
+                                                        <input name="shipPhone" type="number" class="checkout__input__add">
+                                                    </div>
+                                                <%-- </div> --%>
+                                                <%-- <div class="col-lg-6">
+                                                    <div class="checkout__input">
+                                                        <p>Email<span>*</span></p>
+                                                        <input type="text">
+                                                    </div>
+                                                </div> --%>
+                                            <%-- </div> --%>
+                                            <div class="checkout__input">
+                                                <p>Ghi chú<span>*</span></p>
+                                                <input type="text">
                                             </div>
                                         </div>
-                                        <div class="checkout__input">
-                                            <p>Ghi chú<span>*</span></p>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
+                                    </form:form>
+                                    <div class="col-lg-5 col-md-6">
                                         <div class="checkout__order">
                                             <h4 class="order__title">Đơn Hàng</h4>
                                             <div class="checkout__order__products">Sản Phẩm <span>Đơn giá</span></div>

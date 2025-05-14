@@ -72,7 +72,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${cartDetails}" var="cartDetail">
+                                            <c:forEach items="${cartDetails}" var="cartDetail" varStatus="status">
                                                 <tr>
                                                     <td class="product__cart__item">
                                                         <div class="product__cart__item__pic">
@@ -102,7 +102,8 @@
                                                                 <input type="text"
                                                                 value="${cartDetail.quantity}"
                                                                 data-cart-detail-id="${cartDetail.id}"
-                                                                data-cart-detail-price="${cartDetail.price}">
+                                                                data-cart-detail-price="${cartDetail.price}"
+                                                                data-cart-detail-index="${status.index}">
                                                             </div>
                                                         </div>
                                                     </td>
@@ -145,8 +146,30 @@
                                             </span>
                                         </li>
                                     </ul>
-                                    <a href="/cart/checkout" class="primary-btn">Thanh toán</a>
+                                    <a href="/checkout" class="primary-btn">Thanh toán</a>
                                 </div>
+                                <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
+                                    <input type="hidden" name ="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <div style="display: block;">
+                                        <c:forEach var = "cartDetail" items="${cart.cartDetails}"
+                                            varStatus="status">
+                                            <div class ="mb-3">
+                                                <div class="form-group">
+                                                    <label> Id:</label>
+                                                    <form:input path="cartDetails[${status.index}].id"
+                                                        type="text" class="form-control"
+                                                        value="${cartDetail.id}" />
+                                                </div>
+                                                <div class = "form-group">
+                                                    <label> Quantity: </label>
+                                                    <form:input path="cartDetails[${status.index}].quantity"
+                                                        type="text" class="form-control"
+                                                        value="${cartDetail.quantity}" />
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </form:form>
                             </div>
                         </div>
                     </div>
