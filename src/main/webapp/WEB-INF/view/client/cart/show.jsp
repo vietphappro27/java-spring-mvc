@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- form: -->
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <!DOCTYPE html>
             <html lang="zxx">
 
@@ -60,98 +61,6 @@
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="shopping__cart__table">
-                                    <!-- <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Sản Phẩm </th>
-                                                <th>Số Lượng</th>
-                                                <th>Thành Tiền</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart-1.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>T-shirt Contrast Pocket</h6>
-                                                        <h5>$98.49</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">$ 30.00</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart-2.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>Diagonal Textured Cap</h6>
-                                                        <h5>$98.49</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">$ 32.50</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart-3.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>Basic Flowing Scarf</h6>
-                                                        <h5>$98.49</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">$ 47.00</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart-4.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>Basic Flowing Scarf</h6>
-                                                        <h5>$98.49</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">$ 30.00</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table> -->
                                     <table>
                                         <thead>
                                             <tr>
@@ -163,71 +72,46 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart1.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>Converse x CDG Chuck 70</h6>
-                                                        <h5>1.000.000 VND</h5>
-                                                    </div>
-                                                </td>
-                                                <!-- <td class="cart__size"> L</td> -->
-                                                <td class="cart__size">
-                                                    <select class="form-control">
-                                                        <option value="37">37</option>
-                                                        <option value="38">38</option>
-                                                        <option value="39">39</option>
-                                                        <option value="40">40</option>
-                                                        <option value="41">41</option>
-                                                        <option value="42">42</option>
-                                                        <option value="43">43</option>
-                                                    </select>
-                                                </td>
-
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
+                                            <c:forEach items="${cartDetails}" var="cartDetail">
+                                                <tr>
+                                                    <td class="product__cart__item">
+                                                        <div class="product__cart__item__pic">
+                                                            <img src="/images/product/${cartDetail.product.image}" alt="">
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">1.000.000 VND</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img src="/client/img/shopping-cart/cart2.jpg" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6>Vintas Denim - Low Top</h6>
-                                                        <h5>650.000 VND</h5>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__size">
-                                                    <select class="form-control">
-                                                        <option value="37">37</option>
-                                                        <option value="38">38</option>
-                                                        <option value="39">39</option>
-                                                        <option value="40">40</option>
-                                                        <option value="41">41</option>
-                                                        <option value="42">42</option>
-                                                        <option value="43">43</option>
-                                                    </select>
-                                                </td>
-
-                                                <td class="quantity__item">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input type="text" value="1">
+                                                        <div class="product__cart__item__text">
+                                                            <%-- <h6>Converse x CDG Chuck 70</h6>
+                                                            <h5>1.000.000 VND</h5> --%>
+                                                            <a href="/product/${cartDetail.product.id}">
+                                                                <h6>${cartDetail.product.name}</h6>
+                                                            </a>
+                                                            <h5>
+                                                                <fmt:formatNumber value="${cartDetail.product.price}" type="number" groupingUsed="true"/> VNĐ
+                                                            </h5>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">650.000 VND</td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="cart__size">
+                                                        <select class="form-control">
+                                                            <c:forEach items="${cartDetail.product.productItems}" var="item">
+                                                                <option value="${item.size.id}">${item.size.sizeValue}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </td>
+
+                                                    <td class="quantity__item">
+                                                        <div class="quantity">
+                                                            <div class="pro-qty-2">
+                                                                <input type="text"
+                                                                value="${cartDetail.quantity}"
+                                                                data-cart-detail-id="${cartDetail.id}"
+                                                                data-cart-detail-price="${cartDetail.price}">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="cart__price" data-cart-detail-id="${cartDetail.id}">
+                                                        <fmt:formatNumber value="${cartDetail.price * cartDetail.quantity}" type="number" groupingUsed="true"/> VNĐ</td>
+                                                    <td class="cart__close"><i class="fa fa-close"></i></td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -243,8 +127,17 @@
                                 <div class="cart__total">
                                     <h6>Đơn hàng</h6>
                                     <ul>
-                                        <li>Tạm tính <span>1.650.000 VND</span></li>
-                                        <li>Tổng cộng <span>1.650.000 VND</span></li>
+                                        <%-- <li>Tạm tính <span>1.650.000 VND</span></li> --%>
+                                        <li>Tạm tính
+                                            <span data-cart-total-price="${totalPrice}">
+                                                <fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true"/> VNĐ
+                                            </span>
+                                        </li>
+                                        <li>Tổng cộng
+                                            <span data-cart-total-price="${totalPrice}">
+                                                <fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true"/> VNĐ
+                                            </span>
+                                        </li>
                                     </ul>
                                     <a href="/cart/checkout" class="primary-btn">Thanh toán</a>
                                 </div>
@@ -270,6 +163,22 @@
                 <script src="/client/js/mixitup.min.js"></script>
                 <script src="/client/js/owl.carousel.min.js"></script>
                 <script src="/client/js/main.js"></script>
+                <%-- <script>
+                    // Xử lý thay đổi size
+                    $(document).ready(function() {
+                        $('.cart__size select').on('change', function() {
+                            const sizeId = $(this).val();
+                            const productId = $(this).closest('tr').find('.product__cart__item__text a').attr('href').split('/').pop();
+                            const cartDetailId = $(this).closest('tr').find('.cart__price').data('cart-detail-id');
+                            
+                            // Hiển thị thông báo
+                            alert('Đã chọn size ' + $(this).find('option:selected').text() + ' cho sản phẩm ' + productId);
+                            
+                            // Có thể gửi AJAX request để cập nhật size trong giỏ hàng
+                            // $.post('/update-cart-size', { cartDetailId: cartDetailId, sizeId: sizeId });
+                        });
+                    });
+                </script> --%>
             </body>
 
             </html>

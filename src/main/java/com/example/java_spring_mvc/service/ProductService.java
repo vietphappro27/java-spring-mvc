@@ -18,6 +18,8 @@ import com.example.java_spring_mvc.repository.ProductRepository;
 import com.example.java_spring_mvc.repository.SizeRepository;
 import com.example.java_spring_mvc.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class ProductService {
 
@@ -125,28 +127,43 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
-    public void handleAddProductToCart(String email, long productId) {
+    public void handleAddProductToCart(String email, long productId, HttpSession session) {
         User user = this.userRepository.findByEmail(email);
         if (user != null) {
             Cart cart = this.cartRepository.findByUser(user);
             if (cart == null) {
+                // create cart
                 cart = new Cart();
                 cart.setUser(user);
-                cart.setSum(1);
-            } else {
-                cart.setSum(cart.getSum() + 1);
+                cart.setSum(0);
+                cart = this.cartRepository.save(cart);
             }
-            this.cartRepository.save(cart);
             Product product = this.productRepository.findById(productId);
             if (product != null) {
-                CartDetail cartDetail = new CartDetail();
-                cartDetail.setCart(cart);
-                cartDetail.setProduct(product);
-                cartDetail.setQuantity(1);
+
+                CartDetail cartDetail = this.cartDetailRepository.findByCartAndProduct(cart, product);
+                if (cartDetail == null) {
+                    // create cart detail
+                    cartDetail = new CartDetail();
+                    cartDetail.setCart(cart);
+                    cartDetail.setProduct(product);
+                    cartDetail.setQuantity(1);
+                    // update cart
+                    int sum = cart.getSum() + 1;
+                    cart.setSum(sum);
+                    this.cartRepository.save(cart);
+                    session.setAttribute("sum", sum);
+                } else {
+                    // update cart detail
+                    cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+                }
                 cartDetail.setPrice(product.getPrice());
                 this.cartDetailRepository.save(cartDetail);
             }
-
         }
+    }
+
+    public Cart getCartByUser(User user) {
+        return this.cartRepository.findByUser(user);
     }
 }

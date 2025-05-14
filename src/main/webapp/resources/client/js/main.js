@@ -183,21 +183,66 @@
     proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
     proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
     proQty.on('click', '.qtybtn', function () {
+        let change = 0;
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+            change = 1;
         } else {
             // Don't allow decrementing below zero
-            if (oldValue > 0) {
+            if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
+                change = -1;
             } else {
-                newVal = 0;
+                newVal = 1;
             }
         }
-        $button.parent().find('input').val(newVal);
+        // $button.parent().find('input').val(newVal);
+        const input =$button.parent().find('input');
+        input.val(newVal);
+
+        //  get price
+        const price = input.attr('data-cart-detail-price');
+        const id = input.attr('data-cart-detail-id');
+        
+        const priceElement = $(`[data-cart-detail-id="${id}"]`);
+        if (priceElement){
+            const newPrice = +price * newVal;
+            priceElement.text(formatCurrency(newPrice.toFixed(2)) + " VNĐ");
+        }
+        // update total price
+        const totalPriceElement = $(`[data-cart-total-price]`);
+        if (totalPriceElement && totalPriceElement.length){
+            const currentTotalPrice = totalPriceElement.first().attr("data-cart-total-price");
+            let newTotal = +currentTotalPrice ;
+            if(change == 0){
+                newTotal = +currentTotalPrice;
+            }
+            else{
+                newTotal = change * (+price) + +currentTotalPrice;
+            }
+            // reset change
+            change =0 ;
+            // update 
+            totalPriceElement?.each(function(index,element){
+                $(totalPriceElement[index]).text(formatCurrency(newTotal.toFixed(2)) + " VNĐ");
+                $(totalPriceElement[index]).attr("data-cart-total-price", newTotal);
+            });
+        }
+        
     });
 
+    function formatCurrency(value){
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'decimal',
+            currency: 'VND',
+            minimumFractionDigits: 0
+        });
+        let formattedValue = formatter.format(value);
+        formattedValue = formattedValue.replace(/\./g, ',');
+        return formattedValue;
+    }
     /*------------------
         Achieve Counter
     --------------------*/

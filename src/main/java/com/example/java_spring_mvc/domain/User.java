@@ -125,10 +125,19 @@ public class User {
         this.phone = phone;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", fullname=" + fullname + ", password=" + password
-                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + ", role=" + role + ", orders="
+                + orders + ", cart=" + cart + "]";
     }
 
 }

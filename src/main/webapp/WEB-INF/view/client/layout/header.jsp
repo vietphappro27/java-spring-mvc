@@ -43,7 +43,7 @@
                             <div class="header__nav__option">
                                 <c:if test="${not empty pageContext.request.userPrincipal}">
                                     <%-- icon cart --%>
-                                    <a href="/cart" class="cart-icon-container"><img src="/client/img/icon/cart.png" alt=""><span>0</span></a>
+                                    <a href="/cart" class="cart-icon-container"><img src="/client/img/icon/cart.png" alt=""><span>${sessionScope.sum}</span></a>
                                     <%-- icon user --%>
                                     <div class="user-dropdown">
                                         <a href="#" class="user-icon-link"><img src="/client/img/icon/user.png" alt=""></a>

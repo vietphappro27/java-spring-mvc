@@ -1,5 +1,6 @@
 package com.example.java_spring_mvc.controller.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -7,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.java_spring_mvc.domain.Cart;
+import com.example.java_spring_mvc.domain.CartDetail;
 import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.ProductItem;
 import com.example.java_spring_mvc.domain.Size;
+import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +49,7 @@ public class ItemController {
         long productId = id;
         String email = (String) session.getAttribute("email");
 
-        this.productService.handleAddProductToCart(email, productId);
+        this.productService.handleAddProductToCart(email, productId, session);
         return "redirect:/";
     }
 
@@ -56,7 +59,27 @@ public class ItemController {
     }
 
     @GetMapping("/cart")
-    public String getCartPage(Model model) {
+    public String getCartPage(Model model, HttpServletRequest request) {
+        User user = new User();
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        user.setId(id);
+        Cart cart = this.productService.getCartByUser(user);
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+
+        // Lấy danh sách productItems cho mỗi sản phẩm trong giỏ hàng
+        for (CartDetail cartDetail : cartDetails) {
+            Product product = cartDetail.getProduct();
+            List<ProductItem> productItems = this.productService.getProductItemsByProductId(product.getId());
+            product.setProductItems(productItems);
+        }
+
+        double totalPrice = 0;
+        for (CartDetail cartDetail : cartDetails) {
+            totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
+        }
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
         return "client/cart/show";
     }
 
