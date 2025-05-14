@@ -2,6 +2,7 @@ package com.example.java_spring_mvc.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -165,5 +166,24 @@ public class ProductService {
 
     public Cart getCartByUser(User user) {
         return this.cartRepository.findByUser(user);
+    }
+
+    public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
+        Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(cartDetailId);
+        if (cartDetailOptional.isPresent()) {
+            CartDetail cartDetail = cartDetailOptional.get();
+            Cart currentCart = cartDetail.getCart();
+            this.cartDetailRepository.deleteById(cartDetailId);
+            // update cart
+            if (currentCart.getSum() > 1) {
+                int sum = currentCart.getSum() - 1;
+                currentCart.setSum(sum);
+                session.setAttribute("sum", sum);
+                this.cartRepository.save(currentCart);
+            } else {
+                this.cartRepository.deleteById(currentCart.getId());
+                session.setAttribute("sum", 0);
+            }
+        }
     }
 }

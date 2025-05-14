@@ -96,7 +96,6 @@
                                                             </c:forEach>
                                                         </select>
                                                     </td>
-
                                                     <td class="quantity__item">
                                                         <div class="quantity">
                                                             <div class="pro-qty-2">
@@ -109,7 +108,14 @@
                                                     </td>
                                                     <td class="cart__price" data-cart-detail-id="${cartDetail.id}">
                                                         <fmt:formatNumber value="${cartDetail.price * cartDetail.quantity}" type="number" groupingUsed="true"/> VNĐ</td>
-                                                    <td class="cart__close"><i class="fa fa-close"></i></td>
+                                                    <td class="cart__close">
+                                                        <form method="post" action="/delete-cart-product/${cartDetail.id}">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                            <button type="submit" class="delete-cart-item" style="background: none; border: none; cursor: pointer; padding: 0;">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -164,19 +170,55 @@
                 <script src="/client/js/owl.carousel.min.js"></script>
                 <script src="/client/js/main.js"></script>
                 <%-- <script>
-                    // Xử lý thay đổi size
                     $(document).ready(function() {
-                        $('.cart__size select').on('change', function() {
-                            const sizeId = $(this).val();
-                            const productId = $(this).closest('tr').find('.product__cart__item__text a').attr('href').split('/').pop();
-                            const cartDetailId = $(this).closest('tr').find('.cart__price').data('cart-detail-id');
-                            
-                            // Hiển thị thông báo
-                            alert('Đã chọn size ' + $(this).find('option:selected').text() + ' cho sản phẩm ' + productId);
-                            
-                            // Có thể gửi AJAX request để cập nhật size trong giỏ hàng
-                            // $.post('/update-cart-size', { cartDetailId: cartDetailId, sizeId: sizeId });
+                        // Xử lý khi click vào nút xóa sản phẩm
+                        $('.delete-cart-item').on('click', function() {
+                            const cartRow = $(this).closest('tr');
+                            const cartDetailId = cartRow.find('.cart__price').data('cart-detail-id');
+
+                            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                                // TODO: Gửi AJAX request để xóa sản phẩm
+                                // Mô phỏng xóa sản phẩm
+                                cartRow.fadeOut(300, function() {
+                                    $(this).remove();
+                                    // Cập nhật tổng tiền
+                                    updateCartTotal();
+                                });
+                            }
                         });
+
+                        // Xử lý khi số lượng thay đổi
+                        $('.pro-qty-2 .qtybtn').on('click', function() {
+                            const $input = $(this).parent().find('input');
+                            const cartDetailId = $input.data('cart-detail-id');
+                            const price = $input.data('cart-detail-price');
+                            const quantity = parseInt($input.val());
+
+                            // Cập nhật thành tiền
+                            const total = price * quantity;
+                            $(this).closest('tr').find('.cart__price').html(formatCurrency(total) + ' VNĐ');
+
+                            // Cập nhật tổng tiền
+                            updateCartTotal();
+                        });
+
+                        // Hàm định dạng tiền tệ
+                        function formatCurrency(amount) {
+                            return new Intl.NumberFormat('vi-VN').format(amount);
+                        }
+
+                        // Hàm cập nhật tổng tiền
+                        function updateCartTotal() {
+                            let totalPrice = 0;
+                            $('.cart__price').each(function() {
+                                const text = $(this).text().replace(/[^\d]/g,'');
+                                if (text) {
+                                    totalPrice += parseInt(text);
+                                }
+                            });
+
+                            $('[data-cart-total-price]').html(formatCurrency(totalPrice) + ' VNĐ');
+                        }
                     });
                 </script> --%>
             </body>
