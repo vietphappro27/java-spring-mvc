@@ -56,10 +56,10 @@
             <div id="layoutSidenav_content">
               <main>
                 <div class="container-fluid px-4">
-                  <h1 class="mt-4">Manage Product</h1>
+                  <h1 class="mt-4">Quản lý sản phẩm</h1>
                   <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">
-                      <a href="/admin">Dashboard</a> / Product
+                      <a href="/admin">Dashboard</a> / <a href="/admin/product">Product</a> / Detail
                     </li>
                   </ol>
                 </div>
@@ -67,11 +67,11 @@
                   <div class="row">
                     <div class="col-12 mx-auto">
                       <div class="d-flex justify-content-between">
-                        <h3>Detail Product ${product.id}</h3>
+                        <h3>Chi tiết sản phẩm #${product.id}</h3>
                       </div>
                       <hr />
                       <div class="card mb-4">
-                        <div class="card-header">Information Product</div>
+                        <div class="card-header">Thông tin sản phẩm</div>
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-4">
@@ -83,13 +83,13 @@
                             <div class="col-md-8">
                               <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${product.id}</li>
-                                <li class="list-group-item">Name: ${product.name}</li>
-                                <li class="list-group-item">Price:
+                                <li class="list-group-item">Tên: ${product.name}</li>
+                                <li class="list-group-item">Giá:
                                   <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" /> VNĐ
                                 </li>
-                                <li class="list-group-item">Brand: ${product.brand}</li>
-                                <li class="list-group-item">Category: ${product.category}</li>
-                                <li class="list-group-item">Description: ${product.description}</li>
+                                <li class="list-group-item">Thương hiệu: ${product.brand}</li>
+                                <li class="list-group-item">Danh mục: ${product.category}</li>
+                                <li class="list-group-item">Mô tả: ${product.description}</li>
                               </ul>
                             </div>
                           </div>
@@ -99,8 +99,8 @@
                       <div class="card mb-4">
                         <div class="card-header">
                           <div class="d-flex justify-content-between align-items-center">
-                            <div>Product Items</div>
-                            <button class="btn btn-sm btn-primary" id="addNewItemBtn">Add New Item</button>
+                            <div>Danh sách biến thể</div>
+                            <button class="btn btn-sm btn-primary" id="addNewItemBtn">Thêm biến thể</button>
                           </div>
                         </div>
                         <div class="card-body">
@@ -110,9 +110,9 @@
                                 <tr>
                                   <th>ID</th>
                                   <th>Size</th>
-                                  <th>Quantity</th>
-                                  <th>Sold</th>
-                                  <th>Actions</th>
+                                  <th>Số lượng</th>
+                                  <th>Đã bán</th>
+                                  <th>Hành động</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -145,15 +145,15 @@
                                     <td>
                                       <div class="display-mode">
                                         <button type="button"
-                                          class="btn btn-sm btn-warning edit-item-btn">Update</button>
+                                          class="btn btn-sm btn-warning edit-item-btn">Cập nhật</button>
                                         <a href="/admin/product/item/delete/${item.id}?productId=${product.id}"
                                           class="btn btn-sm btn-danger"
-                                          onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                          onclick="return confirm('Bạn có chắc chắn muốn xóa biến thể này?')">Xóa</a>
                                       </div>
                                       <div class="edit-mode" style="display:none;">
-                                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                                        <button type="submit" class="btn btn-sm btn-success">Lưu</button>
                                         <button type="button"
-                                          class="btn btn-sm btn-secondary cancel-edit-btn">Cancel</button>
+                                          class="btn btn-sm btn-secondary cancel-edit-btn">Hủy</button>
                                         </form>
                                       </div>
                                     </td>
@@ -164,8 +164,8 @@
                           </div>
                         </div>
                       </div>
-                      <a href="/admin/product" class="btn btn-secondary"> Back </a>
-                      <a href="/admin/product/update/${product.id}" class="btn btn-primary">Update Product</a>
+                      <a href="/admin/product/update/${product.id}" class="btn btn-primary">Cập nhật sản phẩm</a>
+                      <a href="/admin/product" class="btn btn-secondary"> Quay lại </a>
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addItemModalLabel">Add New Product Item</h5>
+                  <h5 class="modal-title" id="addItemModalLabel">Thêm biến thể</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/admin/product/item/add" method="post">
@@ -197,13 +197,13 @@
                       </select>
                     </div>
                     <div class="mb-3">
-                      <label for="quantity" class="form-label">Quantity</label>
+                      <label for="quantity" class="form-label">Số lượng</label>
                       <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Item</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
                   </div>
                 </form>
               </div>

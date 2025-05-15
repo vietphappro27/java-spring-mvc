@@ -35,22 +35,22 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Quản lý sản phẩm</h1>
+                <h1 class="mt-4">Quản lý đơn hàng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
-                    <a href="/admin">Dashboard</a> / <a href="/admin/product">Product</a> / Delete
+                    <a href="/admin">Dashboard</a> / <a href="/admin/order">Order</a> / Delete
                   </li>
                 </ol>
               </div>
               <div class="container mt-5">
                 <div class="row">
                   <div class="col-12 mx-auto">
-                    <h3>Xóa sản phẩm #${id}</h3>
+                    <h3>Xóa đơn hàng #${id}</h3>
                     <hr />
                     <div class="alert alert-danger">
-                      Bạn có chắc chắn muốn xóa sản phẩm này không ?
+                      Bạn có chắc chắn muốn xóa đơn hàng này không?
                     </div>
-                    <form:form method="post" action="/admin/product/delete" modelAttribute="product">
+                    <form:form method="post" action="/admin/order/delete" modelAttribute="order">
                       <div class="mb-3" style="display: none">
                         <label class="form-label">Id:</label>
                         <form:input value="${id}" type="text" class="form-control" path="id" />
@@ -62,7 +62,7 @@
                           </button>
                         </div>
                         <div class="col-auto">
-                          <a href="/admin/product" class="btn btn-secondary">Quay lại</a>
+                          <a href="/admin/order" class="btn btn-secondary">Quay lại</a>
                         </div>
                       </div>
                     </form:form>

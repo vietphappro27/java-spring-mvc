@@ -33,7 +33,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order")
-    List<OrderItem> orderItems;
+    private List<OrderDetail> orderDetails;
 
     public long getId() {
         return id;
@@ -107,15 +107,19 @@ public class Order {
         this.user = user;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override
     public String toString() {
         return "Order [id=" + id + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", status=" + status
                 + ", shipAddress=" + shipAddress + ", shipName=" + shipName + ", shipPhone=" + shipPhone + ", note="
-                + note + ", user=" + user + ", orderItems=" + orderItems + "]";
+                + note + ", user=" + user + ", orderDetails=" + orderDetails + "]";
     }
 
 }

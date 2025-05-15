@@ -35,20 +35,20 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage User</h1>
+                <h1 class="mt-4">Quản lý người dùng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
-                    <a href="/admin">Dashboard</a> / User
+                    <a href="/admin">Dashboard</a> / <a href="/admin/user">User</a> / Delete
                   </li>
                 </ol>
               </div>
               <div class="container mt-5">
                 <div class="row">
                   <div class="col-12 mx-auto">
-                    <h3>Delete a user #${id}</h3>
+                    <h3>Xóa người dùng #${id}</h3>
                     <hr />
                     <div class="alert alert-danger">
-                      Are you sure to delete this user ?
+                      Bạn có chắc chắn muốn xóa người dùng này không ?
                     </div>
                     <form:form method="post" action="/admin/user/delete" modelAttribute="newUser">
                       <div class="mb-3" style="display: none">
@@ -58,11 +58,11 @@
                       <div class="row mb-5">
                         <div class="col-auto">
                           <button type="submit" class="btn btn-danger">
-                            Confirm
+                            Xác nhận
                           </button>
                         </div>
                         <div class="col-auto">
-                          <a href="/admin/user" class="btn btn-secondary">Back</a>
+                          <a href="/admin/user" class="btn btn-secondary">Quay lại</a>
                         </div>
                       </div>
                     </form:form>

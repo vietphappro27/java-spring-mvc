@@ -26,7 +26,7 @@ public class Product {
     private long id;
 
     @OneToMany(mappedBy = "product")
-    List<ProductItem> productItems = new ArrayList<>();
+    private List<ProductItem> productItems;
 
     @NonNull
     @NotEmpty(message = "Tên sản phẩm không được để trống")

@@ -13234,3 +13234,73 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+
+            .order-info-card {
+              background-color: #f8f9fa;
+              border-radius: 5px;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+              padding: 20px;
+              margin-bottom: 20px;
+            }
+            .order-status {
+              font-weight: bold;
+              padding: 5px 10px;
+              border-radius: 4px;
+              display: inline-block;
+            }
+            .status-pending {
+              background-color: #ffeeba;
+              color: #856404;
+            }
+            .status-processing {
+              background-color: #b8daff;
+              color: #004085;
+            }
+            .status-shipping {
+              background-color: #c3e6cb;
+              color: #155724;
+            }
+            .status-delivered {
+              background-color: #d4edda;
+              color: #155724;
+            }
+            .status-cancelled {
+              background-color: #f5c6cb;
+              color: #721c24;
+            }
+            .product-image {
+              width: 80px;
+              height: 80px;
+              object-fit: cover;
+              border-radius: 4px;
+            }
+            .timeline {
+              position: relative;
+              padding-left: 30px;
+              margin-top: 20px;
+            }
+            .timeline-item {
+              position: relative;
+              padding-bottom: 20px;
+              border-left: 2px solid #dee2e6;
+              padding-left: 20px;
+            }
+            .timeline-item:last-child {
+              border-left: 2px solid transparent;
+            }
+            .timeline-item::before {
+              content: '';
+              position: absolute;
+              left: -9px;
+              top: 0;
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              background-color: #007bff;
+            }
+            .timeline-date {
+              font-size: 0.85rem;
+              color: #6c757d;
+            }
+          

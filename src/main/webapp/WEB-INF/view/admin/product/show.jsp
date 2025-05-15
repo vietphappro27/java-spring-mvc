@@ -70,9 +70,9 @@
                             <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" /> VNĐ
                           </td>
                           <td>
-                            <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
-                            <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
-                            <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
+                            <a href="/admin/product/${product.id}" class="btn btn-success">Chi tiết</a>
+                            <a href="/admin/product/update/${product.id}" class="btn btn-warning">Cập nhật</a>
+                            <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Xóa</a>
                           </td>
                           </tr>
                         </c:forEach>

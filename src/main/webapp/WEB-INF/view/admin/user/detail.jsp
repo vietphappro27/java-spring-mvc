@@ -35,10 +35,10 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage User</h1>
+                <h1 class="mt-4">Quản lý người dùng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
-                    <a href="/admin">Dashboard</a> / User
+                    <a href="/admin">Dashboard</a> / <a href="/admin/user">User</a> / Detail
                   </li>
                 </ol>
               </div>
@@ -46,24 +46,24 @@
                 <div class="row">
                   <div class="col-12 mx-auto">
                     <div class="d-flex justify-content-between">
-                      <h3>Detail User ${id}</h3>
+                      <h3>Chi tiết người dùng #${id}</h3>
                     </div>
                     <hr />
                     <div class="card" style="width: 30rem">
-                      <div class="card-header">Profile User</div>
+                      <div class="card-header">Thông tin người dùng</div>
                       <div class="d-flex justify-content-center p-3">
                         <img src="${pageContext.request.contextPath}/images/avatar/${avatar}" class="rounded-circle"
                           style="width: 150px; height: 150px; object-fit: cover;" alt="img" />
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">name: ${fullname}</li>
-                        <li class="list-group-item">email: ${email}</li>
-                        <li class="list-group-item">address: ${address}</li>
-                        <li class="list-group-item">phone: ${phone}</li>
+                        <li class="list-group-item">Họ và tên: ${fullname}</li>
+                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">Địa chỉ: ${address}</li>
+                        <li class="list-group-item">Số điện thoại: ${phone}</li>
                       </ul>
                     </div>
-                    <a href="/admin/user" class="btn btn-secondary"> Back </a>
+                    <a href="/admin/user" class="btn btn-secondary">Quay lại</a>
                   </div>
                 </div>
               </div>

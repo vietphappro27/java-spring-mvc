@@ -23,8 +23,8 @@ public class CartDetail {
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_item_id")
+    private ProductItem productItem;
 
     public Long getId() {
         return id;
@@ -58,17 +58,18 @@ public class CartDetail {
         this.cart = cart;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductItem getProductItem() {
+        return productItem;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductItem(ProductItem productItem) {
+        this.productItem = productItem;
     }
 
     @Override
     public String toString() {
-        return "CartDetail [id=" + id + ", quantity=" + quantity + ", price=" + price + ", cart=" + cart + ", product="
-                + product + "]";
+        return "CartDetail [id=" + id + ", quantity=" + quantity + ", price=" + price + ", cart=" + cart
+                + ", productItem=" + productItem + "]";
     }
+
 }

@@ -46,10 +46,10 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage User</h1>
+                <h1 class="mt-4">Quản lý người dùng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
-                    <a href="/admin">Dashboard</a> / User
+                    <a href="/admin">Dashboard</a> / <a href="/admin/user">User</a> / Create
                   </li>
                 </ol>
 
@@ -58,7 +58,7 @@
                 <div class="row">
                   <div class="col-12 mx-auto">
                     <!-- <div class="col-12 mx-auto"> -->
-                    <h3>Create a user</h3>
+                    <h3>Thêm người dùng</h3>
                     <hr />
                     <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="row"
                       enctype="multipart/form-data">
@@ -77,7 +77,7 @@
                         <c:set var="passwordHasBindError">
                           <form:errors path="password" class="invalid-feedback" />
                         </c:set>
-                        <label class="form-label">Password:</label>
+                        <label class="form-label">Mật khẩu:</label>
                         <form:input type="password"
                           class="form-control ${not empty passwordHasBindError ? 'is-invalid' : ''}" path="password" />
                         ${passwordHasBindError}
@@ -87,7 +87,7 @@
                         <c:set var="phoneHasBindError">
                           <form:errors path="phone" class="invalid-feedback" />
                         </c:set>
-                        <label class="form-label">Phone:</label>
+                        <label class="form-label">Số điện thoại:</label>
                         <form:input type="number"
                           class="form-control ${not empty phoneHasBindError ? 'is-invalid' : ''}" path="phone" />
                         ${phoneHasBindError}
@@ -97,19 +97,19 @@
                         <c:set var="fullnameHasBindError">
                           <form:errors path="fullname" class="invalid-feedback" />
                         </c:set>
-                        <label class="form-label">FullName:</label>
+                        <label class="form-label">Họ và tên:</label>
                         <form:input type="text"
                           class="form-control ${not empty fullnameHasBindError ? 'is-invalid' : ''}" path="fullname" />
                         ${fullnameHasBindError}
                       </div>
 
                       <div class="mb-3">
-                        <label class="form-label">Address:</label>
+                        <label class="form-label">Địa chỉ:</label>
                         <form:input type="text" class="form-control" path="address" />
                       </div>
 
                       <div class="mb-3 col-12 col-md-6">
-                        <label class="form-label"> Role: </label>
+                        <label class="form-label">Vai trò:</label>
                         <form:select class="form-select" path="role.name">
                           <form:option value="USER">USER</form:option>
                           <form:option value="ADMIN">ADMIN</form:option>
@@ -117,7 +117,7 @@
                       </div>
                       <!-- upload and preview file -->
                       <div class="mb-3 col-12 col-md-6">
-                        <label for="avatarFile" class="form-label">Avatar:</label>
+                        <label for="avatarFile" class="form-label">Ảnh đại diện:</label>
                         <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg"
                           name="vietphapFile" />
                       </div>
@@ -127,10 +127,10 @@
                       <!-- button -->
                       <div class="row mb-5">
                         <div class="col-auto">
-                          <button type="submit" class="btn btn-primary">Create</button>
+                          <button type="submit" class="btn btn-primary">Thêm</button>
                         </div>
                         <div class="col-auto">
-                          <a href="/admin/user" class="btn btn-secondary">Back</a>
+                          <a href="/admin/user" class="btn btn-secondary">Quay lại</a>
                         </div>
                       </div>
                     </form:form>

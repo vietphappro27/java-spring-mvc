@@ -69,9 +69,9 @@
                           <td>${user.fullname}</td>
                           <td>${user.role.name}</td>
                           <td>
-                            <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
-                            <a href="/admin/user/update/${user.id}" class="btn btn-warning">Update</a>
-                            <a href="/admin/user/delete/${user.id}" class="btn btn-danger">Delete</a>
+                            <a href="/admin/user/${user.id}" class="btn btn-success">Chi tiết</a>
+                            <a href="/admin/user/update/${user.id}" class="btn btn-warning">Cập nhật</a>
+                            <a href="/admin/user/delete/${user.id}" class="btn btn-danger">Xóa</a>
                           </td>
                           </tr>
                         </c:forEach>

@@ -50,17 +50,17 @@
           <div id="layoutSidenav_content">
             <main>
               <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage User</h1>
+                <h1 class="mt-4">Quản lý người dùng</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">
-                    <a href="/admin">Dashboard</a> / User
+                    <a href="/admin">Dashboard</a> / <a href="/admin/user">User</a> / Update
                   </li>
                 </ol>
               </div>
               <div class="container mt-5">
                 <div class="row">
                   <div class="col-12 mx-auto">
-                    <h3>Update User</h3>
+                    <h3>Cập nhật người dùng</h3>
                     <hr />
                     <form:form method="post" action="/admin/user/update" modelAttribute="newUser"
                       enctype="multipart/form-data">
@@ -69,7 +69,7 @@
                         <form:input type="text" class="form-control" path="id" />
                       </div>
                       <div class="mb-3 col-12 col-md-6">
-                        <label for="avatarFile" class="form-label">Avatar:</label>
+                        <label for="avatarFile" class="form-label">Ảnh đại diện:</label>
                         <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg"
                           name="vietphapFile" />
                       </div>
@@ -78,25 +78,25 @@
                         <form:input type="email" class="form-control" path="email" disabled="true" />
                       </div>
                       <div class="mb-3">
-                        <label class="form-label">FullName:</label>
+                        <label class="form-label">Họ và tên:</label>
                         <form:input type="text" class="form-control" path="fullname" />
                       </div>
                       <div class="mb-3">
-                        <label class="form-label">Address:</label>
+                        <label class="form-label">Địa chỉ:</label>
                         <form:input type="text" class="form-control" path="address" />
                       </div>
                       <div class="mb-3">
-                        <label class="form-label">Phone:</label>
+                        <label class="form-label">Số điện thoại:</label>
                         <form:input type="text" class="form-control" path="phone" />
                       </div>
                       <div class="row mb-5">
                         <div class="col-auto">
                           <button type="submit" class="btn btn-warning">
-                            Confirm
+                            Xác nhận
                           </button>
                         </div>
                         <div class="col-auto">
-                          <a href="/admin/user" class="btn btn-secondary">Back</a>
+                          <a href="/admin/user" class="btn btn-secondary">Quay lại</a>
                         </div>
                       </div>
                     </form:form>

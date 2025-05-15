@@ -48,31 +48,31 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Manage Product</h1>
+                                <h1 class="mt-4">Quản lý sản phẩm</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item active">
-                                        <a href="/admin">Dashboard</a> / Product
+                                        <a href="/admin">Dashboard</a> / <a href="/admin/product">Product</a> / Update
                                     </li>
                                 </ol>
                             </div>
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-12 mx-auto">
-                                        <h3>Update Product</h3>
+                                        <h3>Cập nhật sản phẩm</h3>
                                         <hr />
                                         <form:form method="post" action="/admin/product/update"
                                             modelAttribute="newProduct" class="row" enctype="multipart/form-data">
                                             <form:hidden path="id" />
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Name:</label>
+                                                <label class="form-label">Tên sản phẩm:</label>
                                                 <form:input type="text" class="form-control" path="name" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Price:</label>
+                                                <label class="form-label">Giá:</label>
                                                 <form:input type="number" class="form-control" path="price" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label"> Brand: </label>
+                                                <label class="form-label">Thương hiệu:</label>
                                                 <form:select class="form-select" path="brand">
                                                     <form:option value="Nike">Nike</form:option>
                                                     <form:option value="Adidas">Adidas</form:option>
@@ -81,20 +81,20 @@
                                                 </form:select>
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label"> Category: </label>
+                                                <label class="form-label">Danh mục:</label>
                                                 <form:select class="form-select" path="category">
                                                     <form:option value="Nam">Nam</form:option>
                                                     <form:option value="Nữ">Nữ</form:option>
                                                 </form:select>
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Description:</label>
+                                                <label class="form-label">Mô tả:</label>
                                                 <form:textarea class="form-control" path="description" rows="3"
                                                     required="true" />
                                             </div>
                                             <!-- image -->
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label for="avatarFile" class="form-label">Image:</label>
+                                                <label for="avatarFile" class="form-label">Ảnh:</label>
                                                 <input class="form-control" type="file" id="avatarFile"
                                                     accept=".png, .jpg, .jpeg" name="vietphapFile" />
                                             </div>
@@ -103,8 +103,7 @@
                                                     <img src="${pageContext.request.contextPath}/images/product/${newProduct.image}"
                                                         style="max-height: 250px; display: block;"
                                                         alt="Current product image" />
-                                                    <p class="text-muted mt-2">Current image will be kept if no new
-                                                        image is selected</p>
+                                                    <p class="text-muted mt-2">Ảnh hiện tại sẽ được giữ nguyên nếu không chọn ảnh mới</p>
                                                 </c:if>
                                                 <img style="max-height: 250px; display: none;" alt="New image preview"
                                                     id="avatarPreview" />
@@ -112,10 +111,10 @@
                                             <!-- button -->
                                             <div class="row mb-5">
                                                 <div class="col-auto">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a href="/admin/product" class="btn btn-secondary">Back</a>
+                                                    <a href="/admin/product" class="btn btn-secondary">Quay lại</a>
                                                 </div>
                                             </div>
                                         </form:form>

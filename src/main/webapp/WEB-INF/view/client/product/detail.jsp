@@ -100,26 +100,29 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="product__details__text">
-                                        <h4>${product.name}</h4>
-                                        <h3><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VND</h3>
-                                        <div class="product__details__option">
-                                            <div class="product__details__option__size">
-                                                <span>Size:</span>
-                                                <c:forEach items="${sizes}" var="size">
-                                                    <label for="${size.id}">${size.sizeValue}
-                                                        <input type="radio" id="${size.id}">
-                                                    </label>
-                                                </c:forEach>
-                                            </div>
-                                        </div>
-                                        <div class="product__details__cart__option">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
+                                        <form action="/add-productItem-to-cart/${product.id}" method="post">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <h4>${product.name}</h4>
+                                            <h3><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VND</h3>
+                                            <div class="product__details__option">
+                                                <div class="product__details__option__size">
+                                                    <span>Size:</span>
+                                                    <c:forEach items="${sizes}" var="size" varStatus="status">
+                                                        <label for="${size.id}" ${status.first ? 'class="active"' : ''}>${size.sizeValue}
+                                                            <input type="radio" id="${size.id}" name="sizeId" value="${size.id}" ${status.first ? 'checked' : ''}>
+                                                        </label>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
-                                            <a href="#" class="primary-btn">Thêm vào giỏ hàng</a>
-                                        </div>
+                                            <div class="product__details__cart__option">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" name="quantity" value="1">
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +260,7 @@
                                     </div>
                                     <div class="product__item__text">
                                     <h6>${product.name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <%-- <a href="#" class="add-cart">+ Add To Cart</a> --%>
                                     <h5><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ</h5>
                                     </div>
                                 </div>

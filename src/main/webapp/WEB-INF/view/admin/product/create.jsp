@@ -53,11 +53,11 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-md-3">
-                                        <label class="form-label">Quantity:</label>
+                                        <label class="form-label">Số lượng:</label>
                                         <input type="number" class="form-control" name="productItems[${itemIndex}].quantity" min="0" required />
                                     </div>
                                     <div class="col-12 col-md-3 d-flex align-items-end">
-                                        <button type="button" class="btn btn-danger remove-product-item" data-index="${itemIndex}">Remove</button>
+                                        <button type="button" class="btn btn-danger remove-product-item" data-index="${itemIndex}">Xóa</button>
                                     </div>
                                 </div>`;
                             $("#productItemsContainer").append(newItemHtml);
@@ -125,30 +125,30 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Manage Product</h1>
+                                <h1 class="mt-4">Quản lý sản phẩm</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item active">
-                                        <a href="/admin">Dashboard</a> / Product
+                                        <a href="/admin">Dashboard</a> / <a href="/admin/product">Product</a> / Create
                                     </li>
                                 </ol>
                             </div>
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-12 mx-auto">
-                                        <h3>Create a product</h3>
+                                        <h3>Tạo sản phẩm</h3>
                                         <hr />
                                         <form:form method="post" action="/admin/product/create"
                                             modelAttribute="newProduct" class="row" enctype="multipart/form-data">
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Name:</label>
+                                                <label class="form-label">Tên sản phẩm:</label>
                                                 <form:input type="text" class="form-control" path="name" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Price:</label>
+                                                <label class="form-label">Giá:</label>
                                                 <form:input type="number" class="form-control" path="price" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label"> Brand: </label>
+                                                <label class="form-label">Thương hiệu:</label>
                                                 <form:select class="form-select" path="brand">
                                                     <form:option value="Nike">Nike</form:option>
                                                     <form:option value="Adidas">Adidas</form:option>
@@ -157,20 +157,20 @@
                                                 </form:select>
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label"> Category: </label>
+                                                <label class="form-label">Danh mục:</label>
                                                 <form:select class="form-select" path="category">
                                                     <form:option value="Nam">Nam</form:option>
                                                     <form:option value="Nữ">Nữ</form:option>
                                                 </form:select>
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Description:</label>
+                                                <label class="form-label">Mô tả:</label>
                                                 <form:textarea class="form-control" path="description" rows="3"
                                                     required="true" />
                                             </div>
                                             <!-- image -->
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label for="avatarFile" class="form-label">Image:</label>
+                                                <label for="avatarFile" class="form-label">Ảnh:</label>
                                                 <input class="form-control" type="file" id="avatarFile"
                                                     accept=".png, .jpg, .jpeg" name="vietphapFile" />
                                             </div>
@@ -180,20 +180,19 @@
                                             </div>
                                             <!-- Product Items -->
                                             <div class="mb-3">
-                                                <h5>Product Items</h5>
+                                                <h5>Danh sách biến thể</h5>
                                                 <button type="button" id="addProductItem"
-                                                    class="btn btn-success mb-2">Add Product Item</button>
+                                                    class="btn btn-success mb-2">Thêm biến thể</button>
                                                 <div id="productItemsContainer"></div>
-                                                <div id="itemError" class="text-danger" style="display:none;">Please add
-                                                    at least one product item</div>
+                                                <div id="itemError" class="text-danger" style="display:none;">Vui lòng thêm ít nhất một biến thể</div>
                                             </div>
                                             <!-- button -->
                                             <div class="row mb-5">
                                                 <div class="col-auto">
-                                                    <button type="submit" class="btn btn-primary">Create</button>
+                                                    <button type="submit" class="btn btn-primary">Tạo</button>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a href="/admin/product" class="btn btn-secondary">Back</a>
+                                                    <a href="/admin/product" class="btn btn-secondary">Quay lại</a>
                                                 </div>
                                             </div>
                                         </form:form>
