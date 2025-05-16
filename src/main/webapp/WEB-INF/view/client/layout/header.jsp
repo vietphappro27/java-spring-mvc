@@ -58,7 +58,7 @@
                                                     </div>
                                                 </div>
                                                 <a href="/account" class="dropdown-item">Quản lý tài khoản</a>
-                                                <a href="/orders" class="dropdown-item">Lịch sử mua hàng</a>
+                                                <a href="/order_history" class="dropdown-item">Lịch sử mua hàng</a>
                                                 <div class="dropdown-divider"></div>
                                                 <form:form action="/logout" method="POST">
                                                     <input type="hidden" name="${_csrf.parameterName}"

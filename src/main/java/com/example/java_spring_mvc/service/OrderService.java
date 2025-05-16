@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.java_spring_mvc.domain.Order;
 import com.example.java_spring_mvc.domain.OrderDetail;
+import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.repository.OrderDetailRepository;
 import com.example.java_spring_mvc.repository.OrderRepository;
 
@@ -31,6 +32,10 @@ public class OrderService {
         return this.orderDetailRepository.findByOrder(this.orderRepository.findById(id));
     }
 
+    public List<Order> getOrdersByUser(User user) {
+        return this.orderRepository.findByUser(user);
+    }
+
     public void handleSaveOrder(Order order) {
         this.orderRepository.save(order);
     }
@@ -41,5 +46,9 @@ public class OrderService {
             this.orderDetailRepository.delete(orderDetail);
         }
         this.orderRepository.deleteById(order.getId());
+    }
+
+    public int countOrder() {
+        return this.orderRepository.findAll().size();
     }
 }

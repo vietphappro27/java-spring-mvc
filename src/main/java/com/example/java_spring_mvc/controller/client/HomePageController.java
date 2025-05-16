@@ -1,6 +1,8 @@
 package com.example.java_spring_mvc.controller.client;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,11 +14,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+import com.example.java_spring_mvc.domain.Order;
+import com.example.java_spring_mvc.domain.OrderDetail;
 import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.domain.dto.RegisterDTO;
+import com.example.java_spring_mvc.service.OrderService;
 import com.example.java_spring_mvc.service.ProductService;
 import com.example.java_spring_mvc.service.UserService;
 
@@ -25,11 +32,14 @@ public class HomePageController {
 
     private final ProductService productService;
     private final UserService userService;
+    private final OrderService orderService;
     private final PasswordEncoder passwordEncoder;
 
-    public HomePageController(ProductService productService, UserService userService, PasswordEncoder passwordEncoder) {
+    public HomePageController(ProductService productService, UserService userService, OrderService orderService,
+            PasswordEncoder passwordEncoder) {
         this.productService = productService;
         this.userService = userService;
+        this.orderService = orderService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -83,4 +93,22 @@ public class HomePageController {
     public String getAccessDeniedPage(Model model) {
         return "client/auth/accessDenied";
     }
+
+    //
+    @GetMapping("/order_history")
+    public String getOrderHistoryPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        User user = this.userService.getUserById(id);
+        List<Order> orders = this.orderService.getOrdersByUser(user);
+        Map<Long, List<OrderDetail>> orderDetailMap = new HashMap<>();
+        for (Order order : orders) {
+            List<OrderDetail> orderDetails = this.orderService.getOrderDetailsByOrderId(order.getId());
+            orderDetailMap.put(order.getId(), orderDetails);
+        }
+        model.addAttribute("orders", orders);
+        model.addAttribute("orderDetailMap", orderDetailMap);
+        return "client/cart/order_history";
+    }
+
 }

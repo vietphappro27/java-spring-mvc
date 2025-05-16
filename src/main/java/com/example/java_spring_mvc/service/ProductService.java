@@ -310,4 +310,8 @@ public class ProductService {
             }
         }
     }
+
+    public int countProduct() {
+        return this.productRepository.findAll().size();
+    }
 }
