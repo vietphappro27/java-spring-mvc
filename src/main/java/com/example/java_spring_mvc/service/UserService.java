@@ -30,10 +30,6 @@ public class UserService {
         this.userRepository.deleteById(user.getId());
     }
 
-    // public List<User> getAllUser() {
-    // return this.userRepository.findAll();
-    // }
-
     public Page<User> getAllUser(Pageable pageable) {
         return this.userRepository.findAll(pageable);
     }

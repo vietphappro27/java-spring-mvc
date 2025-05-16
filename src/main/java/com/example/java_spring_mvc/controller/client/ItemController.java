@@ -77,7 +77,14 @@ public class ItemController {
     // }
 
     @GetMapping("/product")
-    public String getProductPage(Model model) {
+    public String getProductPage(Model model,
+            @RequestParam(name = "page", defaultValue = "1") long page) {
+        PageRequest pageable = PageRequest.of((int) (page - 1), 9);
+        Page<Product> pageProduct = this.productService.getAllProduct(pageable);
+        List<Product> products = pageProduct.getContent();
+        model.addAttribute("products", products);
+        model.addAttribute("totalPages", pageProduct.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "client/product/show";
     }
 

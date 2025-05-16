@@ -22,10 +22,6 @@ public class OrderService {
         this.orderDetailRepository = orderDetailRepository;
     }
 
-    // public List<Order> getAllOrders() {
-    // return this.orderRepository.findAll();
-    // }
-
     public Page<Order> getAllOrders(Pageable pageable) {
         return this.orderRepository.findAll(pageable);
     }
