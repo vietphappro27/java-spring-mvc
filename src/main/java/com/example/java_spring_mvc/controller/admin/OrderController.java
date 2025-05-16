@@ -2,6 +2,8 @@ package com.example.java_spring_mvc.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import com.example.java_spring_mvc.domain.Order;
 import com.example.java_spring_mvc.domain.OrderDetail;
 import com.example.java_spring_mvc.service.OrderService;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class OrderController {
@@ -23,10 +26,16 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // show
     @GetMapping("/admin/order")
-    public String getOrderPage(Model model) {
-        List<Order> orders = this.orderService.getAllOrders();
+    public String getOrderPage(Model model,
+            @RequestParam(name = "page", defaultValue = "1") long page) {
+        PageRequest pageable = PageRequest.of((int) (page - 1), 1);
+        Page<Order> pageOrder = this.orderService.getAllOrders(pageable);
+        List<Order> orders = pageOrder.getContent();
         model.addAttribute("orders", orders);
+        model.addAttribute("totalPages", pageOrder.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "admin/order/show";
     }
 

@@ -2,6 +2,8 @@ package com.example.java_spring_mvc.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.java_spring_mvc.domain.Order;
@@ -20,8 +22,12 @@ public class OrderService {
         this.orderDetailRepository = orderDetailRepository;
     }
 
-    public List<Order> getAllOrders() {
-        return this.orderRepository.findAll();
+    // public List<Order> getAllOrders() {
+    // return this.orderRepository.findAll();
+    // }
+
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return this.orderRepository.findAll(pageable);
     }
 
     public Order getOrderById(long id) {

@@ -2,6 +2,8 @@ package com.example.java_spring_mvc.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +39,14 @@ public class UserController {
 
     // show
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUser();
-        // System.out.println(users); // show int terminal
+    public String getUserPage(Model model,
+            @RequestParam(name = "page", defaultValue = "1") long page) {
+        PageRequest pageable = PageRequest.of((int) (page - 1), 1);
+        Page<User> pageUser = this.userService.getAllUser(pageable);
+        List<User> users = pageUser.getContent();
         model.addAttribute("users", users);
+        model.addAttribute("totalPages", pageUser.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "admin/user/show";
     }
 
