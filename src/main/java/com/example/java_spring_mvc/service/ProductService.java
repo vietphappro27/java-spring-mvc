@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.java_spring_mvc.domain.Cart;
@@ -83,8 +85,8 @@ public class ProductService {
         return this.sizeRepository.findAll();
     }
 
-    public List<Product> getAllProduct() {
-        return this.productRepository.findAll();
+    public Page<Product> getAllProduct(Pageable pageable) {
+        return this.productRepository.findAll(pageable);
     }
 
     public Product getProductById(long id) {

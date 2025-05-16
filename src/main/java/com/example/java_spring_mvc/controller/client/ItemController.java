@@ -3,6 +3,8 @@ package com.example.java_spring_mvc.controller.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +44,10 @@ public class ItemController {
         model.addAttribute("product", product);
         // model.addAttribute("productItems", productItems);
         model.addAttribute("sizes", sizes);
-        model.addAttribute("products", this.productService.getAllProduct());
+        PageRequest pageable = PageRequest.of(0, 8);
+        Page<Product> pageProduct = this.productService.getAllProduct(pageable);
+        List<Product> products = pageProduct.getContent();
+        model.addAttribute("products", products);
         return "client/product/detail";
     }
 

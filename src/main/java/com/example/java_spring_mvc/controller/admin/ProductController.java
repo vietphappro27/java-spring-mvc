@@ -3,6 +3,9 @@ package com.example.java_spring_mvc.controller.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,9 +36,14 @@ public class ProductController {
 
     // show
     @GetMapping("/admin/product")
-    public String getProductPage(Model model) {
-        List<Product> products = this.productService.getAllProduct();
+    public String getProductPage(Model model,
+            @RequestParam(name = "page", defaultValue = "1") long page) {
+        Pageable pageable = PageRequest.of((int) (page - 1), 5);
+        Page<Product> pageProduct = this.productService.getAllProduct(pageable);
+        List<Product> products = pageProduct.getContent();
         model.addAttribute("products", products);
+        model.addAttribute("totalPages", pageProduct.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "admin/product/show";
     }
 
