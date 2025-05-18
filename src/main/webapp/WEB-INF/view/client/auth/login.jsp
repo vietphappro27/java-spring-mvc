@@ -58,13 +58,13 @@
 
                                             <div class="col-12">
                                                 <div class="d-flex gap-2 justify-content-between">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            name="rememberMe" id="rememberMe">
-                                                        <label class="form-check-label text-secondary" for="rememberMe">
-                                                            Duy trì đăng nhập
-                                                        </label>
-                                                    </div>
+                                                    <%-- <div class="form-check"> --%>
+                                                        <%-- <input class="form-check-input" type="checkbox" value=""
+                                                            name="rememberMe" id="rememberMe"> --%>
+                                                        <%-- <label class="form-check-label text-secondary" for="rememberMe"> --%>
+                                                            <%-- Duy trì đăng nhập --%>
+                                                        <%-- </label> --%>
+                                                    <%-- </div> --%>
                                                     <a href="/forgotPassword"
                                                         class="link-primary text-decoration-none">Quên mật
                                                         khẩu?</a>

@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- form: -->
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <!DOCTYPE html>
             <html lang="zxx">
 
@@ -67,137 +68,108 @@
                                         </form>
                                     </div>
                                     <div class="shop__sidebar__accordion">
-                                        <div class="accordion" id="accordionExample">
-                                            <div class="card">
-                                                <div class="card-heading">
-                                                    <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
+                                        <form id="filter-form" action="/product" method="get">
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="card" id="categoryFilter">
+                                                    <div class="card-heading">
+                                                        <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse show">
+                                                        <div class="card-body">
+                                                            <div class="shop__sidebar__categories">
+                                                                <ul class="nice-scroll">
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="category" value="Nam" ${selectedCategories.contains('Nam') ? 'checked' : ''}> Nam 
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="category" value="Nữ" ${selectedCategories.contains('Nữ') ? 'checked' : ''}> Nữ 
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="category" value="Phụ Kiện" ${selectedCategories.contains('Phụ Kiện') ? 'checked' : ''}> Phụ kiện 
+                                                                        </label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div id="collapseOne" class="collapse show"
-                                                    data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="shop__sidebar__categories">
-                                                            <ul class="nice-scroll">
-                                                                <li><a href="#">Nam (20)</a></li>
-                                                                <li><a href="#">Nữ (20)</a></li>
-                                                                <li><a href="#">Phụ kiện (20)</a></li>
-                                                                <li><a href="#">Giảm giá (20)</a></li>
-                                                            </ul>
+                                                <div class="card" id="brandFilter">
+                                                    <div class="card-heading">
+                                                        <a data-toggle="collapse" data-target="#collapseTwo">Thương hiệu</a>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse show">
+                                                        <div class="card-body">
+                                                            <div class="shop__sidebar__brand">
+                                                                <ul class="nice-scroll">
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="brand" value="Ananas" ${selectedBrands.contains('Ananas') ? 'checked' : ''}> Ananas
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="brand" value="Adidas" ${selectedBrands.contains('Adidas') ? 'checked' : ''}> Adidas
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="brand" value="Vans" ${selectedBrands.contains('Vans') ? 'checked' : ''}> Vans
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="brand" value="Converse" ${selectedBrands.contains('Converse') ? 'checked' : ''}> Converse
+                                                                        </label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" id="priceFilter">
+                                                    <div class="card-heading">
+                                                        <a data-toggle="collapse" data-target="#collapseThree">Giá</a>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse show">
+                                                        <div class="card-body">
+                                                            <div class="shop__sidebar__price">
+                                                                <ul class="nice-scroll">
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="price" value="3000plus" ${selectedPrices.contains('3000plus') ? 'checked' : ''}> &gt;3000k
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="price" value="2000-3000" ${selectedPrices.contains('2000-3000') ? 'checked' : ''}> 2000k - 3000k
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="price" value="1000-2000" ${selectedPrices.contains('1000-2000') ? 'checked' : ''}> 1000k - 2000k
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="price" value="below-1000" ${selectedPrices.contains('below-1000') ? 'checked' : ''}> &#60; 1000k
+                                                                        </label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card">
-                                                <div class="card-heading">
-                                                    <a data-toggle="collapse" data-target="#collapseTwo">Thương hiệu</a>
-                                                </div>
-                                                <div id="collapseTwo" class="collapse show"
-                                                    data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="shop__sidebar__brand">
-                                                            <ul>
-                                                                <li><a href="#">Nike</a></li>
-                                                                <li><a href="#">Adidas</a></li>
-                                                                <li><a href="#">Vans</a></li>
-                                                                <li><a href="#">Converse</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="mt-4">
+                                                <button type="button" id="btnFilter" class="btn btn-dark btn-block">Lọc sản phẩm</button>
+                                                <button type="button" id="reset-button" class="btn btn-outline-dark btn-block mt-2">Xóa bộ lọc</button>
                                             </div>
-                                            <div class="card">
-                                                <div class="card-heading">
-                                                    <a data-toggle="collapse" data-target="#collapseThree">Giá</a>
-                                                </div>
-                                                <div id="collapseThree" class="collapse show"
-                                                    data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="shop__sidebar__price">
-                                                            <ul>
-                                                                <li><a href="#">&gt;800k</a></li>
-                                                                <li><a href="#">500k - 800k</a></li>
-                                                                <li><a href="#">200k - 500k</a></li>
-                                                                <li><a href="#">&#60; 200k</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-heading">
-                                                    <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                                                </div>
-                                                <div id="collapseFour" class="collapse show"
-                                                    data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="shop__sidebar__size">
-                                                            <label for="36">36
-                                                                <input type="radio" id="36">
-                                                            </label>
-                                                            <label for="37">37
-                                                                <input type="radio" id="37">
-                                                            </label>
-                                                            <label for="38">38
-                                                                <input type="radio" id="38">
-                                                            </label>
-                                                            <label for="39">39
-                                                                <input type="radio" id="39">
-                                                            </label>
-                                                            <label for="40">40
-                                                                <input type="radio" id="40">
-                                                            </label>
-                                                            <label for="41">41
-                                                                <input type="radio" id="41">
-                                                            </label>
-                                                            <label for="42">42
-                                                                <input type="radio" id="42">
-                                                            </label>
-                                                            <label for="43">43
-                                                                <input type="radio" id="43">
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-heading">
-                                                    <a data-toggle="collapse" data-target="#collapseFive">Màu sắc</a>
-                                                </div>
-                                                <div id="collapseFive" class="collapse show"
-                                                    data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="shop__sidebar__color">
-                                                            <label class="c-1" for="sp-1">
-                                                                <input type="radio" id="sp-1">
-                                                            </label>
-                                                            <label class="c-2" for="sp-2">
-                                                                <input type="radio" id="sp-2">
-                                                            </label>
-                                                            <label class="c-3" for="sp-3">
-                                                                <input type="radio" id="sp-3">
-                                                            </label>
-                                                            <label class="c-4" for="sp-4">
-                                                                <input type="radio" id="sp-4">
-                                                            </label>
-                                                            <label class="c-5" for="sp-5">
-                                                                <input type="radio" id="sp-5">
-                                                            </label>
-                                                            <label class="c-6" for="sp-6">
-                                                                <input type="radio" id="sp-6">
-                                                            </label>
-                                                            <label class="c-7" for="sp-7">
-                                                                <input type="radio" id="sp-7">
-                                                            </label>
-                                                            <label class="c-8" for="sp-8">
-                                                                <input type="radio" id="sp-8">
-                                                            </label>
-                                                            <label class="c-9" for="sp-9">
-                                                                <input type="radio" id="sp-9">
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +178,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <div class="shop__product__option__left">
-                                                <p>Showing 1–12 of 126 results</p>
+                                                <%-- <p>Showing 1–12 of 126 results</p> --%>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -234,19 +206,24 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6>${product.name}</h6>
-                                                    <h5>${product.price} VND</h5>
+                                                    <h5>
+                                                    <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" /> VNĐ
+                                                    </h5>
+                                                    <%-- <h5>${product.price} VND</h5> --%>
                                                 </div>
                                             </div>
                                         </div>
                                     </c:forEach>
                                 </div>
+
+
+                                <%-- pagination --%>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="product__pagination">
                                             <c:if test="${currentPage > 1}">
                                                 <a href="/product?page=${currentPage - 1}"><i class="fa fa-angle-left"></i></a>
                                             </c:if>
-                                            
                                             <c:choose>
                                                 <%-- Nếu tổng số trang ≤ 5, hiển thị tất cả các trang --%>
                                                 <c:when test="${totalPages <= 5}">
@@ -256,17 +233,14 @@
                                                         </a>
                                                     </c:forEach>
                                                 </c:when>
-                                                
                                                 <%-- Nếu tổng số trang > 5, hiển thị theo chiến lược --%>
                                                 <c:otherwise>
                                                     <%-- Luôn hiển thị trang 1 --%>
                                                     <a href="/product?page=1" class="${1 == currentPage ? 'active' : ''}">1</a>
-                                                    
                                                     <%-- Xử lý hiển thị dấu "..." đầu tiên --%>
                                                     <c:if test="${currentPage > 3}">
                                                         <span>...</span>
                                                     </c:if>
-                                                    
                                                     <%-- Hiển thị các trang ở giữa --%>
                                                     <c:choose>
                                                         <c:when test="${currentPage <= 3}">
@@ -298,19 +272,16 @@
                                                             </c:forEach>
                                                         </c:otherwise>
                                                     </c:choose>
-                                                    
                                                     <%-- Xử lý hiển thị dấu "..." thứ hai --%>
                                                     <c:if test="${currentPage < totalPages - 2}">
                                                         <span>...</span>
                                                     </c:if>
-                                                    
                                                     <%-- Luôn hiển thị trang cuối --%>
                                                     <a href="/product?page=${totalPages}" class="${totalPages == currentPage ? 'active' : ''}">
                                                         ${totalPages}
                                                     </a>
                                                 </c:otherwise>
                                             </c:choose>
-                                            
                                             <c:if test="${currentPage < totalPages}">
                                                 <a href="/product?page=${currentPage + 1}"><i class="fa fa-angle-right"></i></a>
                                             </c:if>
@@ -352,6 +323,177 @@
                 <script src="/client/js/mixitup.min.js"></script>
                 <script src="/client/js/owl.carousel.min.js"></script>
                 <script src="/client/js/main.js"></script>
+                
+                <script>
+                    $(document).ready(function() {
+                        // Xử lý nút lọc sản phẩm
+                        $('#btnFilter').on('click', function() {
+                            // Lấy các giá trị đã chọn
+                            var selectedCategories = [];
+                            $('input[name="category"]:checked').each(function() {
+                                selectedCategories.push($(this).val());
+                            });
+                            
+                            var selectedBrands = [];
+                            $('input[name="brand"]:checked').each(function() {
+                                selectedBrands.push($(this).val());
+                            });
+                            
+                            var selectedPrices = [];
+                            $('input[name="price"]:checked').each(function() {
+                                selectedPrices.push($(this).val());
+                            });
+                            
+                            // Tạo URL với các tham số đã chọn
+                            var url = window.location.pathname + '?';
+                            var params = [];
+                            
+                            if (selectedCategories.length > 0) {
+                                params.push('category=' + selectedCategories.join(','));
+                            }
+                            
+                            if (selectedBrands.length > 0) {
+                                params.push('brand=' + selectedBrands.join(','));
+                            }
+                            
+                            if (selectedPrices.length > 0) {
+                                params.push('price=' + selectedPrices.join(','));
+                            }
+                            
+                            // Thêm tham số page và name nếu có
+                            var urlParams = new URLSearchParams(window.location.search);
+                            if (urlParams.has('page')) {
+                                params.push('page=' + urlParams.get('page'));
+                            }
+                            
+                            if (urlParams.has('name')) {
+                                params.push('name=' + urlParams.get('name'));
+                            }
+                            
+                            // Chuyển hướng đến URL mới
+                            if (params.length > 0) {
+                                window.location.href = url + params.join('&');
+                            } else {
+                                window.location.href = url;
+                            }
+                        });
+                        
+                        // Xử lý nút xóa bộ lọc
+                        $('#reset-button').on('click', function() {
+                            // Bỏ chọn tất cả các checkbox
+                            $('input[type="checkbox"]').prop('checked', false);
+                            
+                            // Chuyển hướng đến URL không có tham số lọc
+                            window.location.href = window.location.pathname;
+                        });
+                        
+                        // Đánh dấu các bộ lọc đã chọn khi tải trang
+                        var urlParams = new URLSearchParams(window.location.search);
+                        
+                        if (urlParams.has('category')) {
+                            var categories = urlParams.get('category').split(',');
+                            categories.forEach(function(category) {
+                                $('input[name="category"][value="' + category + '"]').prop('checked', true);
+                            });
+                        }
+                        
+                        if (urlParams.has('brand')) {
+                            var brands = urlParams.get('brand').split(',');
+                            brands.forEach(function(brand) {
+                                $('input[name="brand"][value="' + brand + '"]').prop('checked', true);
+                            });
+                        }
+                        
+                        if (urlParams.has('price')) {
+                            var prices = urlParams.get('price').split(',');
+                            prices.forEach(function(price) {
+                                $('input[name="price"][value="' + price + '"]').prop('checked', true);
+                            });
+                        }
+                    });
+                </script>
+                
+                <style>
+                    /* Style cho checkbox */
+                    input[type="checkbox"] + label {
+                        cursor: pointer;
+                    }
+                    
+                    input[type="checkbox"]:checked + label {
+                        font-weight: bold;
+                        color: #000;
+                    }
+                    
+                    /* Style cho size */
+                    .shop__sidebar__size {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        margin-top: 5px;
+                    }
+                    
+                    .shop__sidebar__size .size-box {
+                        position: relative;
+                        display: inline-block;
+                        width: 45px;
+                        height: 45px;
+                        margin: 0 8px 8px 0;
+                        cursor: pointer;
+                    }
+                    
+                    .shop__sidebar__size .size-box input[type="checkbox"] {
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+                    }
+                    
+                    .shop__sidebar__size .size-text {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid #e5e5e5;
+                        background-color: #fff;
+                        transition: all 0.3s;
+                        font-weight: 500;
+                        border-radius: 4px;
+                    }
+                    
+                    .shop__sidebar__size input[type="checkbox"]:checked + .size-text {
+                        background-color: #111111;
+                        color: white;
+                        border-color: #111111;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        transform: translateY(-2px);
+                    }
+                    
+                    .shop__sidebar__size .size-box:hover .size-text {
+                        border-color: #111111;
+                        transform: translateY(-2px);
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    }
+                    
+                    /* Style cho card-heading */
+                    .card-heading a {
+                        display: block;
+                        position: relative;
+                        cursor: pointer;
+                        font-weight: 600;
+                        padding: 10px 0;
+                    }
+                    
+                    /* Style cho form */
+                    #filter-form label {
+                        display: block;
+                        margin-bottom: 8px;
+                        cursor: pointer;
+                    }
+                    
+                    #filter-form input[type="checkbox"] {
+                        margin-right: 8px;
+                    }
+                </style>
             </body>
 
             </html>

@@ -50,6 +50,7 @@
         <body>
           <!-- header -->
           <jsp:include page="../layout/header.jsp" />
+          <!-- header -->
           <div id="layoutSidenav">
             <!-- sidebar -->
             <jsp:include page="../layout/sidebar.jsp" />

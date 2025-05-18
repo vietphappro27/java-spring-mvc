@@ -1326,6 +1326,10 @@ ol {
 	padding-top: 15px;
 }
 
+.shop__sidebar__color {
+    padding-top: 15px;
+}
+
 .shop__sidebar__color label {
 	height: 30px;
 	width: 30px;
@@ -4113,3 +4117,78 @@ button.add-cart {
   opacity: 1;
   visibility: visible;
 }
+/* account */
+.account__sidebar {
+	background-color: #f8f9fa;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 30px;
+  }
+  
+  .account__sidebar__avatar {
+	text-align: center;
+	padding: 20px 0;
+  }
+  
+  .account__sidebar__menu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+  }
+  
+  .account__sidebar__menu li {
+	margin-bottom: 10px;
+  }
+  
+  .account__sidebar__menu a {
+	display: block;
+	padding: 10px 15px;
+	color: #333;
+	border-radius: 5px;
+	transition: all 0.3s;
+  }
+  
+  .account__sidebar__menu li.active a,
+  .account__sidebar__menu a:hover {
+	background-color: #111111;
+	color: #fff;
+	text-decoration: none;
+  }
+  
+  .tab-content {
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  
+  /* Đảm bảo tab không hiển thị theo mặc định */
+  .tab-pane {
+	display: none;
+  }
+  
+  /* Chỉ hiển thị tab có class active */
+  .tab-pane.active {
+	display: block;
+  }
+  
+  .site-btn {
+	color: #ffffff;
+	background: #111111;
+	border: 1px solid #111111;
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 12px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  
+  .site-btn:hover {
+	background: #333333;
+  }
+  
+  .form-control:focus {
+	border-color: #111111;
+	box-shadow: 0 0 0 0.2rem rgba(17, 17, 17, 0.25);
+  }

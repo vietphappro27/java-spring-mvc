@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.java_spring_mvc.domain.Cart;
@@ -15,8 +16,10 @@ import com.example.java_spring_mvc.domain.Order;
 import com.example.java_spring_mvc.domain.OrderDetail;
 import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.ProductItem;
+import com.example.java_spring_mvc.domain.Product_;
 import com.example.java_spring_mvc.domain.Size;
 import com.example.java_spring_mvc.domain.User;
+import com.example.java_spring_mvc.domain.dto.ProductCriterialDTO;
 import com.example.java_spring_mvc.repository.CartDetailRepository;
 import com.example.java_spring_mvc.repository.CartRepository;
 import com.example.java_spring_mvc.repository.OrderDetailRepository;
@@ -25,6 +28,7 @@ import com.example.java_spring_mvc.repository.ProductItemRepository;
 import com.example.java_spring_mvc.repository.ProductRepository;
 import com.example.java_spring_mvc.repository.SizeRepository;
 import com.example.java_spring_mvc.repository.UserRepository;
+import com.example.java_spring_mvc.service.specification.ProductSpecs;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -54,19 +58,18 @@ public class ProductService {
         this.orderDetailRepository = orderDetailRepository;
     }
 
+    // Save and update product
     public void handleSaveProduct(Product product) {
-        List<ProductItem> productItems = product.getProductItems();
-        // For updates
+        // update product
         if (product.getId() > 0) {
-            // This is an update operation
             Product savedProduct = this.productRepository.save(product);
             return;
         }
-        // For create
+        // create product
+        List<ProductItem> productItems = product.getProductItems();
         if (productItems == null || productItems.isEmpty()) {
             throw new IllegalArgumentException("Product must have at least one ProductItem.");
         }
-        // Save new product with its items
         Product savedProduct = this.productRepository.save(product);
         for (ProductItem item : productItems) {
             item.setProduct(savedProduct);
@@ -81,12 +84,78 @@ public class ProductService {
         }
     }
 
+    // all sizes in database
     public List<Size> getAllSize() {
         return this.sizeRepository.findAll();
     }
 
+    private Specification<Product> nameLike(String name) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+    }
+
     public Page<Product> getAllProduct(Pageable pageable) {
         return this.productRepository.findAll(pageable);
+    }
+
+    public Page<Product> getAllProductWithSpec(Pageable pageable, ProductCriterialDTO productCriterialDTO) {
+        if ((productCriterialDTO.getBrand() == null || !productCriterialDTO.getBrand().isPresent()) &&
+                (productCriterialDTO.getCategory() == null || !productCriterialDTO.getCategory().isPresent()) &&
+                (productCriterialDTO.getPrice() == null || !productCriterialDTO.getPrice().isPresent())) {
+            return this.productRepository.findAll(pageable);
+        }
+
+        Specification<Product> combinedSpec = Specification.where(null);
+
+        if (productCriterialDTO.getCategory() != null && productCriterialDTO.getCategory().isPresent()) {
+            Specification<Product> categorySpec = ProductSpecs
+                    .matchListCategory(productCriterialDTO.getCategory().get());
+            combinedSpec = combinedSpec.and(categorySpec);
+        }
+
+        if (productCriterialDTO.getBrand() != null && productCriterialDTO.getBrand().isPresent()) {
+            Specification<Product> brandSpec = ProductSpecs.matchListBrand(productCriterialDTO.getBrand().get());
+            combinedSpec = combinedSpec.and(brandSpec);
+        }
+
+        if (productCriterialDTO.getPrice() != null && productCriterialDTO.getPrice().isPresent()) {
+            List<String> prices = productCriterialDTO.getPrice().get();
+            if (!prices.isEmpty()) {
+                Specification<Product> priceSpec = null;
+
+                for (String priceRange : prices) {
+                    Specification<Product> currentPriceSpec = null;
+
+                    switch (priceRange) {
+                        case "3000plus":
+                            currentPriceSpec = ProductSpecs.minPrice(3000000);
+                            break;
+                        case "2000-3000":
+                            currentPriceSpec = ProductSpecs.matchPrice(2000000, 3000000);
+                            break;
+                        case "1000-2000":
+                            currentPriceSpec = ProductSpecs.matchPrice(1000000, 2000000);
+                            break;
+                        case "below-1000":
+                            currentPriceSpec = ProductSpecs.maxPrice(1000000);
+                            break;
+                    }
+
+                    if (currentPriceSpec != null) {
+                        if (priceSpec == null) {
+                            priceSpec = currentPriceSpec;
+                        } else {
+                            priceSpec = priceSpec.or(currentPriceSpec);
+                        }
+                    }
+                }
+
+                if (priceSpec != null) {
+                    combinedSpec = combinedSpec.and(priceSpec);
+                }
+            }
+        }
+
+        return this.productRepository.findAll(combinedSpec, pageable);
     }
 
     public Product getProductById(long id) {
@@ -174,51 +243,12 @@ public class ProductService {
                 } else {
                     cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
                 }
-
                 // update cart detail
                 cartDetail.setPrice(productItem.getProduct().getPrice());
                 this.cartDetailRepository.save(cartDetail);
             }
         }
     }
-
-    // *old
-    // public void handleAddProductToCart(String email, long productId, HttpSession
-    // session) {
-    // User user = this.userRepository.findByEmail(email);
-    // if (user != null) {
-    // Cart cart = this.cartRepository.findByUser(user);
-    // if (cart == null) {
-    // // create cart
-    // cart = new Cart();
-    // cart.setUser(user);
-    // cart.setSum(0);
-    // cart = this.cartRepository.save(cart);
-    // }
-    // Product product = this.productRepository.findById(productId);
-    // if (product != null) {
-    // CartDetail cartDetail = this.cartDetailRepository.findByCartAndProduct(cart,
-    // product);
-    // if (cartDetail == null) {
-    // // create cart detail
-    // cartDetail = new CartDetail();
-    // cartDetail.setCart(cart);
-    // cartDetail.setProduct(product);
-    // cartDetail.setQuantity(1);
-    // // update cart
-    // int sum = cart.getSum() + 1;
-    // cart.setSum(sum);
-    // this.cartRepository.save(cart);
-    // session.setAttribute("sum", sum);
-    // } else {
-    // // update cart detail
-    // cartDetail.setQuantity(cartDetail.getQuantity() + 1);
-    // }
-    // cartDetail.setPrice(product.getPrice());
-    // this.cartDetailRepository.save(cartDetail);
-    // }
-    // }
-    // }
 
     public Cart getCartByUser(User user) {
         return this.cartRepository.findByUser(user);
@@ -244,28 +274,7 @@ public class ProductService {
         }
     }
 
-    // *old
-    // public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
-    // Optional<CartDetail> cartDetailOptional =
-    // this.cartDetailRepository.findById(cartDetailId);
-    // if (cartDetailOptional.isPresent()) {
-    // CartDetail cartDetail = cartDetailOptional.get();
-    // Cart currentCart = cartDetail.getCart();
-    // this.cartDetailRepository.deleteById(cartDetailId);
-    // // update cart
-    // if (currentCart.getSum() > 1) {
-    // int sum = currentCart.getSum() - 1;
-    // currentCart.setSum(sum);
-    // session.setAttribute("sum", sum);
-    // this.cartRepository.save(currentCart);
-    // } else {
-    // this.cartRepository.deleteById(currentCart.getId());
-    // session.setAttribute("sum", 0);
-    // }
-    // }
-    // }
-
-    // updated
+    // Update cart before checkout
     public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
         for (CartDetail cartDetail : cartDetails) {
             Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(cartDetail.getId());
@@ -277,7 +286,7 @@ public class ProductService {
         }
     }
 
-    // updated
+    // Place order
     public void handlePlaceOrder(User user, Order order, HttpSession session) {
         Cart cart = this.cartRepository.findByUser(user);
         if (cart != null) {
@@ -316,4 +325,5 @@ public class ProductService {
     public int countProduct() {
         return this.productRepository.findAll().size();
     }
+
 }

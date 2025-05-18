@@ -1,10 +1,13 @@
 package com.example.java_spring_mvc.controller.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +22,11 @@ import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.ProductItem;
 import com.example.java_spring_mvc.domain.Size;
 import com.example.java_spring_mvc.domain.User;
+import com.example.java_spring_mvc.domain.dto.ProductCriterialDTO;
 import com.example.java_spring_mvc.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -65,26 +68,52 @@ public class ItemController {
         this.productService.handleAddProductItemToCart(email, productItem, quantity, session);
         return "redirect:/product/" + productId;
     }
-    // *old
-    // @PostMapping("/add-product-to-cart/{id}")
-    // public String addProductToCart(@PathVariable long id, HttpServletRequest
-    // request) {
-    // HttpSession session = request.getSession(false);
-    // long productId = id;
-    // String email = (String) session.getAttribute("email");
-    // this.productService.handleAddProductToCart(email, productId, session);
-    // return "redirect:/";
-    // }
 
     @GetMapping("/product")
     public String getProductPage(Model model,
-            @RequestParam(name = "page", defaultValue = "1") long page) {
-        PageRequest pageable = PageRequest.of((int) (page - 1), 9);
-        Page<Product> pageProduct = this.productService.getAllProduct(pageable);
+            @RequestParam(required = false) Optional<String> page,
+            @RequestParam(required = false) Optional<List<String>> category,
+            @RequestParam(required = false) Optional<List<String>> brand,
+            @RequestParam(required = false) Optional<List<String>> price,
+            @RequestParam(required = false) Optional<String> sort) {
+
+        int pageNum = 1;
+        try {
+            if (page.isPresent()) {
+                pageNum = Integer.parseInt(page.get());
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        // Tạo đối tượng ProductCriterialDTO
+        ProductCriterialDTO productCriterialDTO = new ProductCriterialDTO();
+        productCriterialDTO.setPage(page);
+        productCriterialDTO.setCategory(category);
+        productCriterialDTO.setBrand(brand);
+        productCriterialDTO.setPrice(price);
+        productCriterialDTO.setSort(sort);
+
+        Pageable pageable = PageRequest.of(pageNum - 1, 9);
+        Page<Product> pageProduct = this.productService.getAllProductWithSpec(pageable, productCriterialDTO);
+
         List<Product> products = pageProduct.getContent();
+
         model.addAttribute("products", products);
         model.addAttribute("totalPages", pageProduct.getTotalPages());
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", pageNum);
+
+        // Thêm các tham số lọc vào model để giữ trạng thái các checkbox
+        if (category.isPresent()) {
+            model.addAttribute("selectedCategories", category.get());
+        }
+        if (brand.isPresent()) {
+            model.addAttribute("selectedBrands", brand.get());
+        }
+        if (price.isPresent()) {
+            model.addAttribute("selectedPrices", price.get());
+        }
+
         return "client/product/show";
     }
 
@@ -113,16 +142,6 @@ public class ItemController {
         this.productService.handleRemoveCartDetail(cartDetailId, session);
         return "redirect:/cart";
     }
-
-    // *old
-    // @PostMapping("/delete-cart-product/{id}")
-    // public String deleteCartProduct(@PathVariable long id, HttpServletRequest
-    // request) {
-    // HttpSession session = request.getSession(false);
-    // long cartDetailId = id;
-    // this.productService.handleRemoveCartDetail(cartDetailId, session);
-    // return "redirect:/cart";
-    // }
 
     @GetMapping("/checkout")
     public String getCheckoutPage(Model model, HttpServletRequest request) {

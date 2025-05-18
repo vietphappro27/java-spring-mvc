@@ -84,31 +84,4 @@ public class OrderController {
         }
         return "redirect:/admin/order";
     }
-
-    // update
-    // @GetMapping("/admin/user/update/{id}")
-    // public String getUpdateUserPage(Model model, @PathVariable long id) {
-    // User currentUser = this.userService.getUserById(id);
-    // model.addAttribute("newUser", currentUser);
-    // model.addAttribute("avatar", currentUser.getAvatar());
-    // return "admin/user/update";
-    // }
-
-    // @PostMapping("/admin/user/update")
-    // public String postUpdateUser(Model model,
-    // @ModelAttribute("newUser") User vietphap,
-    // @RequestParam("vietphapFile") MultipartFile file) {
-    // User currentUser = this.userService.getUserById(vietphap.getId());
-    // if (currentUser != null) {
-    // String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-    // currentUser.setAvatar(avatar);
-    // currentUser.setAddress(vietphap.getAddress());
-    // currentUser.setFullname(vietphap.getFullname());
-    // currentUser.setPhone(vietphap.getPhone());
-    // System.out.println(currentUser);
-    // this.userService.handleSaveUser(currentUser);
-    // }
-    // System.out.println(vietphap.getId());
-    // return "redirect:/admin/user";
-    // }
 }

@@ -74,7 +74,7 @@
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Thương hiệu:</label>
                                                 <form:select class="form-select" path="brand">
-                                                    <form:option value="Nike">Nike</form:option>
+                                                    <form:option value="Ananas">Ananas</form:option>
                                                     <form:option value="Adidas">Adidas</form:option>
                                                     <form:option value="Vans">Vans</form:option>
                                                     <form:option value="Converse">Converse</form:option>

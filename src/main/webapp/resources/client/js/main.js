@@ -266,4 +266,53 @@
         });
     });
 
+    /*-------------------
+		Filter
+	--------------------- */
+    $('#btnFilter').on('click', function(event){
+        event.preventDefault();
+        let categoryArr = [];
+        let brandArr = [];
+        let priceArr = [];
+        // category filter
+        $("#categoryFilter .form-check-input:checked").each(function(){
+            categoryArr.push($(this).val());
+        });
+        // brand filter
+        $("#brandFilter .form-check-input:checked").each(function(){
+            brandArr.push($(this).val());
+        });
+        // price filter
+        $("#priceFilter .form-check-input:checked").each(function(){
+            priceArr.push($(this).val());
+        });
+
+        // console.log(categoryArr, brandArr, priceArr);
+        // debugger
+       // sort order
+       let sortValue = $('input[name="radio-sort"]:checked').val();
+
+       const currentUrl = new URL(window.location.href);
+       const searchParams = currentUrl.searchParams;
+
+       searchParams.set('page', 1);
+       searchParams.set('sort', sortValue);
+
+       if (categoryArr.length > 0){
+        searchParams.set('category', categoryArr.join(','));
+       }
+       if (brandArr.length > 0){
+        searchParams.set('brand', brandArr.join(','));
+       }
+       if (priceArr.length > 0){
+        searchParams.set('price', priceArr.join(','));
+       }
+
+       window.location.href = currentUrl.toString();
+    });
+
+
+
+
+
 })(jQuery);

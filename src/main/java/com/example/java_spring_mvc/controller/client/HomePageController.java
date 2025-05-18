@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -45,7 +46,6 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        // List<Product> products = this.productService.getAllProduct();
         PageRequest pageable = PageRequest.of(0, 8);
         Page<Product> pageProduct = this.productService.getAllProduct(pageable);
         List<Product> products = pageProduct.getContent();
