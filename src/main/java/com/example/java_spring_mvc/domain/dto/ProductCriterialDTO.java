@@ -9,6 +9,7 @@ public class ProductCriterialDTO {
     private Optional<List<String>> brand;
     private Optional<List<String>> price;
     private Optional<String> sort;
+    private Optional<String> keyword;
 
     public Optional<String> getPage() {
         return page;
@@ -50,4 +51,11 @@ public class ProductCriterialDTO {
         this.sort = sort;
     }
 
+    public Optional<String> getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(Optional<String> keyword) {
+        this.keyword = keyword;
+    }
 }

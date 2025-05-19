@@ -234,15 +234,15 @@
                                                         </div>
                                                         <div class="order-footer">
                                                             <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <c:if test="${order.status eq 'PENDING'}">
+                                                                <div class="col-md-8">
+                                                                    <%-- <c:if test="${order.status eq 'PENDING'}">
                                                                         <form action="/cancel-order/${order.id}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
                                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                                             <button type="submit" class="btn btn-sm btn-outline-danger">Hủy đơn hàng</button>
                                                                         </form>
-                                                                    </c:if>
+                                                                    </c:if> --%>
                                                                 </div>
-                                                                <div class="col-md-6 text-end">
+                                                                <div class="col-md-4 text-end">
                                                                     <h6 class="mb-0">Tổng tiền: <fmt:formatNumber value="${order.totalPrice}" type="number" groupingUsed="true" /> VNĐ</h6>
                                                                 </div>
                                                             </div>

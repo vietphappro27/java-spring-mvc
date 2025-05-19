@@ -123,7 +123,7 @@
                                                             </span>
                                                         </li>
                                                     </ul>
-                                                    <div class="checkout__input__checkbox">
+                                                    <!-- <div class="checkout__input__checkbox">
                                                         <label for="cod">
                                                             Thanh toán khi nhận hàng (COD)
                                                             <input type="checkbox" id="cod" name="payment-method"
@@ -138,7 +138,7 @@
                                                                 onclick="toggleCheckbox(this)">
                                                             <span class="checkmark"></span>
                                                         </label>
-                                                    </div>
+                                                    </div> -->
                                                     <button type="submit" class="site-btn">Đặt hàng</button>
                                                     <script>
                                                         function toggleCheckbox(selectedCheckbox) {

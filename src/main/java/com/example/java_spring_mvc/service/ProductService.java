@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -100,11 +101,22 @@ public class ProductService {
     public Page<Product> getAllProductWithSpec(Pageable pageable, ProductCriterialDTO productCriterialDTO) {
         if ((productCriterialDTO.getBrand() == null || !productCriterialDTO.getBrand().isPresent()) &&
                 (productCriterialDTO.getCategory() == null || !productCriterialDTO.getCategory().isPresent()) &&
-                (productCriterialDTO.getPrice() == null || !productCriterialDTO.getPrice().isPresent())) {
+                (productCriterialDTO.getPrice() == null || !productCriterialDTO.getPrice().isPresent()) &&
+                (productCriterialDTO.getSort() == null || !productCriterialDTO.getSort().isPresent()) &&
+                (productCriterialDTO.getKeyword() == null || !productCriterialDTO.getKeyword().isPresent())) {
             return this.productRepository.findAll(pageable);
         }
 
         Specification<Product> combinedSpec = Specification.where(null);
+
+        // Thêm tìm kiếm theo từ khóa
+        if (productCriterialDTO.getKeyword() != null && productCriterialDTO.getKeyword().isPresent()) {
+            String keyword = productCriterialDTO.getKeyword().get();
+            if (!keyword.isEmpty()) {
+                Specification<Product> keywordSpec = nameLike(keyword);
+                combinedSpec = combinedSpec.and(keywordSpec);
+            }
+        }
 
         if (productCriterialDTO.getCategory() != null && productCriterialDTO.getCategory().isPresent()) {
             Specification<Product> categorySpec = ProductSpecs
@@ -152,6 +164,34 @@ public class ProductService {
                 if (priceSpec != null) {
                     combinedSpec = combinedSpec.and(priceSpec);
                 }
+            }
+        }
+
+        // Áp dụng sắp xếp nếu có
+        if (productCriterialDTO.getSort() != null && productCriterialDTO.getSort().isPresent()) {
+            String sortOption = productCriterialDTO.getSort().get();
+
+            // Tạo pageable mới với sắp xếp tương ứng
+            switch (sortOption) {
+                case "price_asc":
+                    pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                            org.springframework.data.domain.Sort.by("price").ascending());
+                    break;
+                case "price_desc":
+                    pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                            org.springframework.data.domain.Sort.by("price").descending());
+                    break;
+                case "name_asc":
+                    pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                            org.springframework.data.domain.Sort.by("name").ascending());
+                    break;
+                case "name_desc":
+                    pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                            org.springframework.data.domain.Sort.by("name").descending());
+                    break;
+                default:
+                    // Mặc định không làm gì
+                    break;
             }
         }
 

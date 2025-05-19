@@ -19,23 +19,23 @@
                             <ul>
                                 <li><a href="/">Trang Chủ</a></li>
                                 <li><a href="/product">Sản Phẩm</a></li>
-                                <li><a href="/product">Nam</a>
+                                <li><a href="/product?category=Nam">Nam</a>
                                     <ul class="dropdown">
-                                        <li><a href="/product">Nike</a></li>
-                                        <li><a href="/product">Adidas</a></li>
-                                        <li><a href="/product">Vans</a></li>
-                                        <li><a href="/product">Converse</a></li>
+                                        <li><a href="/product?category=Nam&brand=Ananas">Ananas</a></li>
+                                        <li><a href="/product?category=Nam&brand=Adidas">Adidas</a></li>
+                                        <li><a href="/product?category=Nam&brand=Vans">Vans</a></li>
+                                        <li><a href="/product?category=Nam&brand=Converse">Converse</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/product">Nữ</a>
+                                <li><a href="/product?category=Nữ">Nữ</a>
                                     <ul class="dropdown">
-                                        <li><a href="/product">Nike</a></li>
-                                        <li><a href="/product">Adidas</a></li>
-                                        <li><a href="/product">Vans</a></li>
-                                        <li><a href="/product">Converse</a></li>
+                                        <li><a href="/product?category=Nữ&brand=Nike">Nike</a></li>
+                                        <li><a href="/product?category=Nữ&brand=Adidas">Adidas</a></li>
+                                        <li><a href="/product?category=Nữ&brand=Vans">Vans</a></li>
+                                        <li><a href="/product?category=Nữ&brand=Converse">Converse</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/product">Phụ Kiện</a></li>
+                                <li><a href="/product?category=Phụ Kiện">Phụ Kiện</a></li>
                             </ul>
                         </nav>
                     </div>

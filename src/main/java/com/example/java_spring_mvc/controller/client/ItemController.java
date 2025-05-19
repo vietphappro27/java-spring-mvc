@@ -23,6 +23,7 @@ import com.example.java_spring_mvc.domain.ProductItem;
 import com.example.java_spring_mvc.domain.Size;
 import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.domain.dto.ProductCriterialDTO;
+import com.example.java_spring_mvc.service.OrderService;
 import com.example.java_spring_mvc.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +34,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ItemController {
 
     private final ProductService productService;
+    private final OrderService orderService;
 
-    public ItemController(ProductService productService) {
+    public ItemController(ProductService productService, OrderService orderService) {
         this.productService = productService;
+        this.orderService = orderService;
     }
 
     // show detail product
@@ -75,7 +78,8 @@ public class ItemController {
             @RequestParam(required = false) Optional<List<String>> category,
             @RequestParam(required = false) Optional<List<String>> brand,
             @RequestParam(required = false) Optional<List<String>> price,
-            @RequestParam(required = false) Optional<String> sort) {
+            @RequestParam(required = false) Optional<String> sort,
+            @RequestParam(required = false) Optional<String> keyword) {
 
         int pageNum = 1;
         try {
@@ -93,6 +97,7 @@ public class ItemController {
         productCriterialDTO.setBrand(brand);
         productCriterialDTO.setPrice(price);
         productCriterialDTO.setSort(sort);
+        productCriterialDTO.setKeyword(keyword);
 
         Pageable pageable = PageRequest.of(pageNum - 1, 9);
         Page<Product> pageProduct = this.productService.getAllProductWithSpec(pageable, productCriterialDTO);
@@ -112,6 +117,14 @@ public class ItemController {
         }
         if (price.isPresent()) {
             model.addAttribute("selectedPrices", price.get());
+        }
+        // Thêm tham số sắp xếp vào model
+        if (sort.isPresent()) {
+            model.addAttribute("selectedSort", sort.get());
+        }
+        // Thêm từ khóa tìm kiếm vào model
+        if (keyword.isPresent()) {
+            model.addAttribute("keyword", keyword.get());
         }
 
         return "client/product/show";
@@ -193,5 +206,4 @@ public class ItemController {
     public String getSuccessPage() {
         return "client/cart/success";
     }
-
 }

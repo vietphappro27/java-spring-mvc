@@ -62,8 +62,8 @@
                             <div class="col-lg-3">
                                 <div class="shop__sidebar">
                                     <div class="shop__sidebar__search">
-                                        <form action="#">
-                                            <input type="text" placeholder="Tìm kiếm...">
+                                        <form action="/product" method="get">
+                                            <input type="text" name="keyword" placeholder="Tìm kiếm..." value="${keyword}">
                                             <button type="submit"><span class="icon_search"></span></button>
                                         </form>
                                     </div>
@@ -183,10 +183,13 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <div class="shop__product__option__right">
-                                                <p>Sort by Price:</p>
-                                                <select>
-                                                    <option value="">Low To High</option>
-                                                    <option value="name_asc">Name (A - Z)</option>
+                                                <p>Sắp xếp theo:</p>
+                                                <select id="sortSelect">
+                                                    <option value="">Mặc định</option>
+                                                    <option value="price_asc" ${selectedSort == 'price_asc' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
+                                                    <option value="price_desc" ${selectedSort == 'price_desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
+                                                    <option value="name_asc" ${selectedSort == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
+                                                    <option value="name_desc" ${selectedSort == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -222,13 +225,13 @@
                                     <div class="col-lg-12">
                                         <div class="product__pagination">
                                             <c:if test="${currentPage > 1}">
-                                                <a href="/product?page=${currentPage - 1}"><i class="fa fa-angle-left"></i></a>
+                                                <a href="/product?page=${currentPage - 1}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>"><i class="fa fa-angle-left"></i></a>
                                             </c:if>
                                             <c:choose>
                                                 <%-- Nếu tổng số trang ≤ 5, hiển thị tất cả các trang --%>
                                                 <c:when test="${totalPages <= 5}">
                                                     <c:forEach begin="1" end="${totalPages}" var="pageNumber">
-                                                        <a href="/product?page=${pageNumber}" class="${pageNumber == currentPage ? 'active' : ''}">
+                                                        <a href="/product?page=${pageNumber}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${pageNumber == currentPage ? 'active' : ''}">
                                                             ${pageNumber}
                                                         </a>
                                                     </c:forEach>
@@ -236,7 +239,7 @@
                                                 <%-- Nếu tổng số trang > 5, hiển thị theo chiến lược --%>
                                                 <c:otherwise>
                                                     <%-- Luôn hiển thị trang 1 --%>
-                                                    <a href="/product?page=1" class="${1 == currentPage ? 'active' : ''}">1</a>
+                                                    <a href="/product?page=1<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${1 == currentPage ? 'active' : ''}">1</a>
                                                     <%-- Xử lý hiển thị dấu "..." đầu tiên --%>
                                                     <c:if test="${currentPage > 3}">
                                                         <span>...</span>
@@ -247,7 +250,7 @@
                                                             <%-- Gần trang đầu --%>
                                                             <c:forEach begin="2" end="4" var="pageNumber">
                                                                 <c:if test="${pageNumber <= totalPages}">
-                                                                    <a href="/product?page=${pageNumber}" class="${pageNumber == currentPage ? 'active' : ''}">
+                                                                    <a href="/product?page=${pageNumber}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${pageNumber == currentPage ? 'active' : ''}">
                                                                         ${pageNumber}
                                                                     </a>
                                                                 </c:if>
@@ -257,7 +260,7 @@
                                                             <%-- Gần trang cuối --%>
                                                             <c:forEach begin="${totalPages - 3}" end="${totalPages - 1}" var="pageNumber">
                                                                 <c:if test="${pageNumber > 1}">
-                                                                    <a href="/product?page=${pageNumber}" class="${pageNumber == currentPage ? 'active' : ''}">
+                                                                    <a href="/product?page=${pageNumber}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${pageNumber == currentPage ? 'active' : ''}">
                                                                         ${pageNumber}
                                                                     </a>
                                                                 </c:if>
@@ -266,7 +269,7 @@
                                                         <c:otherwise>
                                                             <%-- Ở giữa --%>
                                                             <c:forEach begin="${currentPage - 1}" end="${currentPage + 1}" var="pageNumber">
-                                                                <a href="/product?page=${pageNumber}" class="${pageNumber == currentPage ? 'active' : ''}">
+                                                                <a href="/product?page=${pageNumber}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${pageNumber == currentPage ? 'active' : ''}">
                                                                     ${pageNumber}
                                                                 </a>
                                                             </c:forEach>
@@ -277,13 +280,13 @@
                                                         <span>...</span>
                                                     </c:if>
                                                     <%-- Luôn hiển thị trang cuối --%>
-                                                    <a href="/product?page=${totalPages}" class="${totalPages == currentPage ? 'active' : ''}">
+                                                    <a href="/product?page=${totalPages}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>" class="${totalPages == currentPage ? 'active' : ''}">
                                                         ${totalPages}
                                                     </a>
                                                 </c:otherwise>
                                             </c:choose>
                                             <c:if test="${currentPage < totalPages}">
-                                                <a href="/product?page=${currentPage + 1}"><i class="fa fa-angle-right"></i></a>
+                                                <a href="/product?page=${currentPage + 1}<c:if test="${not empty param.category}">&category=${param.category}</c:if><c:if test="${not empty param.brand}">&brand=${param.brand}</c:if><c:if test="${not empty param.price}">&price=${param.price}</c:if><c:if test="${not empty param.sort}">&sort=${param.sort}</c:if><c:if test="${not empty param.keyword}">&keyword=${param.keyword}</c:if>"><i class="fa fa-angle-right"></i></a>
                                             </c:if>
                                         </div>
                                     </div>
@@ -323,6 +326,7 @@
                 <script src="/client/js/mixitup.min.js"></script>
                 <script src="/client/js/owl.carousel.min.js"></script>
                 <script src="/client/js/main.js"></script>
+                <script src="/client/js/product-filter.js"></script>
                 
                 <script>
                     $(document).ready(function() {
@@ -344,6 +348,9 @@
                                 selectedPrices.push($(this).val());
                             });
                             
+                            // Lấy giá trị sắp xếp
+                            var sortValue = $('#sortSelect').val();
+                            
                             // Tạo URL với các tham số đã chọn
                             var url = window.location.pathname + '?';
                             var params = [];
@@ -360,14 +367,20 @@
                                 params.push('price=' + selectedPrices.join(','));
                             }
                             
-                            // Thêm tham số page và name nếu có
+                            if (sortValue) {
+                                params.push('sort=' + sortValue);
+                            }
+                            
+                            // Thêm tham số keyword nếu có
+                            var urlParams = new URLSearchParams(window.location.search);
+                            if (urlParams.has("keyword")) {
+                                params.push("keyword=" + urlParams.get("keyword"));
+                            }
+                            
+                            // Thêm tham số page nếu có
                             var urlParams = new URLSearchParams(window.location.search);
                             if (urlParams.has('page')) {
                                 params.push('page=' + urlParams.get('page'));
-                            }
-                            
-                            if (urlParams.has('name')) {
-                                params.push('name=' + urlParams.get('name'));
                             }
                             
                             // Chuyển hướng đến URL mới
@@ -378,7 +391,57 @@
                             }
                         });
                         
+                        // Xử lý sự kiện thay đổi select box sắp xếp
+                        $('#sortSelect').on('change', function() {
+                            // Lấy các giá trị đã chọn từ URL hiện tại
+                            var urlParams = new URLSearchParams(window.location.search);
+                            var url = window.location.pathname + '?';
+                            var params = [];
+                            
+                            // Giữ lại các tham số lọc hiện tại
+                            if (urlParams.has("keyword")) {
+                                params.push("keyword=" + urlParams.get("keyword"));
+                            }
+                            if (urlParams.has('category')) {
+                                params.push('category=' + urlParams.get('category'));
+                            }
+                            
+                            if (urlParams.has('brand')) {
+                                params.push('brand=' + urlParams.get('brand'));
+                            }
+                            
+                            if (urlParams.has('price')) {
+                                params.push('price=' + urlParams.get('price'));
+                            }
+                            
+                            // Thêm tham số sắp xếp mới
+                            var sortValue = $(this).val();
+                            if (sortValue) {
+                                params.push('sort=' + sortValue);
+                            }
+                            
+                            // Thêm tham số page nếu có
+                            if (urlParams.has('page')) {
+                                params.push('page=' + urlParams.get('page'));
+                            }
+                            
+                            // Chuyển hướng đến URL mới
+                            window.location.href = url + params.join('&');
+                        });
+                        
                         // Xử lý nút xóa bộ lọc
+                        $("#reset-button").on("click", function() {
+                            // Bỏ chọn tất cả các checkbox
+                            $("input[type=\"checkbox\"]").prop("checked", false);
+                            
+                            // Chuyển hướng đến URL không có tham số lọc, nhưng giữ lại keyword nếu có
+                            var urlParams = new URLSearchParams(window.location.search);
+                            if (urlParams.has("keyword")) {
+                                window.location.href = window.location.pathname + "?keyword=" + urlParams.get("keyword");
+                            } else {
+                                window.location.href = window.location.pathname;
+                            }
+                        });
                         $('#reset-button').on('click', function() {
                             // Bỏ chọn tất cả các checkbox
                             $('input[type="checkbox"]').prop('checked', false);
@@ -409,6 +472,11 @@
                             prices.forEach(function(price) {
                                 $('input[name="price"][value="' + price + '"]').prop('checked', true);
                             });
+                        }
+                        
+                        // Đánh dấu tùy chọn sắp xếp đã chọn
+                        if (urlParams.has('sort')) {
+                            $('#sortSelect').val(urlParams.get('sort'));
                         }
                     });
                 </script>

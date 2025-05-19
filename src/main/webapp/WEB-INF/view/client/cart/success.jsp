@@ -31,40 +31,7 @@
                         <link rel="stylesheet" href="/client/css/slicknav.min.css" type="text/css">
                         <link rel="stylesheet" href="/client/css/style.css" type="text/css">
                         <style>
-                            .success-container {
-                                padding: 80px 0;
-                                text-align: center;
-                            }
-                            .success-icon {
-                                color: #4CAF50;
-                                font-size: 5rem;
-                                margin-bottom: 20px;
-                            }
-                            .success-title {
-                                font-size: 28px;
-                                font-weight: 700;
-                                margin-bottom: 15px;
-                            }
-                            .success-message {
-                                font-size: 16px;
-                                margin-bottom: 30px;
-                                color: #555;
-                            }
-                            .order-details {
-                                max-width: 600px;
-                                margin: 0 auto;
-                                padding: 30px;
-                                background-color: #f8f9fa;
-                                border-radius: 8px;
-                                text-align: left;
-                                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-                            }
-                            .action-buttons {
-                                margin-top: 30px;
-                            }
-                            .action-buttons .btn {
-                                margin: 0 10px;
-                            }
+
                         </style>
                     </head>
 
@@ -80,10 +47,11 @@
                                 </div>
                                 <h2 class="success-title">Đặt hàng thành công!</h2>
                                 <p class="success-message">
-                                    Cảm ơn bạn đã mua sắm tại PShoes. Đơn hàng của bạn đã được xác nhận và đang được xử lý.
+                                    Cảm ơn bạn đã mua sắm tại PShoes. Đơn hàng của bạn đã được xác nhận và đang được xử
+                                    lý.
                                 </p>
 
-                                <div class="order-details">
+                                <%-- <div class="order-details">
                                     <h4 style="margin-bottom: 20px">Chi tiết đơn hàng #${cart.id}</h4>
 
                                     <div class="row" style="margin-bottom: 10px">
@@ -102,7 +70,8 @@
                                     <div style="margin-bottom: 20px">
                                         <strong>Phương thức thanh toán:</strong>
                                         <c:choose>
-                                            <c:when test="${cart.paymentMethod == 'COD'}">Thanh toán khi nhận hàng</c:when>
+                                            <c:when test="${cart.paymentMethod == 'COD'}">Thanh toán khi nhận hàng
+                                            </c:when>
                                             <c:when test="${cart.paymentMethod == 'VNPAY'}">Thanh toán VNPAY</c:when>
                                             <c:otherwise>Chưa thanh toán</c:otherwise>
                                         </c:choose>
@@ -111,14 +80,15 @@
                                     <div style="margin-bottom: 15px">
                                         <strong>Tổng thanh toán:</strong>
                                         <span style="font-size: 18px; color: #e53637; font-weight: bold">
-                                            <fmt:formatNumber value="${cart.totalPrice}" type="number" groupingUsed="true"/> VNĐ
+                                            <fmt:formatNumber value="${cart.totalPrice}" type="number"
+                                                groupingUsed="true" /> VNĐ
                                         </span>
                                     </div>
-                                </div>
+                                </div> --%>
 
                                 <div class="action-buttons">
-                                    <a href="/" class="primary-btn">Tiếp tục mua hàng</a>
-                                    <a href="/orders" class="site-btn">Xem đơn hàng của tôi</a>
+                                    <a href="/" class="site-btn">Tiếp tục mua hàng</a>
+                                    <a href="/order_history" class="site-btn">Xem đơn hàng của tôi</a>
                                 </div>
                             </div>
                         </section>
