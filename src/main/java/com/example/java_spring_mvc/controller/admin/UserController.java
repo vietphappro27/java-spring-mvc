@@ -41,7 +41,7 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model,
             @RequestParam(name = "page", defaultValue = "1") long page) {
-        PageRequest pageable = PageRequest.of((int) (page - 1), 1);
+        PageRequest pageable = PageRequest.of((int) (page - 1), 2);
         Page<User> pageUser = this.userService.getAllUser(pageable);
         List<User> users = pageUser.getContent();
         model.addAttribute("users", users);
@@ -86,8 +86,8 @@ public class UserController {
         }
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-        String hashPassword = this.passwordEncoder.encode(vietphap.getPassword());
         vietphap.setAvatar(avatar);
+        String hashPassword = this.passwordEncoder.encode(vietphap.getPassword());
         vietphap.setPassword(hashPassword);
         String role = vietphap.getRole().getName();
         vietphap.setRole(this.userService.getRoleByName(role));

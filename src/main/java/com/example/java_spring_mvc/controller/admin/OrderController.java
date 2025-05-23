@@ -30,7 +30,7 @@ public class OrderController {
     @GetMapping("/admin/order")
     public String getOrderPage(Model model,
             @RequestParam(name = "page", defaultValue = "1") long page) {
-        PageRequest pageable = PageRequest.of((int) (page - 1), 1);
+        PageRequest pageable = PageRequest.of((int) (page - 1), 3);
         Page<Order> pageOrder = this.orderService.getAllOrders(pageable);
         List<Order> orders = pageOrder.getContent();
         model.addAttribute("orders", orders);

@@ -8,7 +8,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Xác Nhận OTP</title>
+                <title>Đặt Lại Mật Khẩu</title>
                 <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
             </head>
 
@@ -21,37 +21,36 @@
                             <div class="card border border-light-subtle rounded-3 shadow-sm">
                                 <div class="card-body p-3 p-md-4 p-xl-5">
                                     <div class="text-center mb-3">
-                                        <h2>Xác Nhận Mã OTP</h2>
+                                        <h2>Đặt Lại Mật Khẩu</h2>
                                     </div>
                                     <c:if test="${not empty error}">
                                         <div class="alert alert-danger" role="alert">
                                             ${error}
                                         </div>
                                     </c:if>
-                                    <c:if test="${not empty message}">
-                                        <div class="alert alert-success" role="alert">
-                                            ${message}
-                                        </div>
-                                    </c:if>
-                                    <form action="/confirmOTP" method="POST">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    
+                                    <form:form action="/resetPassword" method="POST" modelAttribute="passwordResetDTO">
+                                        <form:hidden path="email" value="${email}" />
+                                        <form:hidden path="otp" value="verified" />
+                                        
                                         <div class="form-floating mb-3">
-                                            <input type="email" class="form-control" name="email" id="email"
-                                                value="${email}" readonly>
-                                            <label for="email">Email</label>
+                                            <form:password path="newPassword" class="form-control" id="newPassword" 
+                                                placeholder="Mật khẩu mới" required="true" />
+                                            <label for="newPassword">Mật khẩu mới</label>
+                                            <form:errors path="newPassword" cssClass="text-danger" />
                                         </div>
+                                        
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" name="otp" id="otp"
-                                                placeholder="Nhập mã OTP" required>
-                                            <label for="otp">Mã OTP</label>
+                                            <form:password path="confirmPassword" class="form-control" id="confirmPassword" 
+                                                placeholder="Xác nhận mật khẩu" required="true" />
+                                            <label for="confirmPassword">Xác nhận mật khẩu</label>
+                                            <form:errors path="confirmPassword" cssClass="text-danger" />
                                         </div>
+                                        
                                         <div class="d-grid my-3">
-                                            <button class="btn btn-primary btn-lg" type="submit">Xác Nhận</button>
+                                            <button class="btn btn-primary btn-lg" type="submit">Đặt Lại Mật Khẩu</button>
                                         </div>
-                                        <div class="text-center">
-                                            <a href="/forgotPassword" class="link-primary text-decoration-none">Quay lại</a>
-                                        </div>
-                                    </form>
+                                    </form:form>
                                 </div>
                             </div>
                         </div>
@@ -59,4 +58,4 @@
                 </div>
             </body>
 
-            </html>
+            </html> 

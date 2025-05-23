@@ -23,6 +23,9 @@ public class UserService {
     }
 
     public void handleSaveUser(User user) {
+        if (user.getAvatar() == "") {
+            user.setAvatar("default.jpg");
+        }
         this.userRepository.save(user);
     }
 

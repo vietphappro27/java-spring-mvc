@@ -13,7 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,8 +24,11 @@ import com.example.java_spring_mvc.domain.Order;
 import com.example.java_spring_mvc.domain.OrderDetail;
 import com.example.java_spring_mvc.domain.Product;
 import com.example.java_spring_mvc.domain.User;
+import com.example.java_spring_mvc.domain.dto.PasswordResetDTO;
 import com.example.java_spring_mvc.domain.dto.RegisterDTO;
+import com.example.java_spring_mvc.service.EmailService;
 import com.example.java_spring_mvc.service.OrderService;
+import com.example.java_spring_mvc.service.OtpService;
 import com.example.java_spring_mvc.service.ProductService;
 import com.example.java_spring_mvc.service.UserService;
 
@@ -35,13 +39,17 @@ public class HomePageController {
     private final UserService userService;
     private final OrderService orderService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final OtpService otpService;
 
     public HomePageController(ProductService productService, UserService userService, OrderService orderService,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder, EmailService emailService, OtpService otpService) {
         this.productService = productService;
         this.userService = userService;
         this.orderService = orderService;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+        this.otpService = otpService;
     }
 
     @GetMapping("/")
@@ -67,10 +75,10 @@ public class HomePageController {
         if (bindingResult.hasErrors()) {
             return "client/auth/register";
         }
-
         User user = this.userService.registerDTOToUser(registerDTO);
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
+        user.setAvatar("default.jpg");
         user.setRole(this.userService.getRoleByName("USER"));
         this.userService.handleSaveUser(user);
         return "redirect:/login";
@@ -86,9 +94,93 @@ public class HomePageController {
         return "client/auth/forgotPassword";
     }
 
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+
+        // Check if email exists
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "Email không tồn tại trong hệ thống");
+            return "redirect:/forgotPassword";
+        }
+        try {
+            // Generate OTP
+            String otp = otpService.generateOTP(email);
+
+            // Send OTP to email
+            emailService.sendOtpEmail(email, otp);
+
+            redirectAttributes.addFlashAttribute("message", "Mã OTP đã được gửi đến email của bạn");
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/confirmOTP";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Có lỗi xảy ra khi gửi OTP. Vui lòng thử lại sau.");
+            return "redirect:/forgotPassword";
+        }
+    }
+
     @GetMapping("/confirmOTP")
     public String getConfirmOTPPage(Model model) {
+        if (!model.containsAttribute("email")) {
+            model.addAttribute("email", "");
+        }
+        model.addAttribute("passwordResetDTO", new PasswordResetDTO());
         return "client/auth/confirmOTP";
+    }
+
+    @PostMapping("/confirmOTP")
+    public String confirmOTP(@RequestParam("email") String email,
+            @RequestParam("otp") String otp,
+            RedirectAttributes redirectAttributes) {
+        // Validate OTP
+        if (!otpService.validateOTP(email, otp)) {
+            redirectAttributes.addFlashAttribute("error", "Mã OTP không hợp lệ hoặc đã hết hạn");
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/confirmOTP";
+        }
+
+        redirectAttributes.addFlashAttribute("email", email);
+        redirectAttributes.addFlashAttribute("otpValidated", true);
+        return "redirect:/resetPassword";
+    }
+
+    @GetMapping("/resetPassword")
+    public String getResetPasswordPage(Model model) {
+        if (!model.containsAttribute("otpValidated")) {
+            return "redirect:/forgotPassword";
+        }
+
+        model.addAttribute("passwordResetDTO", new PasswordResetDTO());
+        return "client/auth/resetPassword";
+    }
+
+    @PostMapping("/resetPassword")
+    public String resetPassword(@Valid @ModelAttribute("passwordResetDTO") PasswordResetDTO passwordResetDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+        // Validate passwords match
+        if (!passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.passwordResetDTO", "Mật khẩu xác nhận không khớp");
+        }
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordResetDTO",
+                    bindingResult);
+            redirectAttributes.addFlashAttribute("passwordResetDTO", passwordResetDTO);
+            redirectAttributes.addFlashAttribute("email", passwordResetDTO.getEmail());
+            redirectAttributes.addFlashAttribute("otpValidated", true);
+            return "redirect:/resetPassword";
+        }
+
+        // Update password
+        User user = userService.getUserByEmail(passwordResetDTO.getEmail());
+        String hashPassword = passwordEncoder.encode(passwordResetDTO.getNewPassword());
+        user.setPassword(hashPassword);
+        userService.handleSaveUser(user);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Mật khẩu đã được cập nhật thành công");
+        return "redirect:/login";
     }
 
     // BUG: access denied
