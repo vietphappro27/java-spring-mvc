@@ -40,16 +40,59 @@
                         <jsp:include page="../layout/header.jsp" />
                         <!-- Header Section End -->
 
-                        <section class="success-container">
+                        <!-- Breadcrumb Section Begin -->
+                        <section class="breadcrumb-option">
                             <div class="container">
-                                <div class="success-icon">
-                                    <i class="fa fa-check-circle"></i>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="breadcrumb__text">
+                                            <h4>Đặt hàng thành công</h4>
+                                            <div class="breadcrumb__links">
+                                                <a href="./index.html">Home</a>
+                                                <a href="./shop.html">Shop</a>
+                                                <span>Đặt hàng thành công</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h2 class="success-title">Đặt hàng thành công!</h2>
-                                <p class="success-message">
-                                    Cảm ơn bạn đã mua sắm tại PShoes. Đơn hàng của bạn đã được xác nhận và đang được xử
-                                    lý.
-                                </p>
+                            </div>
+                        </section>
+                        <!-- Breadcrumb Section End -->
+
+                        <!-- Success Section Begin -->
+                        <section class="checkout spad">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="checkout__form">
+                                            <div class="text-center">
+                                                <div class="mb-4">
+                                                    <i class="fa fa-check-circle" style="font-size: 80px; color: #28a745;"></i>
+                                                </div>
+                                                <h2 class="mb-3" style="color: #28a745;">Đặt hàng thành công!</h2>
+                                                <p class="mb-4">
+                                                    <c:choose>
+                                                        <c:when test="${not empty message}">
+                                                            ${message}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Cảm ơn bạn đã mua sắm tại P-Shoes. Đơn hàng của bạn đã được xác nhận và đang được xử lý.
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
+                                                
+                                                <c:if test="${not empty amount}">
+                                                    <div class="alert alert-success">
+                                                        <h5>Thông tin thanh toán:</h5>
+                                                        <p><strong>Số tiền:</strong> <fmt:formatNumber value="${amount}" type="number" groupingUsed="true" /> VNĐ</p>
+                                                        <c:if test="${not empty orderInfo}">
+                                                            <p><strong>Mô tả:</strong> ${orderInfo}</p>
+                                                        </c:if>
+                                                        <c:if test="${not empty txnRef}">
+                                                            <p><strong>Mã giao dịch:</strong> ${txnRef}</p>
+                                                        </c:if>
+                                                    </div>
+                                                </c:if>
 
                                 <%-- <div class="order-details">
                                     <h4 style="margin-bottom: 20px">Chi tiết đơn hàng #${cart.id}</h4>
@@ -86,12 +129,25 @@
                                     </div>
                                 </div> --%>
 
-                                <div class="action-buttons">
-                                    <a href="/" class="site-btn">Tiếp tục mua hàng</a>
-                                    <a href="/order_history" class="site-btn">Xem đơn hàng của tôi</a>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <a href="/" class="site-btn" style="width: 100%;">
+                                                            <i class="fa fa-home"></i> Tiếp tục mua hàng
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <a href="/order_history" class="site-btn" style="width: 100%; background-color: #6c757d;">
+                                                            <i class="fa fa-list"></i> Xem đơn hàng của tôi
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </section>
+                        <!-- Success Section End -->
 
                         <!-- Footer Section Begin -->
                         <jsp:include page="../layout/footer.jsp" />

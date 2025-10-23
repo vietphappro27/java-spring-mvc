@@ -3,7 +3,6 @@ package com.example.java_spring_mvc.domain;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +26,7 @@ public class Order {
     private String shipName;
     private String shipPhone;
     private String note;
+    private String paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -115,11 +115,19 @@ public class Order {
         this.orderDetails = orderDetails;
     }
 
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     @Override
     public String toString() {
         return "Order [id=" + id + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", status=" + status
                 + ", shipAddress=" + shipAddress + ", shipName=" + shipName + ", shipPhone=" + shipPhone + ", note="
-                + note + ", user=" + user + ", orderDetails=" + orderDetails + "]";
+                + note + ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderDetails=" + orderDetails + "]";
     }
 
 }

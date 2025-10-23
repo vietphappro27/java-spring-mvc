@@ -1,8 +1,9 @@
 package com.example.java_spring_mvc.controller.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ import com.example.java_spring_mvc.domain.User;
 import com.example.java_spring_mvc.domain.dto.ProductCriterialDTO;
 import com.example.java_spring_mvc.service.OrderService;
 import com.example.java_spring_mvc.service.ProductService;
+import com.example.java_spring_mvc.service.VNPayService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,17 +37,18 @@ public class ItemController {
 
     private final ProductService productService;
     private final OrderService orderService;
+    private final VNPayService vnPayService;
 
-    public ItemController(ProductService productService, OrderService orderService) {
+    public ItemController(ProductService productService, OrderService orderService, VNPayService vnPayService) {
         this.productService = productService;
         this.orderService = orderService;
+        this.vnPayService = vnPayService;
     }
 
     // show detail product
     @GetMapping("/product/{id}")
     public String getDetailProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.getProductById(id);
-        List<ProductItem> productItems = this.productService.getProductItemsByProductId(id);
         List<Size> sizes = this.productService.getSizesByProductId(id);
         model.addAttribute("product", product);
         // model.addAttribute("productItems", productItems);
@@ -188,7 +191,8 @@ public class ItemController {
             @RequestParam("shipName") String shipName,
             @RequestParam("shipPhone") String shipPhone,
             @RequestParam("shipAddress") String shipAddress,
-            @RequestParam("note") String note) {
+            @RequestParam("note") String note,
+            @RequestParam("paymentMethod") String paymentMethod) {
         User user = new User();
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
@@ -198,12 +202,190 @@ public class ItemController {
         order.setShipPhone(shipPhone);
         order.setShipAddress(shipAddress);
         order.setNote(note);
-        this.productService.handlePlaceOrder(user, order, session);
-        return "redirect:/success";
+        order.setPaymentMethod(paymentMethod);
+
+        if ("COD".equals(paymentMethod)) {
+            // Xử lý thanh toán COD
+            this.productService.handlePlaceOrder(user, order, session);
+            return "redirect:/success";
+        } else if ("VNPAY".equals(paymentMethod)) {
+            // Xử lý thanh toán VNPay
+            return handleVNPayPayment(request, user, order, session);
+        }
+
+        return "redirect:/checkout";
+    }
+
+    private String handleVNPayPayment(HttpServletRequest request, User user, Order order, HttpSession session) {
+        try {
+            // Tạo order tạm thời với status PENDING
+            this.productService.handlePlaceOrder(user, order, session);
+
+            // Lấy thông tin giỏ hàng để tính tổng tiền
+            Cart cart = this.productService.getCartByUser(user);
+            List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+            double totalPrice = 0;
+            for (CartDetail cartDetail : cartDetails) {
+                totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
+            }
+
+            // Kiểm tra số tiền tối thiểu (VNPay yêu cầu tối thiểu 5,000 VND)
+            if (totalPrice < 10000) {
+                // Nếu số tiền quá nhỏ, thêm phí vận chuyển hoặc yêu cầu mua thêm
+                totalPrice = 10000; // Đặt tối thiểu 5,000 VND
+            }
+
+            // Tạo payment URL với thông tin chi tiết
+            // Sử dụng timestamp + random để tránh trùng lặp
+            String orderId = System.currentTimeMillis() + "_" + (int) (Math.random() * 1000);
+            String amount = String.valueOf((long) totalPrice);
+            String orderInfo = "Thanh toan don hang " + orderId;
+            String ipAddress = getClientIpAddress(request);
+
+            // Debug: In ra console để kiểm tra
+            System.out.println("=== VNPay Payment Debug ===");
+            System.out.println("VNPay Debug - User ID: " + user.getId());
+            System.out.println("VNPay Debug - Total Price: " + totalPrice);
+            System.out.println("VNPay Debug - Amount String: " + amount);
+            System.out.println("VNPay Debug - Order ID: " + orderId);
+            System.out.println("VNPay Debug - IP Address: " + ipAddress);
+            System.out.println("VNPay Debug - Order Info: " + orderInfo);
+
+            // Kiểm tra các tham số trước khi tạo URL
+            if (amount == null || amount.isEmpty()) {
+                throw new RuntimeException("Số tiền không hợp lệ");
+            }
+            if (ipAddress == null || ipAddress.isEmpty()) {
+                ipAddress = "127.0.0.1"; // IP mặc định
+            }
+
+            String paymentUrl = vnPayService.createPaymentUrl(orderId, amount, orderInfo, ipAddress);
+
+            // Lưu orderId vào session để xử lý sau
+            session.setAttribute("vnpay_order_id", orderId);
+            session.setAttribute("vnpay_amount", amount);
+
+            System.out.println("VNPay Debug - Payment URL created successfully");
+            return "redirect:" + paymentUrl;
+        } catch (Exception e) {
+            System.err.println("VNPay Payment Error: " + e.getMessage());
+            e.printStackTrace();
+            return "redirect:/error";
+        }
+    }
+
+    private String getClientIpAddress(HttpServletRequest request) {
+        String xForwardedForHeader = request.getHeader("X-Forwarded-For");
+        if (xForwardedForHeader == null) {
+            return request.getRemoteAddr();
+        } else {
+            return xForwardedForHeader.split(",")[0];
+        }
+    }
+
+    @GetMapping("/vnpay-return")
+    public String handleVNPayReturn(HttpServletRequest request, Model model) {
+        try {
+            System.out.println("=== VNPay Return Debug ===");
+
+            Map<String, String> params = new HashMap<>();
+            for (String paramName : request.getParameterMap().keySet()) {
+                String paramValue = request.getParameter(paramName);
+                params.put(paramName, paramValue);
+                System.out.println("VNPay Return - " + paramName + " = " + paramValue);
+            }
+
+            // Debug: In ra tất cả tham số
+            System.out.println("VNPay Return - All Parameters: " + params);
+
+            // Xác thực chữ ký
+            boolean isValid = vnPayService.verifyPayment(params);
+            System.out.println("VNPay Return - Signature Valid: " + isValid);
+
+            if (isValid) {
+                String responseCode = params.get("vnp_ResponseCode");
+                String transactionStatus = params.get("vnp_TransactionStatus");
+                String amount = params.get("vnp_Amount");
+                String orderInfo = params.get("vnp_OrderInfo");
+                String txnRef = params.get("vnp_TxnRef");
+
+                System.out.println("VNPay Return - Response Code: " + responseCode);
+                System.out.println("VNPay Return - Transaction Status: " + transactionStatus);
+                System.out.println("VNPay Return - Amount: " + amount);
+                System.out.println("VNPay Return - Order Info: " + orderInfo);
+                System.out.println("VNPay Return - Txn Ref: " + txnRef);
+
+                if ("00".equals(responseCode) && "00".equals(transactionStatus)) {
+                    // Thanh toán thành công
+                    System.out.println("VNPay Return - Payment successful!");
+
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+                        String orderId = (String) session.getAttribute("vnpay_order_id");
+                        System.out.println("VNPay Return - Session Order ID: " + orderId);
+
+                        if (orderId != null) {
+                            // Cập nhật trạng thái order thành PAID
+                            // TODO: Implement update order status
+                            session.removeAttribute("vnpay_order_id");
+                            System.out.println("VNPay Return - Order ID removed from session");
+                        }
+                    }
+
+                    // Thêm thông tin vào model để hiển thị
+                    model.addAttribute("message", "Thanh toán thành công! Cảm ơn bạn đã mua sắm tại P-Shoes.");
+                    model.addAttribute("amount", amount);
+                    model.addAttribute("orderInfo", orderInfo);
+                    model.addAttribute("txnRef", txnRef);
+
+                    return "redirect:/success";
+                } else {
+                    // Thanh toán thất bại
+                    System.out.println("VNPay Return - Payment failed! Response Code: " + responseCode
+                            + ", Transaction Status: " + transactionStatus);
+                    return "redirect:/error";
+                }
+            } else {
+                // Chữ ký không hợp lệ
+                System.out.println("VNPay Return - Invalid signature!");
+                return "redirect:/error";
+            }
+        } catch (Exception e) {
+            System.err.println("VNPay Return Error: " + e.getMessage());
+            e.printStackTrace();
+            return "redirect:/error";
+        }
     }
 
     @GetMapping("/success")
-    public String getSuccessPage() {
+    public String getSuccessPage(Model model) {
         return "client/cart/success";
+    }
+
+    @GetMapping("/error")
+    public String getErrorPage() {
+        return "client/cart/error";
+    }
+
+    @GetMapping("/vnpay-test")
+    public String getVNPayTestPage() {
+        return "client/cart/vnpay-test";
+    }
+
+    @GetMapping("/vnpay-signature-test")
+    public String testVNPaySignature() {
+        vnPayService.testSignature();
+        return "redirect:/vnpay-test";
+    }
+
+    @GetMapping("/vnpay-debug")
+    public String getVNPayDebugPage() {
+        return "client/cart/vnpay-debug";
+    }
+
+    @GetMapping("/vnpay-config-check")
+    public String checkVNPayConfig() {
+        vnPayService.checkVNPayConfig();
+        return "redirect:/vnpay-test";
     }
 }

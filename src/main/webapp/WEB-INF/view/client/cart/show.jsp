@@ -147,23 +147,22 @@
                                     <div class="cart__total">
                                         <h6>Đơn hàng</h6>
                                         <ul>
-                                            <%-- <li>Tạm tính <span>1.650.000 VND</span></li> --%>
-                                                <li>Tạm tính
-                                                    <span data-cart-total-price="${totalPrice}">
-                                                        <fmt:formatNumber value="${totalPrice}" type="number"
-                                                            groupingUsed="true" /> VNĐ
-                                                    </span>
-                                                </li>
-                                                <li>Tổng cộng
-                                                    <span data-cart-total-price="${totalPrice}">
-                                                        <fmt:formatNumber value="${totalPrice}" type="number"
-                                                            groupingUsed="true" /> VNĐ
-                                                    </span>
-                                                </li>
+                                            <li>Tạm tính
+                                                <span data-cart-total-price="${totalPrice}">
+                                                    <fmt:formatNumber value="${totalPrice}" type="number"
+                                                        groupingUsed="true" /> VNĐ
+                                                </span>
+                                            </li>
+                                            <li>Tổng cộng
+                                                <span data-cart-total-price="${totalPrice}">
+                                                    <fmt:formatNumber value="${totalPrice}" type="number"
+                                                        groupingUsed="true" /> VNĐ
+                                                </span>
+                                            </li>
                                         </ul>
                                         <a href="/checkout" class="primary-btn">Thanh toán</a>
                                     </div>
-                                    <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
+                                    <!-- <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <div style="display: block;">
                                             <c:forEach var="cartDetail" items="${cart.cartDetails}" varStatus="status">
@@ -182,7 +181,7 @@
                                                 </div>
                                             </c:forEach>
                                         </div>
-                                    </form:form>
+                                    </form:form> -->
                                 </div>
                             </div>
                         </div>

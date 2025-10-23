@@ -116,6 +116,11 @@
                                                                     groupingUsed="true" /> VNĐ
                                                             </span>
                                                         </li>
+                                                        <c:if test="${totalPrice < 5000}">
+                                                            <li style="color: #e53637; font-weight: bold;">
+                                                                ⚠️ Số tiền tối thiểu cho VNPay: 5,000 VNĐ
+                                                            </li>
+                                                        </c:if>
                                                         <li>Tổng Cộng
                                                             <span>
                                                                 <fmt:formatNumber value="${totalPrice}" type="number"
@@ -139,6 +144,24 @@
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div> -->
+
+                                                    <!-- Phương thức thanh toán -->
+                                                    <div class="mb-3" style="margin-top:16px;">
+                                                        <label style="display:block; font-weight:600; margin-bottom:8px;">
+                                                            Phương thức thanh toán
+                                                        </label>
+                                                    
+                                                        <label style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                                                            <input type="checkbox" name="paymentMethod" value="COD" checked>
+                                                            <span>Thanh toán khi nhận hàng (COD)</span>
+                                                        </label>
+                                                    
+                                                        <label style="display:flex; align-items:center; gap:8px;">
+                                                            <input type="checkbox" name="paymentMethod" value="VNPAY">
+                                                            <span>Thanh toán qua VNPay</span>
+                                                        </label>
+                                                    </div>
+
                                                     <button type="submit" class="site-btn">Đặt hàng</button>
                                                     <script>
                                                         function toggleCheckbox(selectedCheckbox) {
@@ -175,6 +198,44 @@
                         <script src="/client/js/mixitup.min.js"></script>
                         <script src="/client/js/owl.carousel.min.js"></script>
                         <script src="/client/js/main.js"></script>
+                        <script>
+                            // Chỉ cho phép chọn 1 checkbox
+                            (function () {
+                                const boxes = document.querySelectorAll('input[name="paymentMethod"]');
+                                const totalPrice = ${totalPrice};
+                                
+                                boxes.forEach(box => {
+                                    box.addEventListener('change', () => {
+                                        if (box.checked) {
+                                            boxes.forEach(b => { if (b !== box) b.checked = false; });
+                                            
+                                            // Cảnh báo nếu chọn VNPay với số tiền < 5,000 VND
+                                            if (box.value === 'VNPAY' && totalPrice < 5000) {
+                                                alert('⚠️ Cảnh báo: Số tiền tối thiểu cho VNPay là 5,000 VNĐ. Hệ thống sẽ tự động điều chỉnh số tiền.');
+                                            }
+                                        } else {
+                                            // luôn đảm bảo có 1 lựa chọn
+                                            box.checked = true;
+                                        }
+                                    });
+                                });
+
+                                // đảm bảo khi submit luôn có 1 giá trị
+                                document.querySelector('form')?.addEventListener('submit', (e) => {
+                                    const anyChecked = Array.from(boxes).some(b => b.checked);
+                                    if (!anyChecked) boxes[0].checked = true; // mặc định COD
+                                    
+                                    // Cảnh báo cuối cùng trước khi submit
+                                    const vnpayBox = document.querySelector('input[value="VNPAY"]');
+                                    if (vnpayBox && vnpayBox.checked && totalPrice < 5000) {
+                                        if (!confirm('Số tiền hiện tại (' + totalPrice.toLocaleString() + ' VNĐ) nhỏ hơn mức tối thiểu cho VNPay (5,000 VNĐ). Bạn có muốn tiếp tục? Hệ thống sẽ tự động điều chỉnh số tiền.')) {
+                                            e.preventDefault();
+                                            return false;
+                                        }
+                                    }
+                                });
+                            })();
+                        </script>
                     </body>
 
                     </html>

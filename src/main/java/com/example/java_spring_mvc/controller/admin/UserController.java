@@ -41,7 +41,7 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model,
             @RequestParam(name = "page", defaultValue = "1") long page) {
-        PageRequest pageable = PageRequest.of((int) (page - 1), 1);
+        PageRequest pageable = PageRequest.of((int) (page - 1), 5);
         Page<User> pageUser = this.userService.getAllUser(pageable);
         List<User> users = pageUser.getContent();
         model.addAttribute("users", users);
